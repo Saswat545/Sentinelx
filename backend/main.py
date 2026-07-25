@@ -26,12 +26,16 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+
+
 # ── Import our feature extractor ─────────────────────────────────────────────
 # In production this file sits next to main.py
 try:
-    from feature_extractor import extract_features, extract_features_from_address
+    # Works when Render starts ``uvicorn main:app`` from backend/.
+    from feature_extractor import extract_features, extract_features_from_address, fetch_source_code
 except ImportError:
-    raise RuntimeError("feature_extractor.py must be in the same directory as main.py")
+    # Works when the project is started from its repository root.
+    from .feature_extractor import extract_features, extract_features_from_address, fetch_source_code
 
 load_dotenv()
 
@@ -62,7 +66,7 @@ COLS_PATH = os.path.join(BASE_DIR, "models", "feature_columns.pkl")
 EXPLAINER_PATH = os.path.join(BASE_DIR, "models", "shap_explainer.pkl")
 METRICS_PATH = os.path.join(BASE_DIR, "models", "metrics.json")
 ETHERSCAN_API_KEY  = os.getenv("ETHERSCAN_API_KEY", "")
-print("API KEY LOADED:", ETHERSCAN_API_KEY)
+print("Etherscan API key configured:", bool(ETHERSCAN_API_KEY))
 model     = None
 feat_cols = None
 explainer = None
@@ -318,6 +322,21 @@ def run_model(features: dict) -> tuple[int, float]:
 
 # ── API Endpoints ─────────────────────────────────────────────────────────────
 
+
+@app.get("/")
+def root():
+    """Friendly root route so the bare API URL doesn't 404."""
+    return {
+        "service": "RugGuard API",
+        "status": "live",
+        "version": "2.0.0",
+        "model_loaded": model is not None,
+        "docs": "/docs",
+        "endpoints": ["/analyze", "/health", "/metrics"],
+        "message": "This is the RugGuard backend API. Use the frontend website to interact with it, or POST to /analyze directly."
+    }
+
+
 @app.get("/health")
 def health():
     """Health check — confirms API is running and model status."""
@@ -371,7 +390,6 @@ def analyze(req: AnalyzeRequest):
             )
 
         # Fetch source from Etherscan V2
-        from feature_extractor import fetch_source_code
         source_code = fetch_source_code(raw_input, ETHERSCAN_API_KEY, req.chain)
 
         if not source_code:

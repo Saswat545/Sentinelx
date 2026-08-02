@@ -1,0 +1,6 @@
+{
+  "name": "RugGuard",
+  "description": "AI-Powered Smart Contract Security & Rug Pull Risk Analysis Platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

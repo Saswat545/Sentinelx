@@ -14,7 +14,7 @@ How to run locally:
 
 Then open: http://localhost:8000/docs
 """
-from dotenv import load_dotenv
+import sys
 import os
 import json
 import time
@@ -22,9 +22,18 @@ import pickle
 import numpy as np
 import requests
 from typing import Optional
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
+
 
 
 

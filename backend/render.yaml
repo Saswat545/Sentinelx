@@ -7,6 +7,11 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
+      # pandas 2.2.2, scikit-learn 1.4.2, SHAP 0.45, and XGBoost 2.0.3
+      # provide compatible Linux wheels for Python 3.11. Pin this so Render
+      # does not select a newer Python version and try to compile pandas.
+      - key: PYTHON_VERSION
+        value: 3.11.9
       - key: ETHERSCAN_API_KEY
         sync: false          # you enter this manually in Render dashboard
       - key: MODEL_PATH

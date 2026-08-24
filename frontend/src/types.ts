@@ -8,6 +8,8 @@ export type NavigationPage =
   | 'pricing' 
   | 'settings' 
   | 'docs' 
+  | 'privacy'
+  | 'terms'
   | '404' 
   | '500' 
   | 'maintenance' 

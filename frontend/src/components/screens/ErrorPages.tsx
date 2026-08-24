@@ -11,42 +11,52 @@ interface ErrorPagesProps {
 
 export const ErrorPages: React.FC<ErrorPagesProps> = ({ type, onNavigate }) => {
   return (
-    <div className="min-h-[75vh] flex items-center justify-center p-4 bg-white">
-      <Card className="max-w-md w-full p-8 text-center space-y-6 bg-white border-gray-200 shadow-sm">
+    <div className="min-h-[75vh] flex items-center justify-center p-4 bg-[#0B0F17]">
+      <Card className="max-w-md w-full p-8 text-center space-y-6 bg-[#111827] border-gray-800 shadow-2xl">
         
         {type === '404' && (
           <>
-            <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 mx-auto flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-blue-950/60 text-blue-400 mx-auto flex items-center justify-center border border-blue-800/60">
               <ShieldAlert className="w-8 h-8" />
             </div>
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold text-blue-600 uppercase tracking-widest">Error 404</span>
-              <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Contract Report Not Found</h2>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                The requested smart contract analysis record or screen route does not exist or has been deleted.
+              <span className="font-mono text-xs font-bold text-blue-400 uppercase tracking-widest">404 — Signal Lost</span>
+              <h2 className="text-2xl font-extrabold text-white tracking-tight">Page Not Found</h2>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                The requested page does not exist or has been moved. Enter a valid contract address or return to the SentinelX dashboard.
               </p>
             </div>
-            <Button
-              variant="primary"
-              className="w-full justify-center"
-              onClick={() => onNavigate('dashboard')}
-              leftIcon={<ArrowLeft className="w-4 h-4" />}
-            >
-              Return to Dashboard
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button
+                variant="primary"
+                className="w-full justify-center"
+                onClick={() => onNavigate('analyzer')}
+                leftIcon={<ShieldAlert className="w-4 h-4" />}
+              >
+                Analyze a Contract
+              </Button>
+              <Button
+                variant="outline"
+                className="w-full justify-center"
+                onClick={() => onNavigate('landing')}
+                leftIcon={<ArrowLeft className="w-4 h-4" />}
+              >
+                Return to SentinelX
+              </Button>
+            </div>
           </>
         )}
 
         {type === '500' && (
           <>
-            <div className="w-16 h-16 rounded-2xl bg-red-50 text-red-600 mx-auto flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-red-950/60 text-red-400 mx-auto flex items-center justify-center border border-red-800/60">
               <AlertTriangle className="w-8 h-8" />
             </div>
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold text-red-600 uppercase tracking-widest">Error 500</span>
-              <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Inference Pipeline Error</h2>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                FastAPI model service encountered an unexpected error during AST feature vector calculation.
+              <span className="font-mono text-xs font-bold text-red-400 uppercase tracking-widest">Server Error</span>
+              <h2 className="text-2xl font-extrabold text-white tracking-tight">Analysis Service Error</h2>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                The SentinelX analysis service encountered an unexpected error. Please try again in a moment.
               </p>
             </div>
             <Button
@@ -55,51 +65,52 @@ export const ErrorPages: React.FC<ErrorPagesProps> = ({ type, onNavigate }) => {
               onClick={() => onNavigate('analyzer')}
               leftIcon={<RefreshCw className="w-4 h-4" />}
             >
-              Retry Contract Analysis
+              Retry Analysis
             </Button>
           </>
         )}
 
         {type === 'maintenance' && (
           <>
-            <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 mx-auto flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-amber-950/60 text-amber-400 mx-auto flex items-center justify-center border border-amber-800/60">
               <Wrench className="w-8 h-8" />
             </div>
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold text-amber-600 uppercase tracking-widest">System Upgrade</span>
-              <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">XGBoost Model Retraining</h2>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                We are deploying XGBoost v2.5 weights trained on 20,000 new Arbitrum bytecode samples. Scheduled downtime ends in 15 minutes.
+              <span className="font-mono text-xs font-bold text-amber-400 uppercase tracking-widest">System Upgrade</span>
+              <h2 className="text-2xl font-extrabold text-white tracking-tight">Scheduled Maintenance</h2>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                SentinelX is temporarily unavailable for scheduled maintenance. Please check back shortly.
               </p>
             </div>
             <Button
               variant="outline"
               className="w-full justify-center"
-              onClick={() => onNavigate('dashboard')}
+              onClick={() => onNavigate('landing')}
             >
-              Check System Status Page
+              Return to SentinelX
             </Button>
           </>
         )}
 
         {type === 'offline' && (
           <>
-            <div className="w-16 h-16 rounded-2xl bg-gray-100 text-gray-600 mx-auto flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-gray-800 text-gray-400 mx-auto flex items-center justify-center border border-gray-700">
               <WifiOff className="w-8 h-8" />
             </div>
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold text-gray-500 uppercase tracking-widest">Offline Mode</span>
-              <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Network Connection Lost</h2>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Unable to establish connection with the RugGuard FastAPI cluster. Please check your internet connection.
+              <span className="font-mono text-xs font-bold text-gray-500 uppercase tracking-widest">Offline</span>
+              <h2 className="text-2xl font-extrabold text-white tracking-tight">Connection Lost</h2>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Unable to reach the SentinelX analysis service. Please check your internet connection and try again.
               </p>
             </div>
             <Button
               variant="primary"
               className="w-full justify-center"
               onClick={() => window.location.reload()}
+              leftIcon={<RefreshCw className="w-4 h-4" />}
             >
-              Reconnect to Cluster
+              Reconnect
             </Button>
           </>
         )}

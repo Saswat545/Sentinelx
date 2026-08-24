@@ -1,0 +1,107 @@
+.scroll-expand-container {
+  position: relative;
+  width: 100%;
+  min-height: 150vh;
+}
+
+.scroll-expand-viewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.scroll-expand-frame {
+  position: relative;
+  overflow: hidden;
+  transition: border-radius 0.05s linear;
+  will-change: transform, width, height, border-radius;
+  background: #0a0a0a;
+}
+
+.scroll-expand-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.scroll-expand-scrim {
+  position: absolute;
+  inset: 0;
+  background: #0a0a0a;
+  pointer-events: none;
+}
+
+.scroll-expand-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.scroll-expand-title h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+.scroll-expand-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+}
+
+.scroll-expand-hint-icon {
+  width: 20px;
+  height: 20px;
+  animation: scrollHintBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollHintBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.scroll-expand-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  z-index: 3;
+  color: white;
+  text-align: center;
+}
+
+.scroll-expand-content h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.2rem, 3vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.scroll-expand-content p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 500px;
+  line-height: 1.6;
+}

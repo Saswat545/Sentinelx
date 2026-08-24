@@ -1,0 +1,36 @@
+# SentinelX
+
+SentinelX is an AI-powered blockchain security platform that analyzes Ethereum smart contracts and token addresses for potential rug-pull risks, honeypot patterns, and dangerous contract behaviors.
+
+## What SentinelX Does
+
+- Analyzes Ethereum smart contracts by address or raw Solidity source code
+- Uses XGBoost machine learning trained on ~2,474 labeled contracts (2,391 rug pulls, 83 legitimate)
+- Extracts 53 smart-contract features for risk evaluation
+- Provides SHAP-based model explainability for every risk score
+- Generates risk scores from 0-100 with severity classifications
+- Detects honeypots, hidden owners, unlimited minting, selfdestruct, blacklist mechanisms, and high sell taxes
+
+## Key Pages
+
+- Homepage: https://sentinelx.site/
+- Contract Scanner: https://sentinelx.site/ (navigate to Analyzer)
+- Pricing: https://sentinelx.site/ (navigate to Pricing)
+- Documentation: https://sentinelx.site/ (navigate to Docs)
+- Privacy Policy: https://sentinelx.site/ (navigate to Privacy)
+- Terms of Service: https://sentinelx.site/ (navigate to Terms)
+
+## API
+
+- Production API: https://api.sentinelx.site
+- POST /analyze — Analyze a contract address or Solidity source code
+- GET /health — Check API status and model loading state
+- GET /metrics — Retrieve model evaluation metrics
+
+## Contact
+
+- Email: security@sentinelx.io
+
+## Disclaimer
+
+SentinelX provides automated security analysis for informational purposes only. It does not guarantee detection of all scams or the safety of any token. Analysis results are not financial advice.

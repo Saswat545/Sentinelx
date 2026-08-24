@@ -265,7 +265,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
                   Register new account
                 </button>
                 <span>•</span>
-                <a href="#help" onClick={(e) => { e.preventDefault(); alert("Support available at security@sentinelx.io"); }} className="text-[#a8dadc] hover:text-[#f1faee] cursor-pointer inline-flex items-center gap-1">
+                <a href="mailto:security@sentinelx.io" className="text-[#a8dadc] hover:text-[#f1faee] cursor-pointer inline-flex items-center gap-1">
                   <HelpCircle className="w-3 h-3" /> Need help?
                 </a>
               </div>

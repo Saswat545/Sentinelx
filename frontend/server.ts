@@ -28,7 +28,7 @@ async function startServer() {
   app.get('/api/health', (req, res) => {
     res.json({
       status: 'ok',
-      service: 'RugGuard Analysis API & FastAPI XGBoost Engine',
+      service: 'SentinelX Analysis API & FastAPI XGBoost Engine',
       timestamp: new Date().toISOString(),
       models: {
         xgboost: 'v2.4-tree384',
@@ -130,7 +130,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[RugGuard] Server running on http://0.0.0.0:${PORT}`);
+    console.log(`[SentinelX] Server running on http://0.0.0.0:${PORT}`);
   });
 }
 

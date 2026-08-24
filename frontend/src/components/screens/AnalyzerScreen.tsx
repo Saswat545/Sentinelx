@@ -84,7 +84,7 @@ export const AnalyzerScreen: React.FC<AnalyzerScreenProps> = ({
         onNavigate('result');
       }, 1100);
     } catch (err: any) {
-      console.error('Analysis failed:', err);
+      // Analysis failed — fall back to client-side parser
       const fallbackReport = parseSolidityContract(sourceCode, contractName);
       setIsAnalyzing(false);
       onAnalysisComplete(fallbackReport);
@@ -358,6 +358,27 @@ export const AnalyzerScreen: React.FC<AnalyzerScreenProps> = ({
           </Card>
         </div>
 
+      </div>
+
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 md:hidden z-40 p-3 bg-[#0B0F17]/95 backdrop-blur-md border-t border-gray-800">
+        <button
+          onClick={handleRunAnalysis}
+          disabled={isAnalyzing}
+          className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-bold rounded-xl transition-colors disabled:opacity-50 disabled:pointer-events-none cursor-pointer flex items-center justify-center gap-2"
+        >
+          {isAnalyzing ? (
+            <>
+              <RefreshCw className="w-4 h-4 animate-spin" />
+              <span>Analysing...</span>
+            </>
+          ) : (
+            <>
+              <Play className="w-4 h-4" />
+              <span>Analyse Contract</span>
+            </>
+          )}
+        </button>
       </div>
 
     </div>

@@ -1,7 +1,7 @@
 """
-RUGGUARD API — main.py
+SENTINELX API — main.py
 ======================
-FastAPI backend for RugGuard AI.
+FastAPI backend for SentinelX AI.
 
 Endpoints:
   POST /analyze        — analyze contract code or token address
@@ -22,9 +22,11 @@ import pickle
 import numpy as np
 import requests
 from typing import Optional
+from collections import defaultdict
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 if hasattr(sys.stdout, 'reconfigure'):
@@ -51,7 +53,7 @@ load_dotenv()
 # ── App setup ─────────────────────────────────────────────────────────────────
 
 app = FastAPI(
-    title="RugGuard API",
+    title="SentinelX API",
     description="AI-powered smart contract risk intelligence",
     version="2.0.0",
 )
@@ -59,11 +61,57 @@ app = FastAPI(
 # Allow frontend (Vercel) to call this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # tighten in production to your Vercel domain
+    allow_origins=[
+        "https://sentinelx.site",
+        "https://www.sentinelx.site",
+        "https://rug-guard-vmuy.vercel.app",  # Vercel preview deploys
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+
+# ── Rate Limiting ───────────────────────────────────────────────────────────
+# In-memory sliding window rate limiter.
+# Render free tier runs a single instance, so this is sufficient.
+# For multi-instance deployments, replace with Redis-backed limiter.
+
+RATE_LIMIT_WINDOW = 60  # seconds
+RATE_LIMIT_MAX_REQUESTS = 10  # per window per IP
+
+_rate_limit_store: dict[str, list[float]] = defaultdict(list)
+
+
+def _get_client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+@app.middleware("http")
+async def rate_limit_middleware(request: Request, call_next):
+    # Only rate-limit the /analyze endpoint
+    if request.url.path == "/analyze" and request.method == "POST":
+        client_ip = _get_client_ip(request)
+        now = time.time()
+        # Remove expired entries
+        _rate_limit_store[client_ip] = [
+            t for t in _rate_limit_store[client_ip] if now - t < RATE_LIMIT_WINDOW
+        ]
+        if len(_rate_limit_store[client_ip]) >= RATE_LIMIT_MAX_REQUESTS:
+            return JSONResponse(
+                status_code=429,
+                content={
+                    "error": "Rate limit exceeded",
+                    "message": f"Maximum {RATE_LIMIT_MAX_REQUESTS} analyses per minute. Please wait and try again.",
+                    "retry_after": int(RATE_LIMIT_WINDOW - (now - _rate_limit_store[client_ip][0]))
+                }
+            )
+        _rate_limit_store[client_ip].append(now)
+    response = await call_next(request)
+    return response
 
 
 # ── Load model artifacts ──────────────────────────────────────────────────────
@@ -75,7 +123,6 @@ COLS_PATH = os.path.join(BASE_DIR, "models", "feature_columns.pkl")
 EXPLAINER_PATH = os.path.join(BASE_DIR, "models", "shap_explainer.pkl")
 METRICS_PATH = os.path.join(BASE_DIR, "models", "metrics.json")
 ETHERSCAN_API_KEY  = os.getenv("ETHERSCAN_API_KEY", "")
-print("Etherscan API key configured:", bool(ETHERSCAN_API_KEY))
 model     = None
 feat_cols = None
 explainer = None
@@ -90,7 +137,7 @@ def load_models():
             feat_cols = pickle.load(f)
         print(f"✅ Model loaded — {len(feat_cols)} features")
     except FileNotFoundError:
-        print("⚠️  Model files not found. Train the model first (rugguard_model.ipynb)")
+        print("⚠️  Model files not found. Train the model first.")
         print("   API will still work but will return rule-based scores only.")
 
     try:
@@ -336,13 +383,13 @@ def run_model(features: dict) -> tuple[int, float]:
 def root():
     """Friendly root route so the bare API URL doesn't 404."""
     return {
-        "service": "RugGuard API",
+        "service": "SentinelX API",
         "status": "live",
         "version": "2.0.0",
         "model_loaded": model is not None,
         "docs": "/docs",
         "endpoints": ["/analyze", "/health", "/metrics"],
-        "message": "This is the RugGuard backend API. Use the frontend website to interact with it, or POST to /analyze directly."
+        "message": "This is the SentinelX backend API. Use the frontend website to interact with it, or POST to /analyze directly."
     }
 
 
@@ -362,7 +409,7 @@ def health():
 def get_metrics():
     """Return model evaluation metrics (accuracy, F1, AUC, confusion matrix)."""
     if not metrics:
-        return {"message": "Model not trained yet. Run rugguard_model.ipynb first."}
+        return {"message": "Model not trained yet."}
     return metrics
 
 
@@ -381,6 +428,8 @@ def analyze(req: AnalyzeRequest):
         raise HTTPException(400, "Input cannot be empty")
     if len(raw_input) < 10:
         raise HTTPException(400, "Input too short — paste a full contract or token address")
+    if len(raw_input) > 500_000:
+        raise HTTPException(413, "Input too large — maximum 500,000 characters")
 
     input_type    = "unknown"
     token_address = None

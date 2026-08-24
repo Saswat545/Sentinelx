@@ -14,10 +14,14 @@ export async function analyzeSmartContract(options: AnalysisOptions): Promise<Sm
 
   if (!input) {
     throw new Error('Please provide Solidity source code or contract address.');
-  }
-
-  // Try calling Python FastAPI backend endpoints
-  const backendUrls = ['http://localhost:8000/analyze', 'http://127.0.0.1:8000/analyze', '/api/analyze'];
+  }  // Use environment variable for API URL in production; fallback to local dev endpoints
+  const envApiUrl = import.meta.env.VITE_API_URL;
+  const backendUrls = [
+    ...(envApiUrl ? [`${envApiUrl}/analyze`] : []),
+    '/api/analyze',
+    'http://localhost:8000/analyze',
+    'http://127.0.0.1:8000/analyze',
+  ];
 
   for (const url of backendUrls) {
     try {
@@ -25,8 +29,8 @@ export async function analyzeSmartContract(options: AnalysisOptions): Promise<Sm
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(
-          url === '/api/analyze' 
-            ? { sourceCode, address, contractName, network, chain } 
+          url.endsWith('/api/analyze')
+            ? { sourceCode, address, contractName, network, chain }
             : { input, chain }
         ),
       });
@@ -130,7 +134,7 @@ export function mapPythonResultToReport(
     mlPrediction,
     analyzedAt: new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC',
     processingTimeMs: pyResult.analysis_time_ms || 120,
-    modelVersion: pyResult.model_used ? 'XGBoost RugGuard v2.4 (SHAP Explainer)' : 'Rule-Based Engine',
+    modelVersion: pyResult.model_used ? 'XGBoost SentinelX v2.4 (SHAP Explainer)' : 'Rule-Based Engine',
     liquidityLocked: riskScore < 50,
     liquidityLockDays: riskScore < 50 ? 180 : 0,
     isRenounced: riskScore < 30,
@@ -374,7 +378,7 @@ export function parseSolidityContract(code: string, name: string = 'SubmittedCon
     mlPrediction,
     analyzedAt: new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC',
     processingTimeMs,
-    modelVersion: 'XGBoost-RugGuard-v2.4 (SHAP v0.42)',
+    modelVersion: 'XGBoost-SentinelX-v2.4 (SHAP v0.42)',
     liquidityLocked: !hasEmergencyWithdraw && isRenounced,
     liquidityLockDays: isRenounced ? 365 : 0,
     isRenounced,

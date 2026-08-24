@@ -14,7 +14,7 @@ export const DocsScreen: React.FC = () => {
   };
 
   const codeSnippets = {
-    curl: `curl -X POST "https://rugguard-api.onrender.com/analyze" \\
+    curl: `curl -X POST "https://api.sentinelx.site/analyze" \\
   -H "Authorization: Bearer sx_live_9f81a7b2c3d4..." \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -23,7 +23,7 @@ export const DocsScreen: React.FC = () => {
   }'`,
     python: `import requests
 
-url = "https://rugguard-api.onrender.com/analyze"
+url = "https://api.sentinelx.site/analyze"
 headers = {
     "Authorization": "Bearer sx_live_9f81a7b2c3d4...",
     "Content-Type": "application/json"

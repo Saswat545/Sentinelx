@@ -5,7 +5,8 @@ import { LandingSkeleton } from '../ui/SkeletonLoader';
 import { PartnerMarquee } from '../ui/PartnerMarquee';
 import { 
   ShieldAlert, ArrowRight, CheckCircle2, Cpu, 
-  Terminal, ChevronRight, Code2, Zap, Copy, Check
+  Terminal, ChevronRight, Code2, Zap, Copy, Check,
+  ChevronDown, ChevronUp, HelpCircle
 } from 'lucide-react';
 
 interface LandingScreenProps {
@@ -20,6 +21,30 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
   const [isLoadingSkeleton] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'findings' | 'source'>('overview');
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      q: 'What is SentinelX?',
+      a: 'SentinelX is an AI-powered blockchain security platform that analyzes Ethereum smart contracts and token addresses to identify potential rug-pull indicators, honeypot patterns, dangerous contract behaviors, and privilege risks. It combines XGBoost machine learning, rule-based detection, and SHAP-based explainability.'
+    },
+    {
+      q: 'How does the risk score work?',
+      a: 'SentinelX evaluates 53 extracted smart-contract features using an XGBoost classifier trained on a labeled dataset of confirmed rug pulls and verified contracts. The model produces a risk score from 0 to 100, where higher scores indicate greater potential risk. Each score includes SHAP feature attributions explaining which contract characteristics contributed most to the assessment.'
+    },
+    {
+      q: 'What does a high risk score mean?',
+      a: 'A high risk score indicates that the analyzed contract exhibits patterns commonly associated with rug pulls or malicious behavior — such as honeypot restrictions, unrenounced ownership, unlimited minting, or high sell taxes. A high score is a strong signal to exercise extreme caution, but it is not proof of fraud. Always conduct independent research.'
+    },
+    {
+      q: 'Does SentinelX guarantee that a token is safe?',
+      a: 'No. SentinelX provides automated risk signals based on machine learning analysis and pattern detection. A low risk score does not guarantee safety. No automated tool can provide absolute security assurance. SentinelX identifies potential security risks — it does not guarantee the safety or profitability of any asset.'
+    },
+    {
+      q: 'Is SentinelX financial advice?',
+      a: 'No. SentinelX is a security intelligence and risk-analysis tool. All analysis results are for informational and security-research purposes only and do not constitute financial, investment, or trading advice. You should always conduct your own research and consult qualified professionals before making investment decisions.'
+    },
+  ];
 
   const handleCopyCode = () => {
     const code = `npm install @sentinelx/sdk\n\nimport { SentinelX } from '@sentinelx/sdk';\nconst client = new SentinelX({ apiKey: process.env.SENTINELX_API_KEY });\nconst report = await client.analyzeContract('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D');`;
@@ -50,27 +75,28 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
 
             {/* Headline in Montserrat */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#f1faee] tracking-tight leading-[1.12] font-heading">
-              Analyze Smart Contracts Before You Trust Them.
+              Know Before You Buy It.
             </h1>
 
             {/* Subheadline */}
             <p className="text-base sm:text-lg text-[#a8dadc] leading-relaxed max-w-xl font-sans">
-              AI-powered blockchain security for investors and developers. Detect rug pulls, security vulnerabilities, and hidden risks before interacting with Ethereum smart contracts.
+              SentinelX analyzes Ethereum smart contracts using AI-powered risk scoring, SHAP explainability, and 53+ security signals — so you understand the risk before you interact.
             </p>
 
             {/* CTA Buttons */}
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 font-heading">
               <button
                 onClick={() => onNavigate('analyzer')}
-                className="px-6 py-3.5 text-sm font-bold rounded-xl bg-[#e63946] hover:bg-[#d62828] text-white transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                className="px-6 py-3.5 text-sm font-bold rounded-xl bg-[#e63946] hover:bg-[#d62828] text-white transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#e63946]/60 focus:ring-offset-2 focus:ring-offset-[#0b132b]"
+                aria-label="Analyze a smart contract with SentinelX"
               >
-                <span>Get Started Free</span>
+                <span>Analyze a Contract</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
                 onClick={() => onNavigate('docs')}
-                className="px-6 py-3.5 text-sm font-semibold rounded-xl bg-[#1c2541] hover:bg-[#15263f] text-[#f1faee] border border-[#457b9d]/40 transition-colors cursor-pointer flex items-center justify-center gap-2"
+                className="px-6 py-3.5 text-sm font-semibold rounded-xl bg-[#1c2541] hover:bg-[#15263f] text-[#f1faee] border border-[#457b9d]/40 transition-colors cursor-pointer flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#a8dadc]/50 focus:ring-offset-2 focus:ring-offset-[#0b132b]"
               >
                 <Terminal className="w-4 h-4 text-[#a8dadc]" />
                 <span>View Documentation</span>
@@ -527,6 +553,50 @@ console.log(report.riskScore); // 94 (High Risk)`}
         </div>
       </section>
 
+      {/* FAQ SECTION */}
+      <section className="py-20 border-b border-[#457b9d]/30 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto space-y-8">
+          
+          <div className="text-center space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1c2541] border border-[#457b9d]/40 text-[#a8dadc] text-xs font-sans">
+              <HelpCircle className="w-3.5 h-3.5" />
+              <span>Frequently Asked Questions</span>
+            </div>
+            <h2 className="text-3xl font-extrabold text-[#f1faee] tracking-tight font-heading">
+              Common Questions About SentinelX
+            </h2>
+          </div>
+
+          <div className="space-y-3">
+            {faqs.map((faq, idx) => (
+              <div
+                key={idx}
+                className="bg-[#1c2541] border border-[#457b9d]/40 rounded-xl overflow-hidden"
+              >
+                <button
+                  onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
+                  className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-[#15263f] transition-colors cursor-pointer"
+                  aria-expanded={expandedFaq === idx}
+                >
+                  <span className="text-sm font-semibold text-[#f1faee] font-heading pr-4">{faq.q}</span>
+                  {expandedFaq === idx ? (
+                    <ChevronUp className="w-4 h-4 text-[#a8dadc] shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-[#a8dadc] shrink-0" />
+                  )}
+                </button>
+                {expandedFaq === idx && (
+                  <div className="px-5 pb-4 text-xs text-[#a8dadc] leading-relaxed font-sans border-t border-[#457b9d]/20 pt-3">
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
       {/* FINAL BOTTOM CTA */}
       <section className="py-20 text-center max-w-4xl mx-auto px-4 space-y-6">
         <h2 className="text-3xl font-extrabold text-[#f1faee] tracking-tight font-heading">
@@ -538,7 +608,8 @@ console.log(report.riskScore); // 94 (High Risk)`}
         <div className="pt-2 flex justify-center font-heading">
           <button
             onClick={() => onNavigate('analyzer')}
-            className="px-8 py-3.5 text-sm font-bold rounded-xl bg-[#e63946] hover:bg-[#d62828] text-white transition-all shadow-lg cursor-pointer flex items-center gap-2"
+            className="px-8 py-3.5 text-sm font-bold rounded-xl bg-[#e63946] hover:bg-[#d62828] text-white transition-all shadow-lg cursor-pointer flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#e63946]/60 focus:ring-offset-2 focus:ring-offset-[#0b132b]"
+            aria-label="Analyze a smart contract now"
           >
             <span>Analyze Smart Contract Now</span>
             <ArrowRight className="w-4 h-4" />

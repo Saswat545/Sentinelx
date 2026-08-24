@@ -1,246 +1,226 @@
-import React, { useState } from 'react';
-import { NavigationPage, UserProfile } from '../types';
-import { ChevronDown, Menu, X, LogOut } from 'lucide-react';
-import { SentinelLogo } from './ui/SentinelLogo';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../lib/auth';
 
-interface NavigationProps {
-  currentPage: NavigationPage;
-  onNavigate: (page: NavigationPage) => void;
-  user: UserProfile | null;
-  isAuthenticated: boolean;
-  onLogout: () => void;
-}
+export function Navigation() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const { user, signOut, isConfigured } = useAuth();
+  const navigate = useNavigate();
 
-export const Navigation: React.FC<NavigationProps> = ({
-  currentPage,
-  onNavigate,
-  user,
-  isAuthenticated,
-  onLogout,
-}) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setActiveDropdown(null);
+  }, [location.pathname]);
+
+  const navItems = [
+    {
+      label: 'Product',
+      items: [
+        { label: 'Token Scanner', href: '/scan' },
+        { label: 'How It Works', href: '/how-it-works' },
+        { label: 'Pricing', href: '/pricing' },
+      ],
+    },
+    {
+      label: 'Intelligence',
+      items: [
+        { label: 'Incident Reports', href: '/incident-reports' },
+        { label: 'Case Studies', href: '/case-studies' },
+        { label: 'Security Insights', href: '/insights' },
+      ],
+    },
+    {
+      label: 'Resources',
+      items: [
+        { label: 'Documentation', href: '/docs' },
+        { label: 'FAQ', href: '/faq' },
+        { label: 'Security', href: '/security' },
+        { label: 'Contact', href: '/contact' },
+      ],
+    },
+  ];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0b132b]/95 backdrop-blur-md border-b border-[#457b9d]/30 font-sans transition-colors">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
-        
-        {/* Left Side: Brand Logo */}
-        <div className="flex items-center gap-10">
-          <button 
-            onClick={() => onNavigate('landing')}
-            className="hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-2.5 text-left focus:outline-none"
-          >
-            <SentinelLogo variant="horizontal" size="md" />
-          </button>
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
+        <div
+          className={`flex items-center justify-between w-full max-w-5xl px-5 py-2.5 transition-all duration-500 ${
+            scrolled
+              ? 'bg-white/85 backdrop-blur-2xl border border-gray-200/80 shadow-lg shadow-black/5'
+              : 'bg-white/50 backdrop-blur-xl border border-white/10'
+          } rounded-full`}
+        >
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+            <img
+              src="/brand/dark/Icon mark.png"
+              alt="SentinelX"
+              className="w-7 h-7 object-contain"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+            <span className="text-[#0a0a0a] font-display font-semibold text-sm tracking-tight hidden sm:block">
+              Sentinel<span className="text-[#6D001A]">X</span>
+            </span>
+          </Link>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 font-heading">
-            <button
-              onClick={() => onNavigate('landing')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                currentPage === 'landing'
-                  ? 'text-[#f1faee] bg-[#1d3557] border border-[#457b9d]/50'
-                  : 'text-[#a8dadc] hover:text-[#f1faee] hover:bg-[#1c2541]'
-              }`}
-            >
-              Product
-            </button>
-
-            <button
-              onClick={() => onNavigate('dashboard')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                currentPage === 'dashboard'
-                  ? 'text-[#f1faee] bg-[#1d3557] border border-[#457b9d]/50'
-                  : 'text-[#a8dadc] hover:text-[#f1faee] hover:bg-[#1c2541]'
-              }`}
-            >
-              Dashboard
-            </button>
-
-            <button
-              onClick={() => onNavigate('analyzer')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                currentPage === 'analyzer' || currentPage === 'result'
-                  ? 'text-[#f1faee] bg-[#457b9d] border border-[#a8dadc]/40'
-                  : 'text-[#a8dadc] hover:text-[#f1faee] hover:bg-[#1c2541]'
-              }`}
-            >
-              Scanner
-            </button>
-
-            <button
-              onClick={() => onNavigate('pricing')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                currentPage === 'pricing'
-                  ? 'text-[#f1faee] bg-[#1d3557] border border-[#457b9d]/50'
-                  : 'text-[#a8dadc] hover:text-[#f1faee] hover:bg-[#1c2541]'
-              }`}
-            >
-              Pricing
-            </button>
-
-            <button
-              onClick={() => onNavigate('docs')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
-                currentPage === 'docs'
-                  ? 'text-[#f1faee] bg-[#1d3557] border border-[#457b9d]/50'
-                  : 'text-[#a8dadc] hover:text-[#f1faee] hover:bg-[#1c2541]'
-              }`}
-            >
-              Documentation
-            </button>
-          </nav>
-        </div>
-
-        {/* Right Side Actions */}
-        <div className="flex items-center gap-3">
-          
-          {isAuthenticated && user ? (
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => onNavigate('analyzer')}
-                className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-heading font-bold rounded-xl bg-[#e63946] hover:bg-[#d62828] text-white transition-colors cursor-pointer shadow-md"
+          {/* Desktop Nav - Pill items */}
+          <div className="hidden lg:flex items-center gap-0.5">
+            {navItems.map((item) => (
+              <div
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => setActiveDropdown(item.label)}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
-                <span>New Contract Scan</span>
-              </button>
-
-              <div className="relative">
-                <button
-                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="flex items-center gap-2 p-1 rounded-full hover:bg-[#1c2541] transition-colors border border-[#457b9d]/40 cursor-pointer"
-                >
-                  <img
-                    src={user.avatarUrl}
-                    alt={user.name}
-                    className="w-7 h-7 rounded-full object-cover border border-[#a8dadc]/40"
-                  />
-                  <ChevronDown className="w-3.5 h-3.5 text-[#a8dadc] mr-1 hidden sm:block" />
+                <button className="flex items-center gap-1 px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
+                  {item.label}
+                  <svg className={`w-3 h-3 transition-transform duration-200 ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </button>
+                <AnimatePresence>
+                  {activeDropdown === item.label && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 py-1.5 bg-white/95 backdrop-blur-2xl border border-gray-200/80 rounded-2xl shadow-xl shadow-black/8"
+                    >
+                      {item.items.map((subItem) => (
+                        <Link
+                          key={subItem.label}
+                          to={subItem.href}
+                          className="block px-4 py-2.5 text-sm text-gray-500 hover:text-[#0a0a0a] hover:bg-gray-50 transition-colors mx-1 rounded-xl"
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
 
-                {profileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-[#1c2541] rounded-2xl shadow-2xl border border-[#457b9d]/50 py-2 z-50 text-left">
-                    <div className="px-4 py-3 border-b border-[#457b9d]/30">
-                      <p className="text-xs font-heading font-bold text-[#f1faee] truncate">{user.name}</p>
-                      <p className="text-[11px] text-[#a8dadc] truncate">{user.email}</p>
-                      <div className="mt-2 flex items-center justify-between">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-[#1d3557] text-[#a8dadc] border border-[#457b9d]/60">
-                          {user.plan} Plan
-                        </span>
-                        <span className="text-[10px] text-[#a8dadc] font-number">
-                          {user.analysesUsed} / {user.analysesLimit} Scans
-                        </span>
-                      </div>
-                    </div>
+          {/* Right side */}
+          <div className="flex items-center gap-2">
+            {user && isConfigured ? (
+              <>
+                <Link to="/dashboard" className="hidden sm:block px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
+                  Dashboard
+                </Link>
+                <button onClick={() => signOut()} className="px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="hidden sm:block px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
+                Log In
+              </Link>
+            )}
+            <Link
+              to="/scan"
+              className="px-5 py-2 bg-[#6D001A] hover:bg-[#8B0023] text-white text-[13px] font-semibold rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-[#6D001A]/20"
+            >
+              Scan a Token
+            </Link>
 
-                    <div className="py-1">
-                      <button
-                        onClick={() => { onNavigate('dashboard'); setProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-xs text-[#f1faee] hover:bg-[#1d3557] text-left cursor-pointer font-sans"
-                      >
-                        Dashboard Console
-                      </button>
-                      <button
-                        onClick={() => { onNavigate('history'); setProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-xs text-[#f1faee] hover:bg-[#1d3557] text-left cursor-pointer font-sans"
-                      >
-                        Scan History
-                      </button>
-                      <button
-                        onClick={() => { onNavigate('settings'); setProfileDropdownOpen(false); }}
-                        className="w-full px-4 py-2 text-xs text-[#f1faee] hover:bg-[#1d3557] text-left cursor-pointer font-sans"
-                      >
-                        API Keys & Settings
-                      </button>
-                    </div>
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden w-9 h-9 flex items-center justify-center text-gray-500 hover:text-[#0a0a0a] transition-colors rounded-full hover:bg-gray-100/80"
+              aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+      </nav>
 
-                    <div className="border-t border-[#457b9d]/30 pt-1">
-                      <button
-                        onClick={() => { setProfileDropdownOpen(false); onLogout(); }}
-                        className="w-full flex items-center gap-2 px-4 py-2 text-xs text-[#e63946] hover:bg-[#e63946]/10 text-left font-semibold cursor-pointer"
-                      >
-                        <LogOut className="w-3.5 h-3.5" />
-                        <span>Sign Out</span>
-                      </button>
-                    </div>
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-x-0 top-20 z-50 lg:hidden px-4"
+          >
+            <div className="bg-white/95 backdrop-blur-2xl border border-gray-200/80 rounded-3xl shadow-xl shadow-black/10 overflow-hidden">
+              <div className="p-6 space-y-1">
+                {navItems.map((item) => (
+                  <div key={item.label}>
+                    <button
+                      onClick={() => setActiveDropdown(activeDropdown === item.label ? null : item.label)}
+                      className="w-full flex items-center justify-between py-3 text-gray-600 hover:text-[#0a0a0a] transition-colors"
+                    >
+                      <span className="text-sm font-medium">{item.label}</span>
+                      <svg className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    <AnimatePresence>
+                      {activeDropdown === item.label && (
+                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                          <div className="pl-4 pb-2 space-y-1">
+                            {item.items.map((subItem) => (
+                              <Link key={subItem.label} to={subItem.href} className="block py-2 text-sm text-gray-400 hover:text-[#0a0a0a] transition-colors">
+                                {subItem.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-                )}
+                ))}
+                <div className="pt-4 border-t border-gray-100 space-y-2">
+                  {user && isConfigured ? (
+                    <>
+                      <Link to="/dashboard" className="block w-full py-3 text-center text-sm text-gray-600 hover:text-[#0a0a0a] rounded-xl hover:bg-gray-50 transition-all">
+                        Dashboard
+                      </Link>
+                      <button onClick={() => { signOut(); setIsMobileMenuOpen(false); }} className="block w-full py-3 text-center text-sm text-gray-600 hover:text-[#0a0a0a] rounded-xl hover:bg-gray-50 transition-all">
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="/login" className="block w-full py-3 text-center text-sm text-gray-600 hover:text-[#0a0a0a] rounded-xl hover:bg-gray-50 transition-all">
+                        Sign In
+                      </Link>
+                      <Link to="/signup" className="block w-full py-3 text-center text-sm text-white font-semibold bg-[#6D001A] hover:bg-[#8B0023] rounded-xl transition-all">
+                        Create Account
+                      </Link>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
-          ) : (
-            <div className="flex items-center gap-2.5">
-              <button
-                onClick={() => onNavigate('auth')}
-                className="px-3.5 py-1.5 text-xs font-heading font-semibold text-[#a8dadc] hover:text-[#f1faee] transition-colors cursor-pointer"
-              >
-                Sign In
-              </button>
-              
-              <button
-                onClick={() => onNavigate('auth')}
-                className="px-4 py-2 text-xs font-heading font-bold rounded-xl bg-[#e63946] hover:bg-[#d62828] text-white transition-all shadow-md cursor-pointer flex items-center gap-1.5"
-              >
-                <span>Get Started Free</span>
-              </button>
-            </div>
-          )}
-
-          {/* Mobile Menu Trigger */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-[#a8dadc] hover:bg-[#1c2541] rounded-lg cursor-pointer"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-[#457b9d]/30 bg-[#0b132b] px-4 py-3 space-y-1 font-heading">
-          <button
-            onClick={() => { onNavigate('landing'); setMobileMenuOpen(false); }}
-            className="w-full text-left px-3 py-2 text-xs font-semibold rounded-lg text-[#f1faee] hover:bg-[#1c2541]"
-          >
-            Product Overview
-          </button>
-          <button
-            onClick={() => { onNavigate('dashboard'); setMobileMenuOpen(false); }}
-            className="w-full text-left px-3 py-2 text-xs font-semibold rounded-lg text-[#f1faee] hover:bg-[#1c2541]"
-          >
-            Dashboard Console
-          </button>
-          <button
-            onClick={() => { onNavigate('analyzer'); setMobileMenuOpen(false); }}
-            className="w-full text-left px-3 py-2 text-xs font-semibold rounded-lg text-[#f1faee] hover:bg-[#1c2541]"
-          >
-            Smart Contract Scanner
-          </button>
-          <button
-            onClick={() => { onNavigate('pricing'); setMobileMenuOpen(false); }}
-            className="w-full text-left px-3 py-2 text-xs font-semibold rounded-lg text-[#f1faee] hover:bg-[#1c2541]"
-          >
-            Pricing
-          </button>
-          <button
-            onClick={() => { onNavigate('docs'); setMobileMenuOpen(false); }}
-            className="w-full text-left px-3 py-2 text-xs font-semibold rounded-lg text-[#f1faee] hover:bg-[#1c2541]"
-          >
-            Documentation
-          </button>
-
-          {!isAuthenticated && (
-            <div className="pt-2 border-t border-[#457b9d]/30">
-              <button
-                onClick={() => { onNavigate('auth'); setMobileMenuOpen(false); }}
-                className="w-full py-2 text-xs font-bold rounded-xl bg-[#e63946] text-white text-center"
-              >
-                Get Started Free
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
-};
+}

@@ -1,0 +1,11 @@
+# SentinelX - robots.txt
+# https://sentinelx.site
+
+User-agent: *
+Allow: /
+
+# Disallow internal API routes
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://sentinelx.site/sitemap.xml

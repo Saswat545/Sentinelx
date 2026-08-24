@@ -1,9 +1,57 @@
-# models/
-data/
-# *.pkl
-*.csv
-__pycache__/
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+frontend/dist/
+build/
+*.tsbuildinfo
+
+# Environment variables
 .env
-.vscode/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+frontend/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+
+# Data files (too large for git)
+*.csv
+data/
 plots/
-node_modules
+models/*.pkl
+models/*.joblib
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+
+# Misc
+skills-lock.json

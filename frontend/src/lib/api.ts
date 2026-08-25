@@ -108,13 +108,10 @@ class SentinelXApi {
   async analyze(
     payload: AnalyzePayload
   ): Promise<AnalyzeResponse> {
-    const body: Record<string, string> = { chain: payload.chain || 'ETH' };
-
-    if (payload.input.startsWith('0x') && payload.input.length === 42) {
-      body.contract_address = payload.input;
-    } else {
-      body.solidity_code = payload.input;
-    }
+    const body = {
+      input: payload.input,
+      chain: payload.chain || 'ETH',
+    };
 
     return this.request<AnalyzeResponse>('/analyze', {
       method: 'POST',

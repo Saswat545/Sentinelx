@@ -64,7 +64,11 @@ app.add_middleware(
     allow_origins=[
         "https://sentinelx.site",
         "https://www.sentinelx.site",
-        "https://rug-guard-vmuy.vercel.app",  # Vercel preview deploys
+        "https://rug-guard-vmuy.vercel.app",
+        "https://sentinelx-git-main-saswat545s-projects.vercel.app",
+        "https://sentinelx-pksgzpb3e-saswat545s-projects.vercel.app",
+        "http://localhost:3000",
+        "http://localhost:5173",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST"],

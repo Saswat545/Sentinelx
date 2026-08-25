@@ -1,0 +1,18 @@
+.scroll-reveal {
+  overflow: hidden;
+  display: inline-block;
+  white-space: normal;
+  word-wrap: break-word;
+  will-change: transform, opacity;
+}
+
+.scroll-reveal-text {
+  display: inline;
+}
+
+.scroll-reveal .word {
+  display: inline-block;
+  will-change: opacity, filter;
+  white-space: normal;
+  word-wrap: break-word;
+}

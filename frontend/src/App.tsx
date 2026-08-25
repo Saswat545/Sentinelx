@@ -38,6 +38,7 @@ import { IncidentReports } from './pages/IncidentReports';
 import { Insights } from './pages/Insights';
 import { Docs } from './pages/Docs';
 import { ForgotPassword } from './pages/ForgotPassword';
+import { ComingSoon } from './pages/ComingSoon';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -118,6 +119,14 @@ function App() {
           <Route path="/terms" element={<MainLayout><Terms /></MainLayout>} />
           <Route path="/cookies" element={<MainLayout><Cookies /></MainLayout>} />
           <Route path="/disclaimer" element={<MainLayout><Disclaimer /></MainLayout>} />
+
+          {/* Coming Soon pages */}
+          <Route path="/case-studies" element={<MainLayout><ComingSoon title="Case Studies" /></MainLayout>} />
+          <Route path="/methodology" element={<MainLayout><ComingSoon title="Methodology" description="Our detailed risk scoring methodology is being documented. Learn how the XGBoost model classifies contracts and how SHAP explainability works." /></MainLayout>} />
+          <Route path="/watchlist" element={<MainLayout><ProtectedRoute><ComingSoon title="Watchlist" description="Monitor your favorite tokens and get alerts when risk signals change." /></ProtectedRoute></MainLayout>} />
+          <Route path="/alerts" element={<MainLayout><ProtectedRoute><ComingSoon title="Alerts" description="Real-time notifications for token risk changes, new vulnerabilities, and suspicious activity." /></ProtectedRoute></MainLayout>} />
+          <Route path="/billing" element={<MainLayout><ProtectedRoute><ComingSoon title="Billing" description="Manage your subscription, view invoices, and upgrade your plan." /></ProtectedRoute></MainLayout>} />
+          <Route path="/security/report" element={<MainLayout><ComingSoon title="Vulnerability Reports" description="Report a security vulnerability responsibly. Our security team reviews all submissions." /></MainLayout>} />
 
           {/* Scanner — public free scan, but deeper features need auth */}
           <Route path="/scan" element={<MainLayout><Analyze /></MainLayout>} />

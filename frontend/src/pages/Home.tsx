@@ -6,6 +6,8 @@ import { TextShimmer } from '../components/ui/TextShimmer';
 import LogoLoop from '../components/bits/LogoLoop';
 import DepthCarousel from '../components/bits/DepthCarousel';
 import SpotlightCard from '../components/bits/SpotlightCard';
+import TextLoop from '../components/ui/TextLoop';
+import ScrollReveal from '../components/ui/ScrollReveal';
 
 const Beams = React.lazy(() => import('../components/bits/Beams').then(m => ({ default: m.default })));
 const ScrollExpand = React.lazy(() => import('../components/bits/ScrollExpand').then(m => ({ default: m.default })));
@@ -51,18 +53,18 @@ const metrics = [
 ];
 
 const ecosystemLogos = [
-  { node: <span style={{ fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '-0.02em', fontSize: '15px' }}>Ethereum</span>, title: 'Ethereum' },
-  { node: <span style={{ fontFamily: 'Arial', fontWeight: 900, letterSpacing: '0.08em', fontSize: '13px', textTransform: 'uppercase' }}>Solidity</span>, title: 'Solidity' },
-  { node: <span style={{ fontFamily: 'Trebuchet MS', fontWeight: 600, fontSize: '15px' }}>EVM</span>, title: 'EVM' },
-  { node: <span style={{ fontFamily: 'Courier New', fontWeight: 700, letterSpacing: '0.12em', fontSize: '13px', textTransform: 'uppercase' }}>OpenZeppelin</span>, title: 'OpenZeppelin' },
-  { node: <span style={{ fontFamily: 'Verdana', fontWeight: 700, fontSize: '13px' }}>MetaMask</span>, title: 'MetaMask' },
-  { node: <span style={{ fontFamily: 'Palatino', fontWeight: 500, fontSize: '15px' }}>Chainlink</span>, title: 'Chainlink' },
-  { node: <span style={{ fontFamily: 'Arial', fontWeight: 800, fontSize: '14px' }}>Base</span>, title: 'Base' },
-  { node: <span style={{ fontFamily: 'Verdana', fontWeight: 700, fontSize: '13px' }}>Arbitrum</span>, title: 'Arbitrum' },
-  { node: <span style={{ fontFamily: 'Georgia', fontWeight: 600, fontSize: '14px' }}>Polygon</span>, title: 'Polygon' },
-  { node: <span style={{ fontFamily: 'Courier New', fontWeight: 700, fontSize: '13px' }}>Hardhat</span>, title: 'Hardhat' },
-  { node: <span style={{ fontFamily: 'Helvetica', fontWeight: 700, fontSize: '13px' }}>Foundry</span>, title: 'Foundry' },
-  { node: <span style={{ fontFamily: 'Verdana', fontWeight: 700, fontSize: '13px' }}>Etherscan</span>, title: 'Etherscan' },
+  { node: <span style={{ fontFamily: 'Georgia, serif', fontWeight: 700, letterSpacing: '-0.02em', fontSize: '15px', color: '#ffffff' }}>Ethereum</span>, title: 'Ethereum' },
+  { node: <span style={{ fontFamily: 'Arial', fontWeight: 900, letterSpacing: '0.08em', fontSize: '13px', textTransform: 'uppercase', color: '#ffffff' }}>Solidity</span>, title: 'Solidity' },
+  { node: <span style={{ fontFamily: 'Trebuchet MS', fontWeight: 600, fontSize: '15px', color: '#ffffff' }}>EVM</span>, title: 'EVM' },
+  { node: <span style={{ fontFamily: 'Courier New', fontWeight: 700, letterSpacing: '0.12em', fontSize: '13px', textTransform: 'uppercase', color: '#ffffff' }}>OpenZeppelin</span>, title: 'OpenZeppelin' },
+  { node: <span style={{ fontFamily: 'Verdana', fontWeight: 700, fontSize: '13px', color: '#ffffff' }}>MetaMask</span>, title: 'MetaMask' },
+  { node: <span style={{ fontFamily: 'Palatino', fontWeight: 500, fontSize: '15px', color: '#ffffff' }}>Chainlink</span>, title: 'Chainlink' },
+  { node: <span style={{ fontFamily: 'Arial', fontWeight: 800, fontSize: '14px', color: '#ffffff' }}>Base</span>, title: 'Base' },
+  { node: <span style={{ fontFamily: 'Verdana', fontWeight: 700, fontSize: '13px', color: '#ffffff' }}>Arbitrum</span>, title: 'Arbitrum' },
+  { node: <span style={{ fontFamily: 'Georgia', fontWeight: 600, fontSize: '14px', color: '#ffffff' }}>Polygon</span>, title: 'Polygon' },
+  { node: <span style={{ fontFamily: 'Courier New', fontWeight: 700, fontSize: '13px', color: '#ffffff' }}>Hardhat</span>, title: 'Hardhat' },
+  { node: <span style={{ fontFamily: 'Helvetica', fontWeight: 700, fontSize: '13px', color: '#ffffff' }}>Foundry</span>, title: 'Foundry' },
+  { node: <span style={{ fontFamily: 'Verdana', fontWeight: 700, fontSize: '13px', color: '#ffffff' }}>Etherscan</span>, title: 'Etherscan' },
 ];
 
 const analysisCapabilities = [
@@ -114,13 +116,13 @@ export function Home() {
       </section>
 
       {/* ═══════ ECOSYSTEM TICKER ═══════ */}
-      <section className="relative py-12 overflow-hidden bg-gray-50 border-y border-gray-100">
+      <section className="relative py-12 overflow-hidden bg-black border-y border-white/5">
         <div className="text-center mb-6">
-          <p className="text-[11px] font-mono text-gray-400 tracking-[0.3em] uppercase">Built for the Ethereum security ecosystem</p>
+          <p className="text-[11px] font-mono text-white/40 tracking-[0.3em] uppercase">Built for the Ethereum security ecosystem</p>
         </div>
-        <LogoLoop logos={ecosystemLogos} speed={80} direction="left" logoHeight={24} gap={48} fadeOut fadeOutColor="#f9fafb" ariaLabel="Ecosystem technologies" />
+        <LogoLoop logos={ecosystemLogos} speed={30} direction="left" logoHeight={24} gap={48} fadeOut fadeOutColor="#0a0a0a" ariaLabel="Ecosystem technologies" />
         <div className="mt-6">
-          <LogoLoop logos={analysisCapabilities.map(name => ({ node: <span style={{ fontFamily: 'JetBrains Mono', fontWeight: 500, fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6D001A' }}>{name}</span>, title: name }))} speed={60} direction="right" logoHeight={20} gap={32} fadeOut fadeOutColor="#f9fafb" ariaLabel="Analysis capabilities" />
+          <LogoLoop logos={analysisCapabilities.map(name => ({ node: <span style={{ fontFamily: 'JetBrains Mono', fontWeight: 500, fontSize: '12px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#9B1B30' }}>{name}</span>, title: name }))} speed={25} direction="right" logoHeight={20} gap={32} fadeOut fadeOutColor="#0a0a0a" ariaLabel="Analysis capabilities" />
         </div>
       </section>
 
@@ -252,6 +254,42 @@ export function Home() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══════ TEXT LOOP (GSAP PATH) ═══════ */}
+      <section className="py-20 px-4 bg-[#0a0a0a] overflow-hidden">
+        <TextLoop
+          text="SentinelX • Detect Rug Pulls • Analyze Smart Contracts • AI-Powered Security • Protect Your Wallet"
+          shape="wave"
+          speed={70}
+          direction="forward"
+          separator="✦"
+          curviness={80}
+          fontSize={38}
+          fontWeight={800}
+          letterSpacing={1}
+          uppercase={true}
+          color="#ffffff"
+          ribbon={true}
+          ribbonColor="rgba(109, 0, 26, 0.3)"
+          ribbonWidth={72}
+          pauseOnHover={true}
+          className="max-w-5xl mx-auto"
+        />
+      </section>
+
+      {/* ═══════ SCROLL REVEAL ═══════ */}
+      <section className="py-24 px-4 bg-[#0a0a0a]">
+        <div className="max-w-4xl mx-auto">
+          <ScrollReveal
+            enableBlur={true}
+            baseOpacity={0.1}
+            baseRotation={2}
+            blurStrength={6}
+            containerClassName=""
+            textClassName="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white leading-tight"
+          >{'Every smart contract tells a story. Some lie. SentinelX reads between the lines — analyzing 53+ security signals with machine learning to detect rug pulls, honeypots, and hidden backdoors before they drain your wallet.'}</ScrollReveal>
         </div>
       </section>
 

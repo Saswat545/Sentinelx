@@ -70,6 +70,7 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:5173",
     ],
+    allow_origin_regex=r"https://sentinelx.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],

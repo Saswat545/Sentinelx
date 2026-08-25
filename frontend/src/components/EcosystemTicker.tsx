@@ -34,11 +34,12 @@ export function EcosystemTicker() {
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#060608] to-transparent z-10 pointer-events-none" />
 
       {/* Section label */}
-      <div className="text-center mb-8">
-        <p className="text-[11px] font-['JetBrains_Mono'] text-white/30 tracking-[0.3em] uppercase">
-          Built for the Ethereum security ecosystem
-        </p>
+      <div className="text-center mb-8"> 
+        <p className="text-[11px] font-['JetBrains_Mono'] text-black tracking-[0.3em] uppercase bg-black"> 
+          Built for the Ethereum security ecosystem 
+        </p> 
       </div>
+
 
       {/* Ticker 1 - Ecosystem logos */}
       <div className="relative mb-6 group">

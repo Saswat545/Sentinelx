@@ -2,7 +2,7 @@
   "name": "rugguard-ml",
   "version": "2.0.0",
   "private": true,
-  "description": "RugGuard AI - Machine Learning Risk Intelligence Engine & Frontend",
+  "description": "SentinelX - AI-Powered Machine Learning Smart Contract Security & Risk Intelligence Platform",
   "scripts": {
     "backend": "python -m uvicorn backend.main:app --port 8000 --reload",
     "frontend": "npm --prefix frontend run dev",
@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@web3icons/react": "^4.1.21"
   }
 }

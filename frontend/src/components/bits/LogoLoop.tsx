@@ -7,14 +7,6 @@ import React, {
   memo,
 } from 'react';
 
-import {
-  SiEthereum,
-  SiSolidity,
-  SiOpenzeppelin,
-  SiChainlink,
-  SiPolygon,
-} from 'react-icons/si';
-
 import './LogoLoop.css';
 
 const ANIMATION_CONFIG = {
@@ -379,12 +371,20 @@ export const sentinelXLogos: LogoItem[] = [
 
   {
     title: 'Ethereum',
-    node: <SiEthereum />,
+    node: (
+      <span className="custom-brand custom-brand--ethereum">
+        ETH
+      </span>
+    ),
   },
 
   {
     title: 'Solidity',
-    node: <SiSolidity />,
+    node: (
+      <span className="custom-brand custom-brand--solidity">
+        SOL
+      </span>
+    ),
   },
 
   {
@@ -398,7 +398,11 @@ export const sentinelXLogos: LogoItem[] = [
 
   {
     title: 'OpenZeppelin',
-    node: <SiOpenzeppelin />,
+    node: (
+      <span className="custom-brand custom-brand--openzeppelin">
+        OZ
+      </span>
+    ),
   },
 
   {
@@ -412,7 +416,11 @@ export const sentinelXLogos: LogoItem[] = [
 
   {
     title: 'Chainlink',
-    node: <SiChainlink />,
+    node: (
+      <span className="custom-brand custom-brand--chainlink">
+        CL
+      </span>
+    ),
   },
 
   {
@@ -435,7 +443,11 @@ export const sentinelXLogos: LogoItem[] = [
 
   {
     title: 'Polygon',
-    node: <SiPolygon />,
+    node: (
+      <span className="custom-brand custom-brand--polygon">
+        POLY
+      </span>
+    ),
   },
 ];
 

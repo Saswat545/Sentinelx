@@ -67,6 +67,7 @@ app.add_middleware(
         "https://rug-guard-vmuy.vercel.app",
         "https://sentinelx-git-main-saswat545s-projects.vercel.app",
         "https://sentinelx-pksgzpb3e-saswat545s-projects.vercel.app",
+        "https://sentinelx-seven-ashen.vercel.app",
         "http://localhost:3000",
         "http://localhost:5173",
     ],

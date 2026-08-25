@@ -21,19 +21,31 @@ export function Analyze() {
   const [analyzingStep, setAnalyzingStep] = useState(0);
   const navigate = useNavigate();
 
-  const validateAddress = (addr: string) => /^0x[a-fA-F0-9]{40}$/.test(addr.trim());
+  const extractAddress = (input: string): string => {
+    // If it's a URL, extract the 0x address from it
+    const urlMatch = input.match(/(0x[a-fA-F0-9]{40})/);
+    if (urlMatch) return urlMatch[1];
+    return input.trim();
+  };
+
+  const validateAddress = (addr: string) => /^0x[a-fA-F0-9]{40}$/.test(extractAddress(addr));
 
   const handleAnalyze = async () => {
     setError('');
 
     if (mode === 'address') {
+      const extracted = extractAddress(contractAddress);
       if (!contractAddress.trim()) {
         setError('Please enter a contract address');
         return;
       }
       if (!validateAddress(contractAddress)) {
-        setError('Enter a valid Ethereum address (0x followed by 40 hex characters)');
+        setError('Enter a valid Ethereum address (0x followed by 40 hex characters), or paste a URL containing a contract address');
         return;
+      }
+      // Auto-extract address from URL if needed
+      if (extracted !== contractAddress.trim()) {
+        setContractAddress(extracted);
       }
     } else {
       if (!solidityCode.trim()) {
@@ -80,7 +92,7 @@ export function Analyze() {
     }
 
     try {
-      const input = mode === 'address' ? contractAddress.trim() : solidityCode.trim();
+      const input = mode === 'address' ? extractAddress(contractAddress) : solidityCode.trim();
       const data = await api.analyze({ input });
 
       clearInterval(stepTimer);

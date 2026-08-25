@@ -1,11 +1,15 @@
-# SentinelX - robots.txt
+# SentinelX — robots.txt
 # https://sentinelx.site
 
 User-agent: *
 Allow: /
+Disallow: /dashboard/
+Disallow: /settings/
+Disallow: /history/
+Disallow: /analyze/
+Disallow: /results/
+Disallow: /watchlist/
+Disallow: /alerts/
+Disallow: /billing/
 
-# Disallow internal API routes
-Disallow: /api/
-
-# Sitemap location
 Sitemap: https://sentinelx.site/sitemap.xml

@@ -2,8 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Dots } from '../components/ui/Dots';
-
-const API_URL = import.meta.env.VITE_API_URL || '';
+import { api } from '../lib/api';
 
 type InputMode = 'address' | 'solidity';
 
@@ -59,7 +58,7 @@ export function Analyze() {
       setAnalyzingStep(prev => Math.min(prev + 1, 3));
     }, 800);
 
-    if (!API_URL) {
+    if (!api.isConfigured) {
       clearInterval(stepTimer);
       setTimeout(() => {
         setIsAnalyzing(false);
@@ -73,7 +72,7 @@ export function Analyze() {
             flags: [],
             modelInfo: { model: 'XGBoost ML', features: 53, responseTime: 'N/A' },
             aiAssessment: '',
-            error: 'Backend API not configured. Set VITE_API_URL to your backend endpoint (e.g., https://api.sentinelx.site) to enable real analysis.',
+            error: 'Backend API not configured. Set VITE_API_URL environment variable to enable real analysis.',
           },
         });
       }, 2500);
@@ -81,24 +80,10 @@ export function Analyze() {
     }
 
     try {
-      const payload = mode === 'address'
-        ? { contract_address: contractAddress.trim() }
-        : { solidity_code: solidityCode.trim() };
-
-      const res = await fetch(`${API_URL}/analyze`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const input = mode === 'address' ? contractAddress.trim() : solidityCode.trim();
+      const data = await api.analyze({ input });
 
       clearInterval(stepTimer);
-
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.detail || `Analysis failed (${res.status})`);
-      }
-
-      const data = await res.json();
       setIsAnalyzing(false);
 
       navigate('/results', {
@@ -321,7 +306,7 @@ export function Analyze() {
               </div>
 
               {/* API status */}
-              {API_URL && (
+              {api.isConfigured && (
                 <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gray-400">
                   <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
                   API Connected

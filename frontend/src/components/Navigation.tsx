@@ -27,6 +27,7 @@ export function Navigation() {
       label: 'Product',
       items: [
         { label: 'Token Scanner', href: '/scan' },
+        { label: 'Features', href: '/features' },
         { label: 'How It Works', href: '/how-it-works' },
         { label: 'Pricing', href: '/pricing' },
       ],

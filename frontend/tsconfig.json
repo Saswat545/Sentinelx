@@ -16,7 +16,7 @@
     "noUnusedParameters": false,
     "noImplicitReturns": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     }

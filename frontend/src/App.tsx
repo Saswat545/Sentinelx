@@ -39,6 +39,7 @@ import { Insights } from './pages/Insights';
 import { Docs } from './pages/Docs';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ComingSoon } from './pages/ComingSoon';
+import { Features } from './pages/Features';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -111,6 +112,7 @@ function App() {
           <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
           <Route path="/about" element={<MainLayout><About /></MainLayout>} />
           <Route path="/security" element={<MainLayout><Security /></MainLayout>} />
+          <Route path="/features" element={<MainLayout><Features /></MainLayout>} />
           <Route path="/how-it-works" element={<MainLayout><HowItWorks /></MainLayout>} />
           <Route path="/incident-reports" element={<MainLayout><IncidentReports /></MainLayout>} />
           <Route path="/insights" element={<MainLayout><Insights /></MainLayout>} />

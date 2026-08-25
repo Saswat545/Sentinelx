@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export function Privacy() {
   return (
-    <div className="min-h-screen bg-[#0a0a1a] pt-24 pb-12 px-4">
+    <div className="min-h-screen bg-white pt-24 pb-12 px-4">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -12,23 +12,23 @@ export function Privacy() {
           className="mb-8"
         >
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-            <Link to="/" className="hover:text-white transition-colors">Home</Link>
+            <Link to="/" className="hover:text-[#0a0a0a] transition-colors">Home</Link>
             <span>/</span>
-            <span className="text-white">Privacy Policy</span>
+            <span className="text-[#0a0a0a]">Privacy Policy</span>
           </div>
-          <h1 className="text-3xl font-display font-bold text-white mb-2">Privacy Policy</h1>
-          <p className="text-gray-400">Last updated: August 2026</p>
+          <h1 className="text-3xl font-display font-bold text-[#0a0a0a] mb-2">Privacy Policy</h1>
+          <p className="text-gray-500">Last updated: August 2026</p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-[#181533] rounded-xl p-8 border border-white/10 prose prose-invert max-w-none"
+          className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm max-w-none"
         >
-          <div className="space-y-6 text-gray-300">
+          <div className="space-y-6 text-gray-600">
             <section>
-              <h2 className="text-xl font-display font-semibold text-white mb-3">1. Introduction</h2>
+              <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">1. Introduction</h2>
               <p className="text-sm leading-relaxed">
                 SentinelX ("we," "our," or "us") is committed to protecting your privacy. 
                 This Privacy Policy explains how we collect, use, disclose, and safeguard 
@@ -37,7 +37,7 @@ export function Privacy() {
             </section>
 
             <section>
-              <h2 className="text-xl font-display font-semibold text-white mb-3">2. Information We Collect</h2>
+              <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">2. Information We Collect</h2>
               <p className="text-sm leading-relaxed">
                 We collect information you provide directly, such as contract addresses you 
                 submit for analysis, email addresses for account creation, and usage data 
@@ -47,7 +47,7 @@ export function Privacy() {
             </section>
 
             <section>
-              <h2 className="text-xl font-display font-semibold text-white mb-3">3. How We Use Your Information</h2>
+              <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">3. How We Use Your Information</h2>
               <p className="text-sm leading-relaxed">
                 We use collected information to provide and maintain our service, notify you 
                 about changes, provide customer support, and gather analytics to improve 
@@ -57,7 +57,7 @@ export function Privacy() {
             </section>
 
             <section>
-              <h2 className="text-xl font-display font-semibold text-white mb-3">4. Data Security</h2>
+              <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">4. Data Security</h2>
               <p className="text-sm leading-relaxed">
                 We implement industry-standard security measures to protect your personal 
                 information. However, no method of transmission over the Internet or 
@@ -66,10 +66,10 @@ export function Privacy() {
             </section>
 
             <section>
-              <h2 className="text-xl font-display font-semibold text-white mb-3">5. Contact Us</h2>
+              <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">5. Contact Us</h2>
               <p className="text-sm leading-relaxed">
                 If you have questions about this Privacy Policy, please contact us at{' '}
-                <a href="mailto:privacy@sentinelx.site" className="text-brand-cobalt hover:underline">
+                <a href="mailto:privacy@sentinelx.site" className="text-[#6D001A] hover:underline">
                   privacy@sentinelx.site
                 </a>
               </p>

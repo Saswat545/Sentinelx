@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/((?!assets/|brand/|robots\\.txt|sitemap\\.xml|favicon\\.ico|llms\\.txt|api/).*)",

@@ -5,7 +5,7 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/((?!assets/|brand/|robots\\\\.txt|sitemap\\\\.xml|favicon\\\\.ico|llms\\\\.txt|api/).*)",
+      "source": "/((?!assets/|brand/|robots\\.txt|sitemap\\.xml|favicon\\.ico|llms\\.txt|404\\.html|api/).*)",
       "destination": "/index.html"
     }
   ],
@@ -29,22 +29,19 @@
     {
       "source": "/robots.txt",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" },
-        { "key": "Content-Type", "value": "text/plain" }
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" },
-        { "key": "Content-Type", "value": "application/xml" }
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
     {
       "source": "/llms.txt",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" },
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     }
   ]

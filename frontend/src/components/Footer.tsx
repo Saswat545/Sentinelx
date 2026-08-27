@@ -59,11 +59,11 @@ export function Footer() {
 
             {Object.entries(footerLinks).map(([category, links]) => (
               <div key={category}>
-                <h4 className="font-display font-semibold text-[11px] uppercase tracking-[0.15em] mb-6 text-gray-800">{category}</h4>
+                <h3 className="font-display font-semibold text-[11px] uppercase tracking-[0.15em] mb-6 text-gray-800">{category}</h3>
                 <ul className="space-y-3">
                   {links.map((link) => (
                     <li key={link.label}>
-                      <Link to={link.href} className="text-sm text-gray-400 hover:text-[#0a0a0a] transition-colors duration-200">{link.label}</Link>
+                      <Link to={link.href} className="text-sm text-gray-500 hover:text-[#0a0a0a] transition-colors duration-200">{link.label}</Link>
                     </li>
                   ))}
                 </ul>

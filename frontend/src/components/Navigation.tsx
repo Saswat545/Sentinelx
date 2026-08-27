@@ -63,7 +63,7 @@ export function Navigation() {
           } rounded-full`}
         >
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+          <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label="SentinelX Home">
             <img
               src="/brand/dark/Icon mark.png"
               alt="SentinelX"

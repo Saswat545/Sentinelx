@@ -13,12 +13,12 @@ const Beams = React.lazy(() => import('../components/bits/Beams').then(m => ({ d
 const ScrollExpand = React.lazy(() => import('../components/bits/ScrollExpand').then(m => ({ default: m.default })));
 
 const rugpullIncidents = [
-  { image: 'https://picsum.photos/seed/rug1/800/1000', alt: 'Squid Game Token', title: 'Squid Game Token', amount: '$3.4M', date: 'Nov 2021', description: 'Token creators rug-pulled investors after price surged 23M%. Holders unable to sell.' },
-  { image: 'https://picsum.photos/seed/rug2/800/1000', alt: 'AnubisDAO', title: 'AnubisDAO', amount: '$60M', date: 'Oct 2021', description: 'Liquidity drained within 24 hours of launch. Deployer moved all funds to personal wallet.' },
-  { image: 'https://picsum.photos/seed/rug3/800/1000', alt: 'Meerkat Finance', title: 'Meerkat Finance', amount: '$31M', date: 'Mar 2021', description: 'DeFi protocol drained hours after launch. Deployer claimed it was a "test".' },
-  { image: 'https://picsum.photos/seed/rug4/800/1000', alt: 'Forsage', title: 'Forsage', amount: '$340M', date: 'Aug 2022', description: 'Ponzi scheme operating as a smart contract. SEC charged founders with fraud.' },
-  { image: 'https://picsum.photos/seed/rug5/800/1000', alt: 'DeFi100', title: 'DeFi100', amount: '$32M', date: 'May 2021', description: 'Team abandoned project after draining treasury. Website displayed a taunting message.' },
-  { image: 'https://picsum.photos/seed/rug6/800/1000', alt: 'TurtleDex', title: 'TurtleDex', amount: '$2.5M', date: 'Mar 2022', description: 'Liquidity pooled tokens swapped and sent to multiple wallets within minutes of launch.' },
+  { image: 'https://picsum.photos/seed/rug1/400/500', alt: 'Squid Game Token', title: 'Squid Game Token', amount: '$3.4M', date: 'Nov 2021', description: 'Token creators rug-pulled investors after price surged 23M%. Holders unable to sell.' },
+  { image: 'https://picsum.photos/seed/rug2/400/500', alt: 'AnubisDAO', title: 'AnubisDAO', amount: '$60M', date: 'Oct 2021', description: 'Liquidity drained within 24 hours of launch. Deployer moved all funds to personal wallet.' },
+  { image: 'https://picsum.photos/seed/rug3/400/500', alt: 'Meerkat Finance', title: 'Meerkat Finance', amount: '$31M', date: 'Mar 2021', description: 'DeFi protocol drained hours after launch. Deployer claimed it was a "test".' },
+  { image: 'https://picsum.photos/seed/rug4/400/500', alt: 'Forsage', title: 'Forsage', amount: '$340M', date: 'Aug 2022', description: 'Ponzi scheme operating as a smart contract. SEC charged founders with fraud.' },
+  { image: 'https://picsum.photos/seed/rug5/400/500', alt: 'DeFi100', title: 'DeFi100', amount: '$32M', date: 'May 2021', description: 'Team abandoned project after draining treasury. Website displayed a taunting message.' },
+  { image: 'https://picsum.photos/seed/rug6/400/500', alt: 'TurtleDex', title: 'TurtleDex', amount: '$2.5M', date: 'Mar 2022', description: 'Liquidity pooled tokens swapped and sent to multiple wallets within minutes of launch.' },
 ];
 
 const faqs = [
@@ -118,7 +118,7 @@ export function Home() {
       {/* ═══════ ECOSYSTEM TICKER ═══════ */}
       <section className="relative py-12 overflow-hidden bg-black border-y border-white/5">
         <div className="text-center mb-6">
-          <p className="text-[11px] font-mono text-white/40 tracking-[0.3em] uppercase">Built for the Ethereum security ecosystem</p>
+          <p className="text-[11px] font-mono text-white/70 tracking-[0.3em] uppercase">Built for the Ethereum security ecosystem</p>
         </div>
         <LogoLoop logos={ecosystemLogos} speed={30} direction="left" logoHeight={24} gap={48} fadeOut fadeOutColor="#0a0a0a" ariaLabel="Ecosystem technologies" />
         <div className="mt-6">

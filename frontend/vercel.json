@@ -1,11 +1,5 @@
 {
   "outputDirectory": "dist",
-  "rewrites": [
-    {
-      "source": "/((?!assets/|brand/|robots\\.txt|sitemap\\.xml|favicon\\.ico|llms\\.txt|api/).*)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -39,6 +33,13 @@
       "source": "/llms.txt",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/openapi.json",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" },
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" }
       ]
     }
   ]

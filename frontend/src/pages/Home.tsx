@@ -9,7 +9,6 @@ import SpotlightCard from '../components/bits/SpotlightCard';
 import TextLoop from '../components/ui/TextLoop';
 import ScrollReveal from '../components/ui/ScrollReveal';
 
-const Beams = React.lazy(() => import('../components/bits/Beams').then(m => ({ default: m.default })));
 const ScrollExpand = React.lazy(() => import('../components/bits/ScrollExpand').then(m => ({ default: m.default })));
 
 const rugpullIncidents = [
@@ -86,10 +85,13 @@ export function Home() {
     <div className="min-h-screen bg-white">
       {/* ═══════ HERO ═══════ */}
       <section className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-black">
-        <div className="absolute inset-0 z-0">
-          <Suspense fallback={null}>
-            <Beams beamWidth={2} beamHeight={15} beamNumber={12} lightColor="#ffffff" speed={2} noiseIntensity={1.75} scale={0.2} rotation={0} />
-          </Suspense>
+        {/* CSS-only animated background — replaces Three.js Beams for performance */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-950 to-black" />
+          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent animate-pulse" style={{ animationDuration: '3s' }} />
+          <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-white/8 to-transparent animate-pulse" style={{ animationDuration: '4s', animationDelay: '1s' }} />
+          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent animate-pulse" style={{ animationDuration: '3.5s', animationDelay: '0.5s' }} />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(109,0,26,0.08)_0%,transparent_70%)]" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60 z-[1]" />
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto pt-24">

@@ -124,8 +124,35 @@ async function startServer() {
     // Production static file serving
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
+
+    // Known SPA routes that should return 200
+    const knownRoutes = new Set([
+      '/', '/scan', '/features', '/pricing', '/how-it-works',
+      '/methodology', '/case-studies', '/insights', '/about',
+      '/faq', '/contact', '/docs', '/security', '/privacy',
+      '/terms', '/cookies', '/disclaimer', '/incident-reports',
+      '/login', '/signup', '/forgot-password',
+      '/dashboard', '/analyze', '/results', '/history', '/settings',
+      '/watchlist', '/alerts', '/billing',
+    ]);
+
+    // Add Vary header for content negotiation
+    app.use((_req, res, next) => {
+      res.setHeader('Vary', 'Accept, Accept-Encoding');
+      next();
+    });
+
+    // Serve openapi.json from public
+    app.get('/openapi.json', (_req, res) => {
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.sendFile(path.join(distPath, 'openapi.json'));
+    });
+
+    // SPA catch-all: 200 for known routes, 404 for unknown
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      const isKnown = knownRoutes.has(req.path);
+      const status = isKnown ? 200 : 404;
+      res.status(status).sendFile(path.join(distPath, 'index.html'));
     });
   }
 

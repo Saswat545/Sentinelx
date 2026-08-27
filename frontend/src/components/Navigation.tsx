@@ -66,7 +66,9 @@ export function Navigation() {
           <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label="SentinelX Home">
             <img
               src="/brand/dark/Icon mark.png"
-              alt="SentinelX"
+              alt=""
+              width="28"
+              height="28"
               className="w-7 h-7 object-contain"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
             />

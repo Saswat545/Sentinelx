@@ -1,0 +1,303 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SentinelX API",
+    "description": "AI-powered smart contract security intelligence platform. Analyzes Ethereum smart contracts for rug-pull risks using XGBoost ML, SHAP explainability, and 53+ security signals.",
+    "version": "2.0.0",
+    "contact": {
+      "name": "SentinelX",
+      "url": "https://sentinelx.site"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sentinelx-iz11.onrender.com",
+      "description": "Production API"
+    }
+  ],
+  "paths": {
+    "/analyze": {
+      "post": {
+        "operationId": "analyzeContract",
+        "summary": "Analyze a smart contract or token address",
+        "description": "Submit an Ethereum contract address or raw Solidity source code for risk analysis. Returns a risk score (0-100), security flags, SHAP explanations, and actionable recommendations.",
+        "tags": ["Analysis"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Analysis completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyzeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "healthCheck",
+        "summary": "Health check",
+        "description": "Returns API status and ML model loading state.",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "operationId": "getModelMetrics",
+        "summary": "Get model metrics",
+        "description": "Returns XGBoost model evaluation metrics (accuracy, F1, AUC, confusion matrix).",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Model metrics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Model evaluation metrics including accuracy, precision, recall, F1 score, AUC, and confusion matrix."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalyzeRequest": {
+        "type": "object",
+        "required": ["input"],
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "Ethereum contract address (0x...) or raw Solidity source code",
+            "example": "0x1234567890abcdef1234567890abcdef12345678"
+          },
+          "chain": {
+            "type": "string",
+            "enum": ["ETH", "BSC", "POLYGON"],
+            "default": "ETH",
+            "description": "Blockchain network"
+          }
+        }
+      },
+      "AnalyzeResponse": {
+        "type": "object",
+        "properties": {
+          "risk_score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Risk score from 0 (safe) to 100 (critical)"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["SAFE", "LOW", "MEDIUM", "HIGH", "CRITICAL"],
+            "description": "Risk classification"
+          },
+          "verdict_label": {
+            "type": "string",
+            "description": "Human-readable verdict"
+          },
+          "rug_probability": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Probability of rug pull (0.0 to 1.0)"
+          },
+          "input_type": {
+            "type": "string",
+            "enum": ["token_address", "contract_code"],
+            "description": "Type of input provided"
+          },
+          "flags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Flag"
+            },
+            "description": "Security flags detected in the contract"
+          },
+          "shap_top_features": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SHAPFeature"
+            },
+            "description": "Top SHAP feature contributions explaining the risk score"
+          },
+          "recommendation": {
+            "type": "string",
+            "description": "Actionable recommendation based on the analysis"
+          },
+          "model_used": {
+            "type": "boolean",
+            "description": "Whether the ML model was used (vs rule-based fallback)"
+          },
+          "analysis_time_ms": {
+            "type": "integer",
+            "description": "Analysis time in milliseconds"
+          },
+          "token_address": {
+            "type": "string",
+            "description": "Token address if input was an address"
+          },
+          "contract_name": {
+            "type": "string",
+            "description": "Contract name if detected"
+          }
+        }
+      },
+      "Flag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Flag name"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
+            "description": "Severity level"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the security concern"
+          }
+        }
+      },
+      "SHAPFeature": {
+        "type": "object",
+        "properties": {
+          "feature": {
+            "type": "string",
+            "description": "Feature name"
+          },
+          "impact": {
+            "type": "number",
+            "description": "SHAP impact value (absolute)"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["risk", "safe"],
+            "description": "Whether this feature increases or decreases risk"
+          },
+          "feature_value": {
+            "type": "integer",
+            "description": "Binary feature value (0 or 1)"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error code or type"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message"
+          },
+          "resolution": {
+            "type": "string",
+            "description": "How to resolve this error"
+          }
+        }
+      },
+      "RateLimitResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Rate limit exceeded"
+          },
+          "message": {
+            "type": "string",
+            "example": "Maximum 10 analyses per minute. Please wait and try again."
+          },
+          "retry_after": {
+            "type": "integer",
+            "description": "Seconds to wait before retrying"
+          }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ok"
+          },
+          "model_loaded": {
+            "type": "boolean"
+          },
+          "shap_loaded": {
+            "type": "boolean"
+          },
+          "features": {
+            "type": "integer"
+          },
+          "version": {
+            "type": "string",
+            "example": "2.0.0"
+          }
+        }
+      }
+    }
+  }
+}

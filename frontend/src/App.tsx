@@ -40,6 +40,8 @@ import { Docs } from './pages/Docs';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ComingSoon } from './pages/ComingSoon';
 import { Features } from './pages/Features';
+import { Methodology } from './pages/Methodology';
+import { CaseStudies } from './pages/CaseStudies';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,9 +124,9 @@ function App() {
           <Route path="/cookies" element={<MainLayout><Cookies /></MainLayout>} />
           <Route path="/disclaimer" element={<MainLayout><Disclaimer /></MainLayout>} />
 
-          {/* Coming Soon pages */}
-          <Route path="/case-studies" element={<MainLayout><ComingSoon title="Case Studies" /></MainLayout>} />
-          <Route path="/methodology" element={<MainLayout><ComingSoon title="Methodology" description="Our detailed risk scoring methodology is being documented. Learn how the XGBoost model classifies contracts and how SHAP explainability works." /></MainLayout>} />
+          {/* Full content pages */}
+          <Route path="/case-studies" element={<MainLayout><CaseStudies /></MainLayout>} />
+          <Route path="/methodology" element={<MainLayout><Methodology /></MainLayout>} />
           <Route path="/watchlist" element={<MainLayout><ProtectedRoute><ComingSoon title="Watchlist" description="Monitor your favorite tokens and get alerts when risk signals change." /></ProtectedRoute></MainLayout>} />
           <Route path="/alerts" element={<MainLayout><ProtectedRoute><ComingSoon title="Alerts" description="Real-time notifications for token risk changes, new vulnerabilities, and suspicious activity." /></ProtectedRoute></MainLayout>} />
           <Route path="/billing" element={<MainLayout><ProtectedRoute><ComingSoon title="Billing" description="Manage your subscription, view invoices, and upgrade your plan." /></ProtectedRoute></MainLayout>} />

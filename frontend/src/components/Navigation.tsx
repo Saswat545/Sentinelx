@@ -38,6 +38,7 @@ export function Navigation() {
         { label: 'Incident Reports', href: '/incident-reports' },
         { label: 'Case Studies', href: '/case-studies' },
         { label: 'Security Insights', href: '/insights' },
+        { label: 'Methodology', href: '/methodology' },
       ],
     },
     {

@@ -1,52 +1,224 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { setPageSEO, generateArticleSchema } from '../lib/seo';
+import { Breadcrumb } from '../components/ui/Breadcrumb';
 
 const articles = [
-  { title: 'How to Identify a Potential Rug Pull', category: 'Security Guide', readTime: '5 min', excerpt: 'Learn the key warning signs that a token or DeFi project might be a rug pull before you invest your funds.' },
-  { title: 'What Does Renounced Ownership Actually Mean?', category: 'Deep Dive', readTime: '4 min', excerpt: 'Many investors believe renounced ownership equals safety. Here is why that assumption can be dangerously wrong.' },
-  { title: 'Can a Verified Contract Still Be Dangerous?', category: 'Analysis', readTime: '6 min', excerpt: 'Etherscan verification is a good sign, but it does not guarantee a contract is safe. Learn what verification actually tells you.' },
-  { title: '5 Token Permissions Every Investor Should Understand', category: 'Education', readTime: '7 min', excerpt: 'From minting to pausing, these are the contract permissions that can put your funds at risk.' },
-  { title: 'How Machine Learning Detects Rug Pulls', category: 'Technology', readTime: '8 min', excerpt: 'A look inside the XGBoost model and the 53 features that power SentinelX risk classification.' },
-  { title: 'Understanding SHAP Feature Attribution', category: 'Explainability', readTime: '5 min', excerpt: 'How we use SHAP values to explain why a contract received its risk score — no black boxes.' },
+  {
+    slug: 'top-5-rug-pull-indicators-2026',
+    title: 'Top 5 Rug Pull Indicators Every Crypto Investor Must Know in 2026',
+    excerpt:
+      'Learn the warning signs of rug pulls: hidden mint functions, blacklisted sellers, proxy upgrades, and more. SentinelX detects 53+ risk signals automatically.',
+    category: 'Threat Analysis',
+    readTime: '6 min read',
+    date: '2026-08-20',
+    featured: true,
+  },
+  {
+    slug: 'how-xgboost-detects-rug-pulls',
+    title: 'How XGBoost Machine Learning Detects Rug Pulls with 96.15% Accuracy',
+    excerpt:
+      'Deep dive into how SentinelX uses gradient-boosted decision trees trained on 2,400+ labeled contracts to classify smart contract risk.',
+    category: 'Methodology',
+    readTime: '8 min read',
+    date: '2026-08-15',
+    featured: true,
+  },
+  {
+    slug: 'shap-explainability-smart-contracts',
+    title: 'SHAP Explainability: Understanding Why SentinelX Flags a Contract as Risky',
+    excerpt:
+      'SentinelX does not just give you a score — it explains why. Learn how SHAP values reveal which features contribute most to a risk assessment.',
+    category: 'Research',
+    readTime: '7 min read',
+    date: '2026-08-10',
+    featured: false,
+  },
+  {
+    slug: 'honeypot-detection-deep-dive',
+    title: 'Honeypot Detection: How SentinelX Identifies Tokens That Block Selling',
+    excerpt:
+      'Honeypots are among the most deceptive rug-pull tactics. Learn how SentinelX uses static analysis and ML to detect tokens that prevent you from selling.',
+    category: 'Threat Analysis',
+    readTime: '5 min read',
+    date: '2026-08-05',
+    featured: false,
+  },
+  {
+    slug: 'understanding-53-smart-contract-features',
+    title: 'Understanding the 53 Smart-Contract Features SentinelX Analyzes',
+    excerpt:
+      'A complete breakdown of the feature engineering pipeline: from bytecode analysis to token economics, every signal SentinelX extracts and why it matters.',
+    category: 'Methodology',
+    readTime: '10 min read',
+    date: '2026-07-28',
+    featured: false,
+  },
+  {
+    slug: 'defi-security-best-practices-2026',
+    title: 'DeFi Security Best Practices: Protecting Your Portfolio in 2026',
+    excerpt:
+      'From contract verification to token approvals, learn practical steps every DeFi user should take to protect their assets from smart contract exploits.',
+    category: 'Security Guide',
+    readTime: '9 min read',
+    date: '2026-07-20',
+    featured: false,
+  },
 ];
 
-export function Insights() {
-  return (
-    <div className="min-h-screen bg-white pt-28 pb-16 px-4">
-      <div className="max-w-5xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-          <span className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">Intelligence</span>
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-[#0a0a0a] mb-4">Security Insights</h1>
-          <p className="text-gray-500 max-w-2xl">Deep dives into smart contract security, rug pull detection, and the technology behind SentinelX.</p>
-        </motion.div>
+const categoryColors: Record<string, string> = {
+  'Threat Analysis': 'bg-red-100 text-red-800',
+  Methodology: 'bg-blue-100 text-blue-800',
+  Research: 'bg-purple-100 text-purple-800',
+  'Security Guide': 'bg-green-100 text-green-800',
+};
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {articles.map((article, index) => (
-            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.08 }} className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:border-[#6D001A]/20 transition-all group cursor-pointer">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-xs font-mono text-[#6D001A] bg-[#6D001A]/5 px-2 py-0.5 rounded-full">{article.category}</span>
-                <span className="text-xs font-mono text-gray-400">{article.readTime} read</span>
-              </div>
-              <h3 className="text-lg font-display font-semibold text-[#0a0a0a] mb-2 group-hover:text-[#6D001A] transition-colors">{article.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{article.excerpt}</p>
-              <div className="mt-4 flex items-center gap-1 text-sm text-[#6D001A] font-medium">
-                Read more
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </div>
+const fadeInUp = {
+  initial: { opacity: 0, y: 30 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 },
+};
+
+export function Insights() {
+  useEffect(() => {
+    setPageSEO(
+      {
+        title: 'Security Insights | SentinelX Blockchain Intelligence',
+        description:
+          'Latest blockchain security insights: threat trends, vulnerability analysis, and research from the SentinelX security team.',
+        keywords: [
+          'security insights',
+          'blockchain intelligence',
+          'threat analysis',
+          'rug pull prevention',
+          'smart contract security',
+        ],
+        type: 'article',
+      },
+      '/insights'
+    );
+  }, []);
+
+  const featured = articles.filter((a) => a.featured);
+  const regular = articles.filter((a) => !a.featured);
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Breadcrumb items={[{ label: 'Security Insights' }]} />
+
+      {/* Hero */}
+      <section className="pt-8 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-3xl"
+        >
+          <p className="text-sm font-semibold tracking-wider text-[#6D001A] uppercase mb-3">
+            Security Insights
+          </p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#0a0a0a] tracking-tight leading-tight">
+            Blockchain Security Intelligence
+          </h1>
+          <p className="mt-4 text-lg text-gray-600 leading-relaxed max-w-2xl">
+            Research, threat analysis, and methodology deep-dives from the SentinelX security team.
+            Stay informed about the latest rug-pull tactics and how to protect your assets.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Featured Articles */}
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-12">
+        <h2 className="text-sm font-semibold tracking-wider text-gray-400 uppercase mb-6">
+          Featured
+        </h2>
+        <div className="grid md:grid-cols-2 gap-8">
+          {featured.map((article, i) => (
+            <motion.div
+              key={article.slug}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+            >
+              <Link
+                to={`/insights/${article.slug}`}
+                className="block group p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:border-[#6D001A]/20 hover:shadow-lg transition-all duration-300"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span
+                    className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                      categoryColors[article.category] || 'bg-gray-100 text-gray-800'
+                    }`}
+                  >
+                    {article.category}
+                  </span>
+                  <span className="text-sm text-gray-400">{article.readTime}</span>
+                </div>
+                <h3 className="text-xl font-bold text-[#0a0a0a] group-hover:text-[#6D001A] transition-colors leading-tight mb-3">
+                  {article.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">{article.excerpt}</p>
+                <p className="mt-4 text-sm text-gray-400">{article.date}</p>
+              </Link>
             </motion.div>
           ))}
         </div>
+      </section>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-gray-50 rounded-3xl p-12 text-center border border-gray-100">
-          <h2 className="text-2xl font-display font-bold text-[#0a0a0a] mb-4">Run your own analysis.</h2>
-          <p className="text-gray-500 mb-8 max-w-lg mx-auto">Apply what you've learned. Scan any Ethereum contract for free.</p>
-          <Link to="/scan" className="inline-flex items-center gap-2 px-8 py-4 bg-[#6D001A] hover:bg-[#8B0023] text-white font-semibold rounded-full transition-all duration-300">
-            Scan a Token
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-          </Link>
-        </motion.div>
-      </div>
+      {/* Regular Articles */}
+      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pb-20">
+        <h2 className="text-sm font-semibold tracking-wider text-gray-400 uppercase mb-6">
+          All Articles
+        </h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {regular.map((article, i) => (
+            <motion.div
+              key={article.slug}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
+            >
+              <Link
+                to={`/insights/${article.slug}`}
+                className="block group p-6 bg-white rounded-xl border border-gray-100 hover:border-[#6D001A]/20 hover:shadow-md transition-all duration-300 h-full"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <span
+                    className={`px-2.5 py-0.5 text-xs font-semibold rounded-full ${
+                      categoryColors[article.category] || 'bg-gray-100 text-gray-800'
+                    }`}
+                  >
+                    {article.category}
+                  </span>
+                  <span className="text-xs text-gray-400">{article.readTime}</span>
+                </div>
+                <h3 className="text-lg font-bold text-[#0a0a0a] group-hover:text-[#6D001A] transition-colors leading-snug mb-2">
+                  {article.title}
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{article.excerpt}</p>
+                <p className="mt-3 text-xs text-gray-400">{article.date}</p>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Article Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            articles.map((a) =>
+              generateArticleSchema({
+                title: a.title,
+                description: a.excerpt,
+                url: `https://sentinelx.site/insights/${a.slug}`,
+                publishedTime: a.date,
+              })
+            )
+          ),
+        }}
+      />
     </div>
   );
 }

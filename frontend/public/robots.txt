@@ -3,13 +3,44 @@
 
 User-agent: *
 Allow: /
+
+# Block private/authenticated pages
 Disallow: /dashboard/
 Disallow: /settings/
 Disallow: /history/
-Disallow: /analyze/
-Disallow: /results/
+Disallow: /analyze
+Disallow: /results
 Disallow: /watchlist/
 Disallow: /alerts/
 Disallow: /billing/
+Disallow: /forgot-password
 
+# Block admin/API endpoints
+Disallow: /api/
+Disallow: /admin/
+
+# Allow all public pages
+Allow: /
+Allow: /scan
+Allow: /features
+Allow: /pricing
+Allow: /security
+Allow: /methodology
+Allow: /case-studies
+Allow: /insights
+Allow: /about
+Allow: /faq
+Allow: /contact
+Allow: /docs
+Allow: /privacy
+Allow: /terms
+Allow: /disclaimer
+Allow: /cookies
+Allow: /how-it-works
+Allow: /incident-reports
+
+# Sitemaps
 Sitemap: https://sentinelx.site/sitemap.xml
+
+# Crawl-delay for polite bots (optional)
+Crawl-delay: 1

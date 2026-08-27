@@ -15,6 +15,7 @@ export function Footer() {
       { label: 'Incident Reports', href: '/incident-reports' },
       { label: 'Case Studies', href: '/case-studies' },
       { label: 'Security Insights', href: '/insights' },
+      { label: 'Methodology', href: '/methodology' },
     ],
     Resources: [
       { label: 'Documentation', href: '/docs' },

@@ -4,6 +4,7 @@
   "private": true,
   "description": "SentinelX - AI-Powered Machine Learning Smart Contract Security & Risk Intelligence Platform",
   "scripts": {
+    "build": "cd frontend && npm run build",
     "backend": "python -m uvicorn backend.main:app --port 8000 --reload",
     "frontend": "npm --prefix frontend run dev",
     "dev": "concurrently -k -p \"[{name}]\" -n \"backend,frontend\" -c \"cyan,magenta\" \"npm run backend\" \"npm run frontend\"",

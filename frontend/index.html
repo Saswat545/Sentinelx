@@ -144,7 +144,48 @@
     </script>
   </head>
   <body style="background:#ffffff" class="text-[#0a0a0a] antialiased selection:bg-[#6D001A]/15 selection:text-[#0a0a0a] min-h-screen">
-    <div id="root"></div>
+    <div id="root">
+      <!-- No-JS fallback content for crawlers and AI agents -->
+      <noscript>
+        <header style="padding:2rem;text-align:center;border-bottom:1px solid #e5e7eb;">
+          <h1 style="font-size:2rem;font-weight:bold;color:#0a0a0a;">SentinelX</h1>
+          <p style="color:#6b7280;margin-top:0.5rem;">AI-Powered Blockchain Security Platform</p>
+        </header>
+        <main style="max-width:800px;margin:2rem auto;padding:0 1rem;">
+          <h2 style="font-size:1.5rem;font-weight:bold;color:#0a0a0a;margin-bottom:1rem;">Detect Rug Pulls Before They Drain Your Wallet</h2>
+          <p style="color:#374151;line-height:1.7;margin-bottom:1.5rem;">SentinelX analyzes Ethereum smart contracts using XGBoost machine learning, rule-based security detection, and SHAP explainability to identify potential rug-pull indicators, honeypots, and hidden backdoors. Our model extracts 53 smart-contract features and produces risk scores from 0-100 with transparent explanations.</p>
+          <p style="color:#374151;line-height:1.7;margin-bottom:1.5rem;">Analyze any Ethereum contract by address or paste raw Solidity source code. SentinelX provides automated security analysis for informational and research purposes only.</p>
+          <h3 style="font-size:1.25rem;font-weight:bold;color:#0a0a0a;margin:1.5rem 0 0.75rem;">Key Features</h3>
+          <ul style="color:#374151;line-height:1.8;padding-left:1.5rem;">
+            <li>AI-powered smart contract risk analysis with 96.15% accuracy</li>
+            <li>XGBoost machine learning classification trained on 2,400+ contracts</li>
+            <li>SHAP feature attribution for explainable risk scoring</li>
+            <li>Honeypot detection, hidden mint identification, and access control analysis</li>
+            <li>Real-time analysis with sub-3-second response times</li>
+          </ul>
+          <h3 style="font-size:1.25rem;font-weight:bold;color:#0a0a0a;margin:1.5rem 0 0.75rem;">Pages</h3>
+          <ul style="color:#374151;line-height:1.8;padding-left:1.5rem;">
+            <li><a href="/scan">Token Scanner</a> - Analyze any Ethereum contract</li>
+            <li><a href="/features">Features</a> - Platform capabilities</li>
+            <li><a href="/methodology">Methodology</a> - Technical ML pipeline details</li>
+            <li><a href="/pricing">Pricing</a> - Plans and pricing</li>
+            <li><a href="/case-studies">Case Studies</a> - Real analysis examples</li>
+            <li><a href="/insights">Security Insights</a> - Threat analysis and research</li>
+            <li><a href="/about">About</a> - SentinelX team and mission</li>
+            <li><a href="/docs">Documentation</a> - API and developer guide</li>
+            <li><a href="/faq">FAQ</a> - Common questions answered</li>
+          </ul>
+          <h3 style="font-size:1.25rem;font-weight:bold;color:#0a0a0a;margin:1.5rem 0 0.75rem;">Technical Stack</h3>
+          <ul style="color:#374151;line-height:1.8;padding-left:1.5rem;">
+            <li>Backend: FastAPI + XGBoost ML model</li>
+            <li>Frontend: React + TypeScript + Tailwind CSS</li>
+            <li>Database: Supabase (PostgreSQL)</li>
+            <li>Model: XGBoost classifier with 53 features</li>
+          </ul>
+          <p style="color:#6b7280;margin-top:2rem;font-size:0.875rem;">SentinelX provides automated security analysis for informational purposes only. Results are not financial advice or guarantees of safety.</p>
+        </main>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

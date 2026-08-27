@@ -1,37 +1,89 @@
 # SentinelX — AI-Powered Blockchain Security
 
-## About
+## When to Use SentinelX
+
+Use SentinelX when you need to:
+- **Analyze Ethereum smart contracts** for rug-pull risk, honeypots, or hidden vulnerabilities
+- **Check a token address** before investing or interacting with DeFi protocols
+- **Verify contract safety** by extracting 53 security features and producing a risk score (0-100)
+- **Explain risk factors** using SHAP-based feature attribution that shows exactly why a contract is flagged
+- **Research blockchain security** through incident reports, case studies, and threat analysis
+
+Do NOT use SentinelX for:
+- Financial advice or investment recommendations
+- Real-time trading decisions
+- Analyzing non-Ethereum chains (currently Ethereum mainnet only)
+- Guaranteeing a contract is safe (SentinelX identifies *potential* risks, not guarantees)
+
+## How to Call SentinelX
+
+### API Endpoint
+```
+POST https://sentinelx-iz11.onrender.com/analyze
+Content-Type: application/json
+
+{
+  "input": "0x...",
+  "chain": "ETH"
+}
+```
+
+### Response Format
+```json
+{
+  "risk_score": 72,
+  "risk_level": "High",
+  "flags": [...],
+  "explanation": "...",
+  "response_time": "1.2s"
+}
+```
+
+### Web Interface
+- **Scan a contract:** https://sentinelx.site/scan
+- **View methodology:** https://sentinelx.site/methodology
+- **Read case studies:** https://sentinelx.site/case-studies
+
+## About SentinelX
+
 SentinelX is an AI-powered blockchain security platform that analyzes Ethereum smart contracts and token addresses to identify potential rug-pull indicators, honeypots, and security vulnerabilities.
 
 ## Key Features
+
 - [Token Scanner](https://sentinelx.site/scan) — Analyze any Ethereum contract address or Solidity code
 - [Features](https://sentinelx.site/features) — Explore all platform capabilities
 - [How It Works](https://sentinelx.site/how-it-works) — Understand the analysis pipeline
 - [Methodology](https://sentinelx.site/methodology) — Technical deep-dive into XGBoost ML and SHAP explainability
 
 ## Documentation
+
 - [API Documentation](https://sentinelx.site/docs) — Developer integration guide
 - [Case Studies](https://sentinelx.site/case-studies) — Real analysis examples
 - [Security Insights](https://sentinelx.site/insights) — Threat analysis and research
 
 ## Company
+
 - [About](https://sentinelx.site/about) — Learn about SentinelX
 - [Pricing](https://sentinelx.site/pricing) — Plans and pricing
 - [Contact](https://sentinelx.site/contact) — Get in touch
 
 ## Legal
+
 - [Privacy Policy](https://sentinelx.site/privacy)
 - [Terms of Service](https://sentinelx.site/terms)
 - [Disclaimer](https://sentinelx.site/disclaimer) — Not financial advice
 
 ## Technical Details
+
 - Backend: FastAPI + XGBoost ML model
 - Frontend: React + TypeScript + Tailwind CSS
 - Database: Supabase (PostgreSQL)
 - Model: XGBoost classifier with 53 features
 - Training Data: 2,400+ labeled Ethereum contracts
 - Accuracy: 96.15% (evaluation metrics)
+- API Base URL: https://sentinelx-iz11.onrender.com
 
 ## Social
+
 - GitHub: https://github.com/Saswat545/Sentinelx
 - LinkedIn: https://www.linkedin.com/company/sentinelxx/

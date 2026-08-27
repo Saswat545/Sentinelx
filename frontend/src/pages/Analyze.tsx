@@ -22,11 +22,23 @@ export function Analyze() {
   const navigate = useNavigate();
 
   const extractAddress = (input: string): string => {
-    // If it's a URL, extract the 0x address from it
-    const urlMatch = input.match(/(0x[a-fA-F0-9]{40})/);
+    const trimmed = input.trim();
+    
+    // If it's a direct address (0x + 40 hex chars), return as-is
+    if (/^0x[a-fA-F0-9]{40}$/.test(trimmed)) return trimmed;
+    
+    // If it's a URL, try to extract a 40-char address from it
+    const urlMatch = trimmed.match(/(0x[a-fA-F0-9]{40})/);
     if (urlMatch) return urlMatch[1];
-    return input.trim();
+    
+    // If it's a URL with a 64-char hash (like DEXScreener pair hash), extract first 40 chars
+    const longHashMatch = trimmed.match(/(0x[a-fA-F0-9]{64})/);
+    if (longHashMatch) return longHashMatch[1].slice(0, 42); // Take first 42 chars (0x + 40)
+    
+    return trimmed;
   };
+
+  const isDexScreenerUrl = (input: string) => /dexscreener\.com/i.test(input);
 
   const validateAddress = (addr: string) => /^0x[a-fA-F0-9]{40}$/.test(extractAddress(addr));
 
@@ -34,12 +46,25 @@ export function Analyze() {
     setError('');
 
     if (mode === 'address') {
-      const extracted = extractAddress(contractAddress);
       if (!contractAddress.trim()) {
         setError('Please enter a contract address');
         return;
       }
-      if (!validateAddress(contractAddress)) {
+      
+      // Special message for DEXScreener URLs with pair hashes
+      if (isDexScreenerUrl(contractAddress)) {
+        const hasLongHash = /0x[a-fA-F0-9]{40,}/i.test(contractAddress);
+        if (hasLongHash) {
+          setError(
+            'This DEXScreener URL contains a pair/pool hash (64 chars), not a token address. ' +
+            'Click on the token name (e.g., "GULD") on DEXScreener to find its contract address (42 chars starting with 0x).'
+          );
+          return;
+        }
+      }
+      
+      const extracted = extractAddress(contractAddress);
+      if (!validateAddress(extracted)) {
         setError('Enter a valid Ethereum address (0x followed by 40 hex characters), or paste a URL containing a contract address');
         return;
       }

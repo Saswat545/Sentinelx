@@ -395,7 +395,7 @@ export function Analyze() {
                 How it works
               </span>
               <Link to="/how-it-works" className="text-xs text-[#6D001A] hover:underline ml-auto">
-                Learn more
+                See how it works
               </Link>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

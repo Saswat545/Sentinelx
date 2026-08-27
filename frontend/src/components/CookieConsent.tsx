@@ -59,7 +59,7 @@ export function CookieConsent() {
                   We use cookies to enhance your experience and analyze site traffic. 
                   By clicking "Accept", you consent to the use of cookies for analytics purposes.
                   <a href="/privacy" className="text-brand-cobalt hover:underline ml-1">
-                    Learn more
+                    Read our Privacy Policy
                   </a>
                 </p>
               </div>

@@ -91,7 +91,7 @@ function App() {
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
 
-    const timer = setTimeout(() => setIsLoading(false), 2500);
+    const timer = setTimeout(() => setIsLoading(false), 800);
     return () => { lenis.destroy(); clearTimeout(timer); };
   }, []);
 

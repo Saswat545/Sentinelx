@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { setPageSEO, generateArticleSchema } from '../lib/seo';
 
 const features = [
   {
@@ -42,6 +43,28 @@ const features = [
 ];
 
 export function Features() {
+  useEffect(() => {
+    setPageSEO({
+      title: 'Features | SentinelX — AI Security Platform Capabilities',
+      description: 'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
+      keywords: ['smart contract features', 'ML security analysis', 'SHAP explainability', 'honeypot detection', 'security signals'],
+      type: 'article',
+      publishedTime: '2026-08-27',
+    }, '/features');
+    const schema = generateArticleSchema({
+      title: 'Features | SentinelX — AI Security Platform Capabilities',
+      description: 'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
+      url: 'https://sentinelx.site/features',
+      publishedTime: '2026-08-27',
+    });
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'features-schema';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
+    return () => { document.getElementById('features-schema')?.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white pt-28 pb-16 px-4">
       <div className="max-w-6xl mx-auto">

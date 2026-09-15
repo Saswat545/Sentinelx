@@ -1,5 +1,11 @@
 {
   "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/((?!assets/|robots\\.txt|sitemap\\.xml|llms\\.txt|openapi\\.json|og-image\\.png|brand/).*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -20,26 +26,29 @@
     {
       "source": "/robots.txt",
       "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
+        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
     {
       "source": "/llms.txt",
       "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
     {
       "source": "/openapi.json",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" },
-        { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     }
   ]

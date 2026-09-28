@@ -40,9 +40,9 @@ Content-Type: application/json
 ```
 
 ### Web Interface
-- **Scan a contract:** https://sentinelx.site/scan
-- **View methodology:** https://sentinelx.site/methodology
-- **Read case studies:** https://sentinelx.site/case-studies
+- **Scan a contract:** https://www.sentinelx.site/scan
+- **View methodology:** https://www.sentinelx.site/methodology
+- **Read case studies:** https://www.sentinelx.site/case-studies
 
 ## About SentinelX
 
@@ -50,28 +50,28 @@ SentinelX is an AI-powered blockchain security platform that analyzes Ethereum s
 
 ## Key Features
 
-- [Token Scanner](https://sentinelx.site/scan) — Analyze any Ethereum contract address or Solidity code
-- [Features](https://sentinelx.site/features) — Explore all platform capabilities
-- [How It Works](https://sentinelx.site/how-it-works) — Understand the analysis pipeline
-- [Methodology](https://sentinelx.site/methodology) — Technical deep-dive into XGBoost ML and SHAP explainability
+- [Token Scanner](https://www.sentinelx.site/scan) — Analyze any Ethereum contract address or Solidity code
+- [Features](https://www.sentinelx.site/features) — Explore all platform capabilities
+- [How It Works](https://www.sentinelx.site/how-it-works) — Understand the analysis pipeline
+- [Methodology](https://www.sentinelx.site/methodology) — Technical deep-dive into XGBoost ML and SHAP explainability
 
 ## Documentation
 
-- [API Documentation](https://sentinelx.site/docs) — Developer integration guide
-- [Case Studies](https://sentinelx.site/case-studies) — Real analysis examples
-- [Security Insights](https://sentinelx.site/insights) — Threat analysis and research
+- [API Documentation](https://www.sentinelx.site/docs) — Developer integration guide
+- [Case Studies](https://www.sentinelx.site/case-studies) — Real analysis examples
+- [Security Insights](https://www.sentinelx.site/insights) — Threat analysis and research
 
 ## Company
 
-- [About](https://sentinelx.site/about) — Learn about SentinelX
-- [Pricing](https://sentinelx.site/pricing) — Plans and pricing
-- [Contact](https://sentinelx.site/contact) — Get in touch
+- [About](https://www.sentinelx.site/about) — Learn about SentinelX
+- [Pricing](https://www.sentinelx.site/pricing) — Plans and pricing
+- [Contact](https://www.sentinelx.site/contact) — Get in touch
 
 ## Legal
 
-- [Privacy Policy](https://sentinelx.site/privacy)
-- [Terms of Service](https://sentinelx.site/terms)
-- [Disclaimer](https://sentinelx.site/disclaimer) — Not financial advice
+- [Privacy Policy](https://www.sentinelx.site/privacy)
+- [Terms of Service](https://www.sentinelx.site/terms)
+- [Disclaimer](https://www.sentinelx.site/disclaimer) — Not financial advice
 
 ## Technical Details
 

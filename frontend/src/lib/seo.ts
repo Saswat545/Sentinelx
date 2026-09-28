@@ -1,7 +1,7 @@
 // SentinelX — Centralized SEO Utilities
 // https://sentinelx.site
 
-const SITE_URL = 'https://sentinelx.site';
+const SITE_URL = 'https://www.sentinelx.site';
 const SITE_NAME = 'SentinelX';
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 const TWITTER_HANDLE = '@sentinelx';

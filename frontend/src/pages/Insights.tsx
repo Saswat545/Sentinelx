@@ -212,7 +212,7 @@ export function Insights() {
               generateArticleSchema({
                 title: a.title,
                 description: a.excerpt,
-                url: `https://sentinelx.site/insights/${a.slug}`,
+                url: `https://www.sentinelx.site/insights/${a.slug}`,
                 publishedTime: a.date,
               })
             )

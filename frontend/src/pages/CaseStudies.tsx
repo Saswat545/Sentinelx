@@ -247,7 +247,7 @@ export function CaseStudies() {
               title: 'Security Analysis Examples | SentinelX Case Studies',
               description:
                 'See SentinelX in action: real smart contract analyses showing honeypot detection, hidden mint identification, and legitimate contract verification.',
-              url: 'https://sentinelx.site/case-studies',
+              url: 'https://www.sentinelx.site/case-studies',
               publishedTime: '2026-08-15',
               modifiedTime: '2026-08-27',
             })

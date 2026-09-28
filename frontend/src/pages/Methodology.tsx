@@ -272,7 +272,7 @@ export function Methodology() {
               title: 'How SentinelX Works | Security Methodology & ML Pipeline',
               description:
                 'Learn how SentinelX uses XGBoost ML, rule-based detection, SHAP explainability, and 53 smart-contract features to identify rug-pull risk indicators.',
-              url: 'https://sentinelx.site/methodology',
+              url: 'https://www.sentinelx.site/methodology',
               publishedTime: '2026-07-15',
               modifiedTime: '2026-08-27',
             })

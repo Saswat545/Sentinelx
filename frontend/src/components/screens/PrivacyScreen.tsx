@@ -26,7 +26,7 @@ export const PrivacyScreen: React.FC<PrivacyScreenProps> = ({ onNavigate }) => {
         <section className="space-y-3">
           <h2 className="text-lg font-bold text-white font-heading">1. Introduction</h2>
           <p>
-            SentinelX ("we," "our," or "us") operates the SentinelX platform at <a href="https://sentinelx.site" className="text-blue-400 hover:text-blue-300 underline">sentinelx.site</a>. This Privacy Policy explains how we collect, use, and protect information when you use our AI-powered smart contract security analysis platform.
+            SentinelX ("we," "our," or "us") operates the SentinelX platform at <a href="https://www.sentinelx.site" className="text-blue-400 hover:text-blue-300 underline">sentinelx.site</a>. This Privacy Policy explains how we collect, use, and protect information when you use our AI-powered smart contract security analysis platform.
           </p>
           <p>
             By using SentinelX, you agree to the collection and use of information in accordance with this policy. If you do not agree, please discontinue use of the platform.

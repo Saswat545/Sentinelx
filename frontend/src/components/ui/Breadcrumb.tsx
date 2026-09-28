@@ -19,13 +19,13 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://sentinelx.site/',
+        item: 'https://www.sentinelx.site/',
       },
       ...items.map((item, index) => ({
         '@type': 'ListItem',
         position: index + 2,
         name: item.label,
-        ...(item.href ? { item: `https://sentinelx.site${item.href}` } : {}),
+        ...(item.href ? { item: `https://www.sentinelx.site${item.href}` } : {}),
       })),
     ],
   };

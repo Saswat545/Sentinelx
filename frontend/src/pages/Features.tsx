@@ -54,7 +54,7 @@ export function Features() {
     const schema = generateArticleSchema({
       title: 'Features | SentinelX — AI Security Platform Capabilities',
       description: 'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
-      url: 'https://sentinelx.site/features',
+      url: 'https://www.sentinelx.site/features',
       publishedTime: '2026-08-27',
     });
     const script = document.createElement('script');

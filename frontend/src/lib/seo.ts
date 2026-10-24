@@ -61,7 +61,7 @@ export const PAGE_SEO: Record<string, SEOConfig> = {
     type: 'website',
   },
   features: {
-    title: 'Features | SentinelX — AI Security Platform Capabilities',
+    title: 'Features | SentinelX: AI Security Platform Capabilities',
     description:
       'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
     keywords: [
@@ -74,7 +74,7 @@ export const PAGE_SEO: Record<string, SEOConfig> = {
     type: 'website',
   },
   pricing: {
-    title: 'Pricing | SentinelX — AI Security Plans',
+    title: 'Pricing | SentinelX: AI Security Plans',
     description:
       'Choose a SentinelX plan: Free basic scans, Pro unlimited analysis, or Enterprise custom deployment. Secure your DeFi portfolio today.',
     keywords: ['security pricing', 'crypto security plans', 'blockchain analysis pricing'],
@@ -100,7 +100,7 @@ export const PAGE_SEO: Record<string, SEOConfig> = {
     type: 'website',
   },
   faq: {
-    title: 'FAQ | SentinelX — Smart Contract Security Questions',
+    title: 'FAQ | SentinelX: Smart Contract Security Questions',
     description:
       'Get answers to common questions about SentinelX: how risk scores work, supported chains, model accuracy, and whether SentinelX is financial advice.',
     keywords: ['SentinelX FAQ', 'smart contract questions', 'rug pull FAQ'],
@@ -114,7 +114,7 @@ export const PAGE_SEO: Record<string, SEOConfig> = {
     type: 'website',
   },
   pricing_page: {
-    title: 'Pricing Plans | SentinelX — Choose Your Security Level',
+    title: 'Pricing Plans | SentinelX: Choose Your Security Level',
     description:
       'SentinelX offers free, pro, and enterprise plans for smart contract security analysis. Protect your DeFi investments with AI-powered rug pull detection.',
     keywords: ['pricing', 'plans', 'security analysis cost'],
@@ -136,7 +136,7 @@ export const PAGE_SEO: Record<string, SEOConfig> = {
     type: 'website',
   },
   disclaimer: {
-    title: 'Disclaimer | SentinelX — Not Financial Advice',
+    title: 'Disclaimer | SentinelX: Not Financial Advice',
     description:
       'SentinelX provides automated security analysis for informational purposes only. Results are not a guarantee of safety or financial advice.',
     keywords: ['disclaimer', 'not financial advice', 'security analysis disclaimer'],
@@ -145,7 +145,7 @@ export const PAGE_SEO: Record<string, SEOConfig> = {
   cookies: {
     title: 'Cookie Policy | SentinelX',
     description:
-      'SentinelX cookie policy: how we use cookies to improve your experience. Essential cookies only — no tracking without consent.',
+      'SentinelX cookie policy: how we use cookies to improve your experience. Essential cookies only. No tracking without consent.',
     keywords: ['cookie policy', 'cookies', 'privacy'],
     type: 'website',
   },

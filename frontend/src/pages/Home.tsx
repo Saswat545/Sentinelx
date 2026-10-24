@@ -101,7 +101,7 @@ export function Home() {
             Detect Rug Pulls<br /><span className="text-white/40">Before They</span><br /><span className="text-[#6D001A]">Drain Your Wallet</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }} className="text-lg md:text-xl text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed">
-            SentinelX analyzes Ethereum smart contracts using machine learning, static code analysis, and 53+ security signals to detect rug pulls, honeypots, and hidden backdoors — before you sign anything.
+            SentinelX analyzes Ethereum smart contracts using machine learning, static code analysis, and 53+ security signals to detect rug pulls, honeypots, and hidden backdoors before you sign anything.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }} className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/scan" className="group inline-flex items-center gap-3 px-8 py-4 bg-[#6D001A] text-white font-semibold rounded-full transition-all duration-300 hover:bg-[#8B0023] hover:shadow-lg hover:shadow-[#6D001A]/20">
@@ -149,9 +149,15 @@ export function Home() {
       {/* ═══════ SCROLL EXPAND ═══════ */}
       <section className="bg-white">
         <Suspense fallback={<div className="h-[120vh]" />}>
-          <ScrollExpand title="Built for Trust" scrollHint="Scroll to expand" startWidth={65} startHeight={55} startRadius={24} endRadius={0} mediaZoom={1.15} scrollDistance={1.5} holdDistance={0.4} overlayScrim={0.5}>
-            <h2>Every pixel, everywhere.</h2>
-            <p>SentinelX analyzes the signals that matter — so you don't have to read every line of code.</p>
+          <ScrollExpand
+            title="Built for Trust"
+            scrollHint="Scroll to expand"
+            src="https://fastly.picsum.photos/id/516/1600/1000.jpg?hmac=04xtVPUPHePncjrSPKrWQsShgTux9szrRLH7bTsH52g"
+            alt="Rocky coastline standing against a storm surge"
+            startWidth={65} startHeight={55} startRadius={24} endRadius={0} mediaZoom={1.15} scrollDistance={1.5} holdDistance={0.4} overlayScrim={0.7}
+          >
+            <h2>Read the risk, not the code.</h2>
+            <p>SentinelX analyzes the signals that matter, so you don't have to read every line of code.</p>
           </ScrollExpand>
         </Suspense>
       </section>
@@ -162,7 +168,7 @@ export function Home() {
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <span className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">Why SentinelX</span>
             <h2 className="text-3xl md:text-5xl font-display font-bold mb-6 text-[#0a0a0a]">Every smart contract<br /><span className="text-gray-400">tells a story.</span></h2>
-            <p className="text-lg text-gray-500 max-w-3xl mx-auto">SentinelX combines static analysis, machine learning, and explainable AI to detect malicious smart contracts — before your wallet signs anything.</p>
+            <p className="text-lg text-gray-500 max-w-3xl mx-auto">SentinelX combines static analysis, machine learning, and explainable AI to detect malicious smart contracts before your wallet signs anything.</p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -289,7 +295,7 @@ export function Home() {
             blurStrength={6}
             containerClassName=""
             textClassName="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white leading-tight"
-          >{'Every smart contract tells a story. Some lie. SentinelX reads between the lines — analyzing 53+ security signals with machine learning to detect rug pulls, honeypots, and hidden backdoors before they drain your wallet.'}</ScrollReveal>
+          >{'Every smart contract tells a story. Some lie. SentinelX reads between the lines, analyzing 53+ security signals with machine learning to detect rug pulls, honeypots, and hidden backdoors before they drain your wallet.'}</ScrollReveal>
         </div>
       </section>
 

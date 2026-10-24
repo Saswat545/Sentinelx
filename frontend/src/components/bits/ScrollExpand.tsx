@@ -323,6 +323,8 @@ export default function ScrollExpand({
               src={src}
               alt={alt}
               className="scroll-expand-image"
+              loading="lazy"
+              decoding="async"
               style={{
                 transform:
                   `scale(${mediaScale})`,

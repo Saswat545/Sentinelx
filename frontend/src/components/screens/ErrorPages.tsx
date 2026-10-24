@@ -20,7 +20,7 @@ export const ErrorPages: React.FC<ErrorPagesProps> = ({ type, onNavigate }) => {
               <ShieldAlert className="w-8 h-8" />
             </div>
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold text-blue-400 uppercase tracking-widest">404 — Signal Lost</span>
+              <span className="font-mono text-xs font-bold text-blue-400 uppercase tracking-widest">404: Signal Lost</span>
               <h2 className="text-2xl font-extrabold text-white tracking-tight">Page Not Found</h2>
               <p className="text-xs text-gray-400 leading-relaxed">
                 The requested page does not exist or has been moved. Enter a valid contract address or return to the SentinelX dashboard.

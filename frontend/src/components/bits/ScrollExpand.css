@@ -78,6 +78,9 @@
 
   display: block;
 
+  /* Mute stock photography toward the dark brand palette */
+  filter: grayscale(0.35) contrast(1.05) brightness(0.92);
+
   will-change: transform;
 
   pointer-events: none;
@@ -120,27 +123,26 @@
 
   text-align: center;
 
-  z-index: 5;
-
-  color: #ffffff;
+  z-index: 5;  color: #ffffff;
 
   font-family:
     'Orbitron',
     sans-serif;
 
-  font-size:
-    clamp(
-      2rem,
-      5.5vw,
-      5.5rem
-    );
+  font-size: clamp(
+    2rem,
+    5.5vw,
+    5.5rem
+  );
 
   font-weight: 700;
 
   line-height: 1;
 
-  letter-spacing:
-    -0.035em;
+  letter-spacing: -0.035em;
+
+  /* Keep white type legible over bright areas of the media */
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.65), 0 1px 6px rgba(0, 0, 0, 0.45);
 
   pointer-events: none;
 
@@ -259,28 +261,20 @@
   will-change:
     opacity,
     transform;
-}
-
-.scroll-expand-content h2 {
+}.scroll-expand-content h2 {
   margin: 0 0 18px;
 
-  font-family:
-    'Orbitron',
-    sans-serif;
+  font-family: 'Orbitron', sans-serif;
 
-  font-size:
-    clamp(
-      1.5rem,
-      4vw,
-      4rem
-    );
+  font-size: clamp(1.5rem, 4vw, 4rem);
 
   font-weight: 700;
 
   line-height: 1.05;
 
-  letter-spacing:
-    -0.03em;
+  letter-spacing: -0.03em;
+
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.65), 0 1px 6px rgba(0, 0, 0, 0.45);
 }
 
 .scroll-expand-content p {
@@ -288,26 +282,15 @@
 
   max-width: 620px;
 
-  font-family:
-    'Inter',
-    sans-serif;
+  font-family: 'Inter', sans-serif;
 
-  font-size:
-    clamp(
-      0.9rem,
-      1.4vw,
-      1.15rem
-    );
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
 
   line-height: 1.7;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.72
-    );
+  color: rgba(255, 255, 255, 0.85);
+
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.7);
 }
 
 /* =========================================

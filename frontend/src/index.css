@@ -56,7 +56,23 @@ body {
 }
 
 a, button {
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease,
+    opacity 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Reduced motion: gentler, not zero. Instant state changes stay legible;
+   transform/position movement and infinite loops are removed. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .font-display {

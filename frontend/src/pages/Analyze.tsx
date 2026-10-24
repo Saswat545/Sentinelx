@@ -1,8 +1,10 @@
 import React, { useState, Suspense } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Dots } from '../components/ui/Dots';
 import { api } from '../lib/api';
+import { useAuth } from '../lib/auth';
+import { addScan, normalizeRiskLevel } from '../lib/scanStore';
 
 type InputMode = 'address' | 'solidity';
 
@@ -13,8 +15,10 @@ const exampleContracts = [
 ];
 
 export function Analyze() {
+  const [searchParams] = useSearchParams();
+  const { user } = useAuth();
   const [mode, setMode] = useState<InputMode>('address');
-  const [contractAddress, setContractAddress] = useState('');
+  const [contractAddress, setContractAddress] = useState(searchParams.get('address') ?? '');
   const [solidityCode, setSolidityCode] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState('');
@@ -123,13 +127,33 @@ export function Analyze() {
       clearInterval(stepTimer);
       setIsAnalyzing(false);
 
+      const flags = (data.flags || data.signals || []).map((flag) => ({
+        name: flag.name,
+        severity: flag.severity,
+      }));
+
+      addScan(user?.id || 'guest', {
+        id: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+        contract: data.contract_address || extractAddress(contractAddress) || 'Contract',
+        inputMode: mode === 'solidity' ? 'solidity' : 'address',
+        riskScore: data.risk_score,
+        riskLevel: normalizeRiskLevel(data.risk_level, data.risk_score),
+        flags,
+        model: data.model || 'XGBoost ML',
+        features: data.features_used || 53,
+        responseTime: data.response_time || '<3s',
+        aiAssessment: data.ai_assessment || data.explanation || '',
+        createdAt: new Date().toISOString(),
+      });
+
       navigate('/results', {
         state: {
           contractAddress: data.contract_address || contractAddress.trim(),
           inputMode: mode,
           riskScore: data.risk_score,
           riskLevel: data.risk_level || (data.risk_score <= 30 ? 'Low' : data.risk_score <= 60 ? 'Medium' : data.risk_score <= 80 ? 'High' : 'Critical'),
-          flags: data.flags || data.signals || [],
+          flags,
+          saved: true,
           modelInfo: {
             model: data.model || 'XGBoost ML',
             features: data.features_used || 53,

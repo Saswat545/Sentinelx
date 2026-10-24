@@ -43,7 +43,7 @@ export function Footer() {
           <div className="grid grid-cols-2 lg:grid-cols-6 gap-10">
             <div className="col-span-2">
               <Link to="/" className="flex items-center gap-3 mb-4">
-                <img src="/brand/dark/Icon mark.png" alt="SentinelX" className="h-8 w-auto" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                <img src="/brand/dark/Icon mark.png" alt="SentinelX" className="h-8 w-auto" width="32" height="32" loading="lazy" decoding="async" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                 <span className="font-display font-semibold text-lg text-[#0a0a0a]">Sentinel<span className="text-[#6D001A]">X</span></span>
               </Link>
               <p className="text-[10px] font-mono text-gray-400 uppercase tracking-[0.2em] mb-4">AI-Powered Blockchain Security</p>

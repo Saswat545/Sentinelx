@@ -51,7 +51,7 @@ export function ApproachSection() {
           </h2>
           <p className="text-lg text-dark-muted max-w-3xl mx-auto">
             SentinelX combines static analysis, machine learning, and explainable AI 
-            to detect malicious smart contracts — before your wallet signs anything.
+            to detect malicious smart contracts before your wallet signs anything.
           </p>
         </motion.div>
 

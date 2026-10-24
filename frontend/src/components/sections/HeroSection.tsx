@@ -9,6 +9,9 @@ export function HeroSection() {
   const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Reduced motion: keep hero content static and fully visible
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const ctx = gsap.context(() => {
       // Title animation
       gsap.fromTo(titleRef.current,

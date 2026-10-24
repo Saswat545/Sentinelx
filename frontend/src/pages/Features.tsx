@@ -45,14 +45,14 @@ const features = [
 export function Features() {
   useEffect(() => {
     setPageSEO({
-      title: 'Features | SentinelX — AI Security Platform Capabilities',
+      title: 'Features | SentinelX: AI Security Platform Capabilities',
       description: 'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
       keywords: ['smart contract features', 'ML security analysis', 'SHAP explainability', 'honeypot detection', 'security signals'],
       type: 'article',
       publishedTime: '2026-08-27',
     }, '/features');
     const schema = generateArticleSchema({
-      title: 'Features | SentinelX — AI Security Platform Capabilities',
+      title: 'Features | SentinelX: AI Security Platform Capabilities',
       description: 'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
       url: 'https://www.sentinelx.site/features',
       publishedTime: '2026-08-27',

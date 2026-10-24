@@ -37,7 +37,7 @@ const caseStudies = [
       'This contract appeared legitimate but contained a hidden mint function callable only by the owner. SentinelX identified the function signature in the bytecode and flagged it as high risk.',
     findings: [
       { severity: 'high', finding: 'Hidden mint function with no supply cap' },
-      { severity: 'high', finding: 'Only owner can call mint — no multisig protection' },
+      { severity: 'high', finding: 'Only owner can call mint with no multisig protection' },
       { severity: 'medium', finding: 'No timelock on critical functions' },
       { severity: 'low', finding: 'Centralized governance model' },
     ],
@@ -56,7 +56,7 @@ const caseStudies = [
     riskScore: 12,
     riskLevel: 'Low',
     summary:
-      'USDC (USD Coin) by Circle — a well-established, audited stablecoin. SentinelX correctly classifies this as low risk due to verified ownership, no dangerous functions, and battle-tested code.',
+      'USDC (USD Coin) by Circle, a well-established, audited stablecoin. SentinelX correctly classifies this as low risk due to verified ownership, no dangerous functions, and battle-tested code.',
     findings: [
       { severity: 'low', finding: 'Verified and audited contract' },
       { severity: 'low', finding: 'Multi-sig ownership with timelock' },
@@ -123,7 +123,7 @@ export function CaseStudies() {
           </h1>
           <p className="mt-4 text-lg text-gray-600 leading-relaxed max-w-2xl">
             See how SentinelX analyzes real smart contracts. These are example analyses
-            demonstrating the detection pipeline — not verified incident reports.
+            demonstrating the detection pipeline, not verified incident reports.
           </p>
         </motion.div>
       </section>

@@ -74,7 +74,7 @@ export function ExplainableAISection() {
               Why should I trust the result?
             </h2>
             <p className="text-dark-muted text-lg mb-8 leading-relaxed">
-              SentinelX doesn't just give you a score — it shows you exactly which features 
+              SentinelX doesn't just give you a score. It shows you exactly which features 
               contributed to the risk assessment using SHAP (SHapley Additive exPlanations).
             </p>
             

@@ -34,11 +34,11 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
     },
     {
       q: 'What does a high risk score mean?',
-      a: 'A high risk score indicates that the analyzed contract exhibits patterns commonly associated with rug pulls or malicious behavior — such as honeypot restrictions, unrenounced ownership, unlimited minting, or high sell taxes. A high score is a strong signal to exercise extreme caution, but it is not proof of fraud. Always conduct independent research.'
+      a: 'A high risk score indicates that the analyzed contract exhibits patterns commonly associated with rug pulls or malicious behavior, such as honeypot restrictions, unrenounced ownership, unlimited minting, or high sell taxes. A high score is a strong signal to exercise extreme caution, but it is not proof of fraud. Always conduct independent research.'
     },
     {
       q: 'Does SentinelX guarantee that a token is safe?',
-      a: 'No. SentinelX provides automated risk signals based on machine learning analysis and pattern detection. A low risk score does not guarantee safety. No automated tool can provide absolute security assurance. SentinelX identifies potential security risks — it does not guarantee the safety or profitability of any asset.'
+      a: 'No. SentinelX provides automated risk signals based on machine learning analysis and pattern detection. A low risk score does not guarantee safety. No automated tool can provide absolute security assurance. SentinelX identifies potential security risks. It does not guarantee the safety or profitability of any asset.'
     },
     {
       q: 'Is SentinelX financial advice?',
@@ -80,7 +80,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
 
             {/* Subheadline */}
             <p className="text-base sm:text-lg text-[#a8dadc] leading-relaxed max-w-xl font-sans">
-              SentinelX analyzes Ethereum smart contracts using AI-powered risk scoring, SHAP explainability, and 53+ security signals — so you understand the risk before you interact.
+              SentinelX analyzes Ethereum smart contracts using AI-powered risk scoring, SHAP explainability, and 53+ security signals, so you understand the risk before you interact.
             </p>
 
             {/* CTA Buttons */}
@@ -139,7 +139,7 @@ export const LandingScreen: React.FC<LandingScreenProps> = ({
                   <div className="w-3 h-3 rounded-full bg-[#a8dadc]"></div>
                   <div className="w-3 h-3 rounded-full bg-[#457b9d]"></div>
                   <span className="ml-2 text-xs font-sans text-[#a8dadc] truncate">
-                    SentinelX Intelligence Console — 0x7a25...2488D
+                    SentinelX Intelligence Console: 0x7a25...2488D
                   </span>
                 </div>
                 <span className="px-2.5 py-0.5 text-[10px] font-sans font-bold rounded bg-[#e63946]/20 text-[#e63946] border border-[#e63946]/50">

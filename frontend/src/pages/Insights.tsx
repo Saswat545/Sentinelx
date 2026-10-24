@@ -29,7 +29,7 @@ const articles = [
     slug: 'shap-explainability-smart-contracts',
     title: 'SHAP Explainability: Understanding Why SentinelX Flags a Contract as Risky',
     excerpt:
-      'SentinelX does not just give you a score — it explains why. Learn how SHAP values reveal which features contribute most to a risk assessment.',
+      'SentinelX does not just give you a score; it explains why. Learn how SHAP values reveal which features contribute most to a risk assessment.',
     category: 'Research',
     readTime: '7 min read',
     date: '2026-08-10',

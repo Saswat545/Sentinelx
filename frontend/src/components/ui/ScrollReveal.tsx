@@ -80,6 +80,13 @@ const ScrollReveal = ({
 
     if (!el) return;
 
+    /*
+     * REDUCED MOTION: skip scrubbed reveals entirely.
+     * Initial hidden state comes from these tweens, so skipping
+     * leaves the text fully visible with no rotation/blur.
+     */
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const scroller =
       scrollContainerRef?.current ?? window;
 

@@ -16,6 +16,8 @@ interface AuthContextType {
   signInWithGitHub: () => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<{ error?: string }>;
   signUpWithEmail: (email: string, password: string, name: string) => Promise<{ error?: string }>;
+  updateProfile: (data: { name?: string }) => Promise<{ error?: string }>;
+  sendPasswordReset: (email: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
   isConfigured: boolean;
 }
@@ -28,6 +30,8 @@ const AuthContext = createContext<AuthContextType>({
   signInWithGitHub: async () => {},
   signInWithEmail: async () => ({ error: 'Not configured' }),
   signUpWithEmail: async () => ({ error: 'Not configured' }),
+  updateProfile: async () => ({ error: 'Not configured' }),
+  sendPasswordReset: async () => ({ error: 'Not configured' }),
   signOut: async () => {},
   isConfigured: false,
 });
@@ -58,14 +62,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  const oauthRedirect = () =>
+    import.meta.env.VITE_AUTH_REDIRECT_URL || `${window.location.origin}/dashboard`;
+
   const signInWithGoogle = useCallback(async () => {
     if (!supabase) return;
-    await supabase.auth.signInWithOAuth({ provider: 'google' });
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: oauthRedirect() },
+    });
   }, []);
 
   const signInWithGitHub = useCallback(async () => {
     if (!supabase) return;
-    await supabase.auth.signInWithOAuth({ provider: 'github' });
+    await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: { redirectTo: oauthRedirect() },
+    });
   }, []);
 
   const signInWithEmail = useCallback(async (email: string, password: string) => {
@@ -84,6 +97,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error: error?.message };
   }, []);
 
+  const updateProfile = useCallback(async (data: { name?: string }) => {
+    if (!supabase) return { error: 'Supabase not configured' };
+    const { error } = await supabase.auth.updateUser({ data });
+    return { error: error?.message };
+  }, []);
+
+  const sendPasswordReset = useCallback(async (email: string) => {
+    if (!supabase) return { error: 'Supabase not configured' };
+    if (!email) return { error: 'No email address on this account' };
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/login`,
+    });
+    return { error: error?.message };
+  }, []);
+
   const signOut = useCallback(async () => {
     if (!supabase) return;
     await supabase.auth.signOut();
@@ -98,6 +126,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signInWithGitHub,
       signInWithEmail,
       signUpWithEmail,
+      updateProfile,
+      sendPasswordReset,
       signOut,
       isConfigured: !!supabase,
     }}>

@@ -171,7 +171,7 @@ export function HowItWorks() {
           <div className="mt-8 bg-gray-50 rounded-xl p-6 border border-gray-100">
             <p className="text-sm text-gray-500 leading-relaxed">
               <strong className="text-[#0a0a0a]">Important:</strong> The risk score is based on automated ML analysis and rule-based pattern detection.
-              It identifies risk signals — it does not guarantee that a contract is safe or unsafe.
+              It identifies risk signals; it does not guarantee that a contract is safe or unsafe.
               Always perform your own due diligence before interacting with any smart contract.
             </p>
           </div>

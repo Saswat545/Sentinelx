@@ -40,6 +40,8 @@ export function CookieBanner() {
                   src="/brand/dark/Icon mark.png"
                   alt=""
                   className="w-4 h-4 object-contain"
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                   }}

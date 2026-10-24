@@ -92,7 +92,7 @@ export function TrustMetricsSection() {
           className="text-center text-xs text-dark-muted mt-12 max-w-2xl mx-auto"
         >
           * Model metrics are evaluation results from our training dataset. 
-          SentinelX identifies potential security risks — it does not guarantee 
+          SentinelX identifies potential security risks. It does not guarantee 
           the safety or profitability of any asset. This is not financial advice.
         </motion.p>
       </div>

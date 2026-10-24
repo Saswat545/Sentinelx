@@ -247,7 +247,7 @@ const DepthCarousel = ({
       <div className="depth-carousel__stage">
         {data.map((item, i) => (
           <div key={i} ref={el => { cardRefs.current[i] = el; }} className="depth-carousel__card" style={{ width: cardWidth, height: cardHeight, borderRadius: radius }} aria-roledescription="slide" aria-label={`${i + 1} of ${count}`} aria-hidden={active !== i} onClick={() => onCardClick(i)}>
-            <img className="depth-carousel__img" src={item.image} alt={item.alt || ''} draggable={false} />
+            <img className="depth-carousel__img" src={item.image} alt={item.alt || ''} draggable={false} loading={i === active ? 'eager' : 'lazy'} decoding="async" />
             <span className="depth-carousel__tint" ref={el => { overlayRefs.current[i] = el; }} style={{ background: tint }} />
             {item.title && (
               <div className="depth-carousel__info">

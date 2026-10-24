@@ -12,6 +12,7 @@ interface AnalysisResult {
   modelInfo: { model: string; features: number; responseTime: string };
   aiAssessment: string;
   shapValues?: any;
+  saved?: boolean;
   error?: string;
 }
 
@@ -125,6 +126,14 @@ export function Results() {
           <p className="text-gray-500">
             Contract: <span className="font-mono text-gray-700 text-sm">{result.contractAddress}</span>
           </p>
+          {result.saved && (
+            <p className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Added to scan history
+            </p>
+          )}
         </motion.div>
 
         {/* Risk Score Card */}

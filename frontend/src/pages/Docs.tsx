@@ -70,7 +70,7 @@ export function Docs() {
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-gray-50 rounded-3xl p-12 text-center border border-gray-100">
           <h2 className="text-2xl font-display font-bold text-[#0a0a0a] mb-4">Ready to start?</h2>
-          <p className="text-gray-500 mb-8 max-w-lg mx-auto">Try the scanner yourself — no account needed for basic scans.</p>
+          <p className="text-gray-500 mb-8 max-w-lg mx-auto">Try the scanner yourself. No account needed for basic scans.</p>
           <Link to="/scan" className="inline-flex items-center gap-2 px-8 py-4 bg-[#6D001A] hover:bg-[#8B0023] text-white font-semibold rounded-full transition-all duration-300">
             Scan a Token
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>

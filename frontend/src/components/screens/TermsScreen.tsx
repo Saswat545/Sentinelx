@@ -53,7 +53,7 @@ export const TermsScreen: React.FC<TermsScreenProps> = ({ onNavigate }) => {
           <div className="p-4 bg-amber-950/30 border border-amber-800/40 rounded-xl space-y-2">
             <h3 className="text-base font-bold text-amber-400">⚠️ No Guarantee of Safety</h3>
             <p>
-              A low risk score from SentinelX does not guarantee that a smart contract or token is safe. SentinelX identifies potential risks based on pattern analysis and machine learning — it cannot predict all possible attack vectors or malicious behaviors. No automated tool can provide absolute security assurance.
+              A low risk score from SentinelX does not guarantee that a smart contract or token is safe. SentinelX identifies potential risks based on pattern analysis and machine learning; it cannot predict all possible attack vectors or malicious behaviors. No automated tool can provide absolute security assurance.
             </p>
           </div>
 

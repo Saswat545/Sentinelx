@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../lib/auth';
 import { adoptGuestScans, useScans } from '../../lib/scanStore';
+import { OnboardingProvider } from '../onboarding/OnboardingProvider';
 
 const PAGE_META: Record<string, { title: string; crumb: string }> = {
   '/dashboard': { title: 'Overview', crumb: 'Overview' },
@@ -251,6 +252,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   };
 
   return (
+    <OnboardingProvider>
     <div className="min-h-screen bg-[#F6F6F7] text-[#0a0a0a]">
       {mobileOpen && (
         <div
@@ -262,6 +264,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Sidebar */}
       <aside
+        data-tour="sidebar"
         className={`fixed inset-y-0 z-50 w-[272px] border-r border-gray-200 bg-white transition-[left] duration-300 ease-out lg:left-0 ${
           mobileOpen ? 'left-0' : '-left-[272px]'
         }`}
@@ -391,6 +394,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </footer>
       </div>
     </div>
+    </OnboardingProvider>
   );
 }
 

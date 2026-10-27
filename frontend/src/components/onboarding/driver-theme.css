@@ -1,0 +1,226 @@
+/* SentinelX theme for driver.js (tour popovers, hint beacons, checklist).
+   Loaded after driver.css / hints.css / checklist.css so these win the cascade.
+   Brand system: white surfaces, 16px radii, #6D001A crimson accent,
+   Orbitron display / Exo 2 body / JetBrains Mono eyebrows. */
+
+:root {
+  --driver-popover-font-family: 'Exo 2', ui-sans-serif, sans-serif;
+  --driver-hint-color: #6d001a;
+  --driver-hint-size: 24px;
+}
+
+/* ---------- Tour / hint popover ---------- */
+
+.driver-popover {
+  background-color: #ffffff;
+  border: 1px solid #e8e8ec;
+  border-radius: 16px;
+  padding: 18px 20px 16px;
+  min-width: 260px;
+  max-width: 340px;
+  color: #0a0a0a;
+  box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.24);
+}
+
+/* Clean card edge — spacing comes from popoverOffset instead of the arrow. */
+.driver-popover-arrow {
+  display: none;
+}
+
+.driver-popover-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+  color: #0a0a0a;
+  padding-right: 26px;
+}
+
+.driver-popover-description {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #6b7280;
+}
+
+.driver-popover-title[style*='block'] + .driver-popover-description {
+  margin-top: 6px;
+}
+
+.driver-popover-close-btn {
+  color: #c4c4cc;
+  font-size: 20px;
+  top: 4px;
+  right: 6px;
+}
+
+.driver-popover-close-btn:hover,
+.driver-popover-close-btn:focus-visible {
+  color: #0a0a0a;
+}
+
+.driver-popover-footer {
+  margin-top: 16px;
+}
+
+.driver-popover-progress-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #9ca3af;
+}
+
+.driver-popover-footer-btn {
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 16px;
+}
+
+.driver-popover-footer-btn:hover,
+.driver-popover-footer-btn:focus {
+  background-color: #f7f7f8;
+  border-color: #d4d4d8;
+}
+
+.driver-popover-footer-btn.sx-btn-next,
+.driver-popover-footer-btn.sx-btn-done {
+  background-color: #6d001a;
+  border-color: #6d001a;
+  color: #ffffff;
+}
+
+.driver-popover-footer-btn.sx-btn-next:hover,
+.driver-popover-footer-btn.sx-btn-next:focus,
+.driver-popover-footer-btn.sx-btn-done:hover,
+.driver-popover-footer-btn.sx-btn-done:focus {
+  background-color: #8b0023;
+  border-color: #8b0023;
+}
+
+/* Hint popovers get their shadow from hints.css — keep it on-brand too. */
+.driver-hint-popover.driver-popover {
+  box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.24);
+  filter: none;
+}
+
+/* ---------- Hint beacons ---------- */
+
+.driver-hint-dot,
+.driver-hint-pulse {
+  background-color: var(--driver-hint-color, #6d001a);
+}
+
+/* ---------- Checklist ---------- */
+
+.driver-checklist {
+  --driver-checklist-color: #6d001a;
+}
+
+.driver-checklist-launcher {
+  background-color: #0a0a0a;
+  border: 1px solid #0a0a0a;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow: 0 12px 28px -10px rgba(10, 10, 10, 0.4);
+}
+
+.driver-checklist-launcher:hover {
+  background-color: #6d001a;
+  border-color: #6d001a;
+}
+
+.driver-checklist-launcher-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+.driver-checklist-panel {
+  width: 336px;
+  border: 1px solid #e8e8ec;
+  border-radius: 16px;
+  box-shadow: 0 24px 48px -16px rgba(10, 10, 10, 0.24);
+}
+
+.driver-checklist-header {
+  background-color: rgba(109, 0, 26, 0.045);
+  border-bottom: 1px solid #f1f1f3;
+  border-radius: 16px 16px 0 0;
+  padding: 16px 16px 13px;
+}
+
+.driver-checklist-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0a0a0a;
+}
+
+.driver-checklist-description {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.driver-checklist-progress-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9ca3af;
+}
+
+.driver-checklist-progress-bar {
+  background-color: #f1f1f3;
+  border-radius: 999px;
+  height: 6px;
+}
+
+.driver-checklist-item-title {
+  font-size: 13.5px;
+}
+
+.driver-checklist-item-description {
+  font-size: 12.5px;
+}
+
+.driver-checklist-check {
+  border-color: #d4d4d8;
+}
+
+.driver-checklist-item-done .driver-checklist-item-title {
+  color: #9ca3af;
+}
+
+/* Celebration: the finish state flips the accent to green. */
+.driver-checklist-complete {
+  --driver-checklist-color: #16a34a;
+}
+
+.driver-checklist-complete .driver-checklist-launcher {
+  background-color: #16a34a;
+  border-color: #16a34a;
+}
+
+.driver-checklist-complete .driver-checklist-launcher:hover {
+  background-color: #15803d;
+  border-color: #15803d;
+}
+
+.driver-checklist-complete .driver-checklist-header {
+  background-color: rgba(22, 163, 74, 0.07);
+}
+
+.driver-checklist-complete .driver-checklist-title {
+  color: #15803d;
+}

@@ -2,6 +2,7 @@ import React, { useState, Suspense } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Dots } from '../components/ui/Dots';
+import { ScanHints } from '../components/onboarding/ScanHints';
 import { api } from '../lib/api';
 import { useAuth } from '../lib/auth';
 import { addScan, normalizeRiskLevel } from '../lib/scanStore';
@@ -254,7 +255,7 @@ export function Analyze() {
           ) : (
             <>
               {/* Mode Tabs */}
-              <div className="flex gap-2 mb-6">
+              <div id="scan-mode-tabs" className="flex gap-2 mb-6">
                 <button
                   onClick={() => { setMode('address'); setError(''); }}
                   className={`flex-1 px-5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
@@ -293,6 +294,7 @@ export function Analyze() {
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">Contract Address</label>
                     <input
+                      id="scan-input"
                       type="text"
                       value={contractAddress}
                       onChange={(e) => { setContractAddress(e.target.value); setError(''); }}
@@ -306,6 +308,7 @@ export function Analyze() {
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">Solidity Source Code</label>
                     <textarea
+                      id="scan-input"
                       value={solidityCode}
                       onChange={(e) => { setSolidityCode(e.target.value); setError(''); }}
                       placeholder={`// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract MyToken {\n  // Paste your Solidity code here\n}`}
@@ -377,6 +380,8 @@ export function Analyze() {
           )}
         </motion.div>
 
+        <ScanHints visible={mode === 'address' && !isAnalyzing} />
+
         {/* Example Contracts */}
         {mode === 'address' && !isAnalyzing && (
           <motion.div
@@ -388,7 +393,7 @@ export function Analyze() {
             <h3 className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wider">
               Try an Example
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div id="scan-examples" className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {exampleContracts.map((example, index) => (
                 <button
                   key={index}

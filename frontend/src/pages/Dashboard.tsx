@@ -80,6 +80,7 @@ export function Dashboard() {
 
   return (
     <div className="space-y-5">
+      <div data-tour="welcome">
       <PageHeader
         eyebrow={today}
         title={`Welcome back, ${displayName}`}
@@ -106,9 +107,10 @@ export function Dashboard() {
           </>
         }
       />
+      </div>
 
       {/* KPI row */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div data-tour="kpis" className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           label="Total scans"
           value={stats.total}
@@ -145,7 +147,7 @@ export function Dashboard() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+      <div data-tour="activity" className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <Panel className="xl:col-span-2">
           <PanelHeader
             title="Scan activity"
@@ -280,7 +282,8 @@ export function Dashboard() {
 
       {/* Recent scans + side rail */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
-        <Panel className="xl:col-span-2" padded={false}>
+        <div data-tour="recent" className="xl:col-span-2">
+        <Panel padded={false}>
           <div className="flex items-start justify-between gap-3 p-5 pb-0 sm:p-6 sm:pb-0">
             <div>
               <h2 className="font-display text-[15px] font-semibold text-[#0a0a0a]">Recent scans</h2>
@@ -369,8 +372,10 @@ export function Dashboard() {
             </div>
           )}
         </Panel>
+        </div>
 
         <div className="space-y-4">
+          <div data-tour="quick-actions">
           <Panel>
             <PanelHeader title="Quick actions" />
             <div className="space-y-1.5">
@@ -396,6 +401,7 @@ export function Dashboard() {
               ))}
             </div>
           </Panel>
+          </div>
 
           <Panel>
             <PanelHeader

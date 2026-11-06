@@ -114,7 +114,7 @@ export function Insights() {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-3xl"
         >
-          <p className="text-sm font-semibold tracking-wider text-[#6D001A] uppercase mb-3">
+          <p className="text-sm font-semibold tracking-wider text-[#0149FD] uppercase mb-3">
             Security Insights
           </p>
           <h1 className="text-4xl sm:text-5xl font-bold text-[#0a0a0a] tracking-tight leading-tight">
@@ -142,7 +142,7 @@ export function Insights() {
             >
               <Link
                 to={`/insights/${article.slug}`}
-                className="block group p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:border-[#6D001A]/20 hover:shadow-lg transition-all duration-300"
+                className="block group p-8 bg-gray-50 rounded-2xl border border-gray-100 hover:border-[#0149FD]/20 hover:shadow-lg transition-all duration-300"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <span
@@ -154,7 +154,7 @@ export function Insights() {
                   </span>
                   <span className="text-sm text-gray-400">{article.readTime}</span>
                 </div>
-                <h3 className="text-xl font-bold text-[#0a0a0a] group-hover:text-[#6D001A] transition-colors leading-tight mb-3">
+                <h3 className="text-xl font-bold text-[#0a0a0a] group-hover:text-[#0149FD] transition-colors leading-tight mb-3">
                   {article.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">{article.excerpt}</p>
@@ -180,7 +180,7 @@ export function Insights() {
             >
               <Link
                 to={`/insights/${article.slug}`}
-                className="block group p-6 bg-white rounded-xl border border-gray-100 hover:border-[#6D001A]/20 hover:shadow-md transition-all duration-300 h-full"
+                className="block group p-6 bg-white rounded-xl border border-gray-100 hover:border-[#0149FD]/20 hover:shadow-md transition-all duration-300 h-full"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <span
@@ -192,7 +192,7 @@ export function Insights() {
                   </span>
                   <span className="text-xs text-gray-400">{article.readTime}</span>
                 </div>
-                <h3 className="text-lg font-bold text-[#0a0a0a] group-hover:text-[#6D001A] transition-colors leading-snug mb-2">
+                <h3 className="text-lg font-bold text-[#0a0a0a] group-hover:text-[#0149FD] transition-colors leading-snug mb-2">
                   {article.title}
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{article.excerpt}</p>

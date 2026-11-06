@@ -62,19 +62,19 @@ export function Cookies() {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   <tr>
-                    <td className="py-3 font-mono text-xs text-[#6D001A]">Session/auth cookie</td>
+                    <td className="py-3 font-mono text-xs text-[#0149FD]">Session/auth cookie</td>
                     <td className="py-3 text-gray-600">Keeps you authenticated</td>
                     <td className="py-3 text-gray-600">Essential</td>
                     <td className="py-3 text-gray-600">Session</td>
                   </tr>
                   <tr>
-                    <td className="py-3 font-mono text-xs text-[#6D001A]">CSRF token</td>
+                    <td className="py-3 font-mono text-xs text-[#0149FD]">CSRF token</td>
                     <td className="py-3 text-gray-600">Protects against CSRF</td>
                     <td className="py-3 text-gray-600">Essential</td>
                     <td className="py-3 text-gray-600">Session</td>
                   </tr>
                   <tr>
-                    <td className="py-3 font-mono text-xs text-[#6D001A]">_ga, _ga_*</td>
+                    <td className="py-3 font-mono text-xs text-[#0149FD]">_ga, _ga_*</td>
                     <td className="py-3 text-gray-600">Analytics tracking</td>
                     <td className="py-3 text-gray-600">Analytics</td>
                     <td className="py-3 text-gray-600">Up to 2 years</td>
@@ -102,7 +102,7 @@ export function Cookies() {
             <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">6. Contact Us</h2>
             <p className="text-sm leading-relaxed">
               If you have questions about this Cookie Policy, contact us at{' '}
-              <a href="mailto:support@sentinelx.site" className="text-[#6D001A] hover:underline">
+              <a href="mailto:support@sentinelx.site" className="text-[#0149FD] hover:underline">
                 support@sentinelx.site
               </a>
             </p>

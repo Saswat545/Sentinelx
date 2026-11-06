@@ -22,7 +22,7 @@ export function ForgotPassword() {
     }
 
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/login`,
+      redirectTo: `${window.location.origin}/reset-password`,
     });
 
     if (resetError) {
@@ -37,7 +37,7 @@ export function ForgotPassword() {
     <div className="min-h-screen bg-white flex">
       {/* Left panel - dark */}
       <div className="hidden md:flex md:w-1/2 bg-[#0a0a0a] relative overflow-hidden items-center justify-center">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(109,0,26,0.15)_0%,_transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(1, 73, 253,0.15)_0%,_transparent_70%)]" />
         <div className="relative z-10 text-center px-12">
           <img src="/brand/dark/Stacked logo.png" alt="SentinelX" className="w-48 h-auto mx-auto mb-8 opacity-80" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
           <p className="text-white/30 text-sm leading-relaxed max-w-xs mx-auto">We'll send you a link to reset your password securely.</p>
@@ -61,7 +61,7 @@ export function ForgotPassword() {
                 </div>
                 <h1 className="text-2xl font-display font-bold text-[#0a0a0a] mb-2">Check your email</h1>
                 <p className="text-gray-500 text-sm mb-8">We sent a password reset link to <strong className="text-[#0a0a0a]">{email}</strong></p>
-                <Link to="/login" className="inline-flex items-center gap-2 text-sm text-[#6D001A] hover:underline font-medium">Back to Sign In</Link>
+                <Link to="/login" className="inline-flex items-center gap-2 text-sm text-[#0149FD] hover:underline font-medium">Back to Sign In</Link>
               </>
             ) : (
               <>
@@ -71,18 +71,18 @@ export function ForgotPassword() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-1.5">Email</label>
-                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-[#0a0a0a] placeholder-gray-400 focus:outline-none focus:border-[#6D001A] focus:ring-1 focus:ring-[#6D001A]/20 transition-all duration-300" />
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-[#0a0a0a] placeholder-gray-400 focus:outline-none focus:border-[#0149FD] focus:ring-1 focus:ring-[#0149FD]/20 transition-all duration-300" />
                   </div>
 
                   {error && <p className="text-sm text-red-500">{error}</p>}
 
-                  <button type="submit" disabled={loading} className="w-full py-3 bg-[#6D001A] hover:bg-[#8B0023] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-300">
+                  <button type="submit" disabled={loading} className="w-full py-3 bg-[#0149FD] hover:bg-[#0033CC] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-300">
                     {loading ? 'Sending...' : 'Send Reset Link'}
                   </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-gray-500">
-                  Remember your password? <Link to="/login" className="text-[#6D001A] hover:underline font-medium">Sign in</Link>
+                  Remember your password? <Link to="/login" className="text-[#0149FD] hover:underline font-medium">Sign in</Link>
                 </p>
               </>
             )}

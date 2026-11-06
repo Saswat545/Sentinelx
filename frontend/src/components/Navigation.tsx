@@ -54,13 +54,11 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-gray-200 bg-white/85 backdrop-blur-md">
         <div
-          className={`flex items-center justify-between w-full max-w-5xl px-5 py-2.5 transition-all duration-500 ${
-            scrolled
-              ? 'bg-white/85 backdrop-blur-2xl border border-gray-200/80 shadow-lg shadow-black/5'
-              : 'bg-white/50 backdrop-blur-xl border border-white/10'
-          } rounded-full`}
+          className={`mx-auto flex w-full max-w-6xl items-center justify-between px-6 transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            scrolled ? 'h-14' : 'h-16'
+          }`}
         >
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label="SentinelX Home">
@@ -73,7 +71,7 @@ export function Navigation() {
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
             />
             <span className="text-[#0a0a0a] font-display font-semibold text-sm tracking-tight hidden sm:block">
-              Sentinel<span className="text-[#6D001A]">X</span>
+              Sentinel<span className="text-[#0149FD]">X</span>
             </span>
           </Link>
 
@@ -86,7 +84,7 @@ export function Navigation() {
                 onMouseEnter={() => setActiveDropdown(item.label)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center gap-1 px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
+                <button className="flex items-center gap-1 rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900">
                   {item.label}
                   <svg className={`w-3 h-3 transition-transform duration-200 ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -95,17 +93,18 @@ export function Navigation() {
                 <AnimatePresence>
                   {activeDropdown === item.label && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                      initial={{ opacity: 0, y: -6, scale: 0.97 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 py-1.5 bg-white/95 backdrop-blur-2xl border border-gray-200/80 rounded-2xl shadow-xl shadow-black/8"
+                      exit={{ opacity: 0, y: -6, scale: 0.99 }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ transformOrigin: 'top center' }}
+                      className="absolute top-full left-1/2 mt-2 w-56 -translate-x-1/2 rounded-lg border border-gray-200 bg-white py-1.5 shadow-[0_8px_24px_rgba(15,18,22,0.08)]"
                     >
                       {item.items.map((subItem) => (
                         <Link
                           key={subItem.label}
                           to={subItem.href}
-                          className="block px-4 py-2.5 text-sm text-gray-500 hover:text-[#0a0a0a] hover:bg-gray-50 transition-colors mx-1 rounded-xl"
+                          className="mx-1 block rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
                         >
                           {subItem.label}
                         </Link>
@@ -121,29 +120,29 @@ export function Navigation() {
           <div className="flex items-center gap-2">
             {user && isConfigured ? (
               <>
-                <Link to="/dashboard" className="hidden sm:block px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
+                <Link to="/dashboard" className="hidden rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 sm:block">
                   Dashboard
                 </Link>
-                <button onClick={() => signOut()} className="px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
-                  Sign Out
+                <button onClick={() => signOut()} className="rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900">
+                  Sign out
                 </button>
               </>
             ) : (
-              <Link to="/login" className="hidden sm:block px-4 py-2 text-[13px] text-gray-500 hover:text-[#0a0a0a] font-medium transition-colors rounded-full hover:bg-gray-100/80">
-                Log In
+              <Link to="/login" className="hidden rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 sm:block">
+                Log in
               </Link>
             )}
             <Link
               to="/scan"
-              className="px-5 py-2 bg-[#6D001A] hover:bg-[#8B0023] text-white text-[13px] font-semibold rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-[#6D001A]/20"
+              className="inline-flex h-9 items-center rounded-lg bg-[#0149FD] px-4 text-[13px] font-semibold text-white hover:bg-[#0033CC]"
             >
-              Scan a Token
+              Scan a contract
             </Link>
 
             {/* Mobile hamburger */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden w-9 h-9 flex items-center justify-center text-gray-500 hover:text-[#0a0a0a] transition-colors rounded-full hover:bg-gray-100/80"
+              className="flex h-9 w-9 items-center justify-center rounded-md text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 lg:hidden"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -169,10 +168,10 @@ export function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-x-0 top-20 z-50 lg:hidden px-4"
+            className="fixed inset-x-0 top-16 z-40 border-b border-gray-200 bg-white lg:hidden"
           >
-            <div className="bg-white/95 backdrop-blur-2xl border border-gray-200/80 rounded-3xl shadow-xl shadow-black/10 overflow-hidden">
-              <div className="p-6 space-y-1">
+            <div className="max-h-[calc(100vh-4rem)] overflow-y-auto">
+              <div className="space-y-1 px-6 py-5">
                 {navItems.map((item) => (
                   <div key={item.label}>
                     <button
@@ -214,7 +213,7 @@ export function Navigation() {
                       <Link to="/login" className="block w-full py-3 text-center text-sm text-gray-600 hover:text-[#0a0a0a] rounded-xl hover:bg-gray-50 transition-all">
                         Sign In
                       </Link>
-                      <Link to="/signup" className="block w-full py-3 text-center text-sm text-white font-semibold bg-[#6D001A] hover:bg-[#8B0023] rounded-xl transition-all">
+                      <Link to="/signup" className="block w-full py-3 text-center text-sm text-white font-semibold bg-[#0149FD] hover:bg-[#0033CC] rounded-xl transition-all">
                         Create Account
                       </Link>
                     </>

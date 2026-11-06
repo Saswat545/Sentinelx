@@ -14,6 +14,8 @@ import { Navigation } from './components/Navigation';
 import { AppShell } from './components/app/AppShell';
 import { Footer } from './components/Footer';
 import { CookieBanner } from './components/CookieBanner';
+import { Analytics } from './components/Analytics';
+import { RouteErrorBoundary } from './components/RouteErrorBoundary';
 import { LoadingScreen } from './components/LoadingScreen';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
@@ -43,6 +45,7 @@ const IncidentReports = lazy(() => import('./pages/IncidentReports').then((m) =>
 const Insights = lazy(() => import('./pages/Insights').then((m) => ({ default: m.Insights })));
 const Docs = lazy(() => import('./pages/Docs').then((m) => ({ default: m.Docs })));
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword').then((m) => ({ default: m.ForgotPassword })));
+const ResetPassword = lazy(() => import('./pages/ResetPassword').then((m) => ({ default: m.ResetPassword })));
 const Billing = lazy(() => import('./pages/Billing').then((m) => ({ default: m.Billing })));
 const Watchlist = lazy(() => import('./pages/Watchlist').then((m) => ({ default: m.Watchlist })));
 const Features = lazy(() => import('./pages/Features').then((m) => ({ default: m.Features })));
@@ -78,6 +81,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/login': 'Log In | SentinelX',
   '/signup': 'Create Account | SentinelX',
   '/forgot-password': 'Reset Password | SentinelX',
+  '/reset-password': 'Choose a New Password | SentinelX',
   '/analyze': 'Analyze Contract | SentinelX',
   '/results': 'Analysis Results | SentinelX',
   '/dashboard': 'Dashboard | SentinelX',
@@ -93,6 +97,12 @@ function ScrollToTop() {
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   useEffect(() => {
     document.title = ROUTE_TITLES[pathname] ?? 'Page Not Found | SentinelX';
+  }, [pathname]);
+  /* New route means new document height, so GSAP's scroll positions need
+     recalculating after the paint instead of on the old layout. */
+  useEffect(() => {
+    const id = window.setTimeout(() => ScrollTrigger.refresh(), 60);
+    return () => window.clearTimeout(id);
   }, [pathname]);
   return null;
 }
@@ -120,25 +130,32 @@ function App() {
     const lenis = reduceMotion
       ? null
       : new Lenis({
-          duration: 1.2,
+          duration: 1.05,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
+          wheelMultiplier: 1,
+          touchMultiplier: 1.6,
         });
 
-    if (lenis) {
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-    }
+    /* Drive Lenis from GSAP's ticker so both share one clock. ScrollTrigger
+       then reads the same scroll position the browser paints. */
+    const tick = (time: number) => lenis?.raf(time * 1000);
+    gsap.ticker.add(tick);
+    lenis?.on('scroll', ScrollTrigger.update);
     gsap.ticker.lagSmoothing(0);
 
     // First visit in a session plays the full brand splash; later loads skip the wait
     const seen = sessionStorage.getItem('sentinelx_splash_seen');
-    const delay = seen ? 0 : 1900;
+    const delay = seen ? 0 : 700;
     const timer = setTimeout(() => {
       sessionStorage.setItem('sentinelx_splash_seen', '1');
       setIsLoading(false);
     }, delay);
-    return () => { lenis?.destroy(); clearTimeout(timer); };
+    return () => {
+      gsap.ticker.remove(tick);
+      lenis?.destroy();
+      clearTimeout(timer);
+    };
   }, []);
 
   if (isLoading) return <MotionConfig reducedMotion="user"><LoadingScreen /></MotionConfig>;
@@ -148,10 +165,12 @@ function App() {
     <Router>
       <AuthProvider>
         <ScrollToTop />
+        <Analytics />
+        <RouteErrorBoundary>
         <Suspense
           fallback={
             <div className="min-h-screen bg-white flex items-center justify-center" role="status" aria-label="Loading page">
-              <div className="w-8 h-8 rounded-full border-2 border-gray-200 border-t-[#6D001A] animate-spin" />
+              <div className="w-8 h-8 rounded-full border-2 border-gray-200 border-t-[#0149FD] animate-spin" />
             </div>
           }
         >
@@ -159,6 +178,7 @@ function App() {
           {/* Auth pages — no nav/footer */}
           <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
           <Route path="/forgot-password" element={<AuthLayout><ForgotPassword /></AuthLayout>} />
+          <Route path="/reset-password" element={<AuthLayout><ResetPassword /></AuthLayout>} />
           <Route path="/signup" element={<AuthLayout><Signup /></AuthLayout>} />
 
           {/* Public marketing pages */}
@@ -192,11 +212,9 @@ function App() {
               <ProtectedRoute><Analyze /></ProtectedRoute>
             </MainLayout>
           } />
-          <Route path="/results" element={
-            <MainLayout>
-              <ProtectedRoute><Results /></ProtectedRoute>
-            </MainLayout>
-          } />
+          {/* Results stay public: guests see a scan result with the signal
+              list truncated, and the page itself offers the account. */}
+          <Route path="/results" element={<MainLayout><Results /></MainLayout>} />
           <Route
             path="/dashboard"
             element={
@@ -254,6 +272,7 @@ function App() {
           <Route path="*" element={<MainLayout><NotFound /></MainLayout>} />
           </Routes>
         </Suspense>
+        </RouteErrorBoundary>
       </AuthProvider>
     </Router>
     </MotionConfig>

@@ -91,6 +91,12 @@ const ScrollReveal = ({
       scrollContainerRef?.current ?? window;
 
     /*
+     * Scoped context: everything created below belongs to it,
+     * so unmounting reverts only THIS component's triggers.
+     */
+    const ctx = gsap.context(() => {
+
+    /*
      * ROTATION
      */
 
@@ -219,19 +225,17 @@ const ScrollReveal = ({
 
     }
 
+    }, el);
+
 
     /*
-     * CLEANUP
+     * CLEANUP — revert this component's own context only.
+     * Killing every ScrollTrigger on the page (the old behavior)
+     * destroyed other sections' scroll animations on unmount.
      */
 
     return () => {
-
-      ScrollTrigger
-        .getAll()
-        .forEach(trigger => {
-          trigger.kill();
-        });
-
+      ctx.revert();
     };
 
   }, [

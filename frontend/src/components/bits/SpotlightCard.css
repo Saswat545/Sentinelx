@@ -1,7 +1,7 @@
 .card-spotlight {
   --mouse-x: 50%;
   --mouse-y: 50%;
-  --spotlight-color: rgba(109, 0, 26, 0.15);
+  --spotlight-color: rgba(1, 73, 253, 0.15);
   position: relative;
   border-radius: 16px;
   overflow: hidden;
@@ -30,6 +30,6 @@
 }
 
 .card-spotlight:hover {
-  border-color: rgba(109, 0, 26, 0.2);
+  border-color: rgba(1, 73, 253, 0.2);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }

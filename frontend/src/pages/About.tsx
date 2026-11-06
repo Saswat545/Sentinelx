@@ -74,7 +74,7 @@ export function About() {
             </p>
             <Link
               to="/contact"
-              className="inline-flex px-6 py-3 bg-[#6D001A] hover:bg-[#8B0023] text-white font-semibold rounded-xl transition-all duration-300"
+              className="inline-flex px-6 py-3 bg-[#0149FD] hover:bg-[#0033CC] text-white font-semibold rounded-xl transition-all duration-300"
             >
               Contact Us
             </Link>

@@ -16,14 +16,14 @@ export function IncidentReports() {
     <div className="min-h-screen bg-white pt-28 pb-16 px-4">
       <div className="max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-12">
-          <span className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">Intelligence</span>
+          <span className="text-[#0149FD] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">Intelligence</span>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-[#0a0a0a] mb-4">Incident Reports</h1>
           <p className="text-gray-500 max-w-2xl">Real-world rug pulls and security incidents. See how SentinelX would have detected these patterns.</p>
         </motion.div>
 
         <div className="space-y-6">
           {incidents.map((incident, index) => (
-            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.08 }} className="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm hover:border-[#6D001A]/20 transition-all">
+            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.08 }} className="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm hover:border-[#0149FD]/20 transition-all">
               <div className="flex flex-col md:flex-row md:items-start gap-6">
                 <div className="shrink-0">
                   <div className="text-3xl font-display font-bold text-red-500 mb-1">{incident.loss}</div>
@@ -37,10 +37,10 @@ export function IncidentReports() {
                   </div>
                   <p className="text-gray-500 text-sm leading-relaxed mb-4">{incident.description}</p>
                   <div>
-                    <p className="text-xs font-mono text-[#6D001A] uppercase tracking-wider mb-2">What SentinelX would flag:</p>
+                    <p className="text-xs font-mono text-[#0149FD] uppercase tracking-wider mb-2">What SentinelX would flag:</p>
                     <div className="flex flex-wrap gap-2">
                       {incident.signals.map((signal, i) => (
-                        <span key={i} className="text-xs px-3 py-1 bg-[#6D001A]/5 text-[#6D001A] border border-[#6D001A]/10 rounded-full">
+                        <span key={i} className="text-xs px-3 py-1 bg-[#0149FD]/5 text-[#0149FD] border border-[#0149FD]/10 rounded-full">
                           {signal}
                         </span>
                       ))}
@@ -55,7 +55,7 @@ export function IncidentReports() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 bg-gray-50 rounded-3xl p-12 text-center border border-gray-100">
           <h2 className="text-2xl font-display font-bold text-[#0a0a0a] mb-4">Don't become the next statistic.</h2>
           <p className="text-gray-500 mb-8 max-w-lg mx-auto">Analyze any contract before you invest. No account required for basic scans.</p>
-          <Link to="/scan" className="inline-flex items-center gap-2 px-8 py-4 bg-[#6D001A] hover:bg-[#8B0023] text-white font-semibold rounded-full transition-all duration-300">
+          <Link to="/scan" className="inline-flex items-center gap-2 px-8 py-4 bg-[#0149FD] hover:bg-[#0033CC] text-white font-semibold rounded-full transition-all duration-300">
             Scan a Token
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
           </Link>

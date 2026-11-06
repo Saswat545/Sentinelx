@@ -80,7 +80,7 @@ export function LoadingScreen() {
               style={{ willChange: 'transform, opacity, filter' }}
             >
               {letter.char === 'X' ? (
-                <span className="text-[#6D001A]">X</span>
+                <span className="text-[#0149FD]">X</span>
               ) : (
                 letter.char
               )}

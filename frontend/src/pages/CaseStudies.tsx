@@ -211,7 +211,7 @@ export function CaseStudies() {
 
                 {/* Lesson */}
                 <div className="bg-white rounded-lg p-4 border border-gray-100">
-                  <h4 className="text-sm font-semibold text-[#6D001A] mb-1">
+                  <h4 className="text-sm font-semibold text-[#0149FD] mb-1">
                     Key Takeaway
                   </h4>
                   <p className="text-sm text-gray-600 leading-relaxed">{study.lesson}</p>
@@ -231,7 +231,7 @@ export function CaseStudies() {
           </p>
           <Link
             to="/scan"
-            className="inline-block bg-[#6D001A] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#5a0015] transition-colors"
+            className="inline-block bg-[#0149FD] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#5a0015] transition-colors"
           >
             Start Free Analysis
           </Link>

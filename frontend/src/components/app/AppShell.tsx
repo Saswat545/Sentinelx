@@ -67,7 +67,7 @@ function NavItem({
       className={({ isActive }) =>
         `group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
           isActive
-            ? 'bg-[#6D001A]/[0.06] font-semibold text-[#6D001A]'
+            ? 'bg-[#0149FD]/[0.06] font-semibold text-[#0149FD]'
             : 'font-medium text-gray-600 hover:bg-gray-100 hover:text-[#0a0a0a]'
         }`
       }
@@ -75,11 +75,11 @@ function NavItem({
       {({ isActive }) => (
         <>
           {isActive && (
-            <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-[#6D001A]" />
+            <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-[#0149FD]" />
           )}
           <Icon
             className={`h-[18px] w-[18px] shrink-0 transition-colors ${
-              isActive ? 'text-[#6D001A]' : 'text-gray-400 group-hover:text-gray-600'
+              isActive ? 'text-[#0149FD]' : 'text-gray-400 group-hover:text-gray-600'
             }`}
           />
           <span>{label}</span>
@@ -111,7 +111,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
             }}
           />
           <span className="font-display text-[15px] font-semibold tracking-tight text-[#0a0a0a]">
-            Sentinel<span className="text-[#6D001A]">X</span>
+            Sentinel<span className="text-[#0149FD]">X</span>
           </span>
         </Link>
         <button
@@ -144,10 +144,10 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </nav>
 
         {/* Scanner CTA */}
-        <div className="mt-6 rounded-2xl border border-[#6D001A]/10 bg-gradient-to-br from-[#6D001A]/[0.06] via-white to-white p-4">
+        <div className="mt-6 rounded-2xl border border-[#0149FD]/10 bg-gradient-to-br from-[#0149FD]/[0.06] via-white to-white p-4">
           <div className="mb-2 flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-[#6D001A]" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#6D001A]">
+            <ShieldCheck className="h-4 w-4 text-[#0149FD]" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#0149FD]">
               Scanner
             </span>
           </div>
@@ -157,7 +157,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           <Link
             to="/scan"
             onClick={onNavigate}
-            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#6D001A] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#8B0023]"
+            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#0149FD] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#0033CC]"
           >
             <Plus className="h-3.5 w-3.5" />
             New scan
@@ -174,14 +174,14 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           </div>
           <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
             <div
-              className="h-full rounded-full bg-[#6D001A] transition-all duration-500"
+              className="h-full rounded-full bg-[#0149FD] transition-all duration-500"
               style={{ width: `${Math.min(100, (stats.last30Days / 50) * 100)}%` }}
             />
           </div>
           <Link
             to="/billing"
             onClick={onNavigate}
-            className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-[#6D001A] hover:underline"
+            className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-[#0149FD] hover:underline"
           >
             View usage
             <ChevronRight className="h-3 w-3" />
@@ -303,14 +303,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder="Search contracts…"
-                    className="w-56 rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-3 text-sm text-[#0a0a0a] placeholder:text-gray-400 transition-all focus:w-72 focus:border-[#6D001A]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6D001A]/10"
+                    className="w-56 rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-3 text-sm text-[#0a0a0a] placeholder:text-gray-400 transition-all focus:w-72 focus:border-[#0149FD]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
                   />
                 </div>
               </form>
 
               <Link
                 to="/scan"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023]"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC]"
               >
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline">New scan</span>
@@ -323,7 +323,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               >
                 <Bell className="h-[18px] w-[18px]" />
                 {stats.highRisk > 0 && (
-                  <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[#6D001A]" />
+                  <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[#0149FD]" />
                 )}
               </Link>
 

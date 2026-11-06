@@ -59,7 +59,7 @@ export function HowItWorks() {
           <motion.span
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block"
+            className="text-[#0149FD] font-mono text-xs tracking-[0.2em] uppercase mb-4 block"
           >
             Methodology
           </motion.span>
@@ -95,22 +95,22 @@ export function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 border border-gray-200 hover:border-[#6D001A]/20 transition-all group shadow-sm"
+                className="bg-white rounded-2xl p-8 border border-gray-200 hover:border-[#0149FD]/20 transition-all group shadow-sm"
               >
                 <div className="flex items-start gap-5">
-                  <div className="w-14 h-14 rounded-xl bg-[#6D001A]/5 border border-[#6D001A]/10 flex items-center justify-center shrink-0 group-hover:bg-[#6D001A]/10 transition-colors">
-                    <svg className="w-7 h-7 text-[#6D001A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-14 h-14 rounded-xl bg-[#0149FD]/5 border border-[#0149FD]/10 flex items-center justify-center shrink-0 group-hover:bg-[#0149FD]/10 transition-colors">
+                    <svg className="w-7 h-7 text-[#0149FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={step.icon} />
                     </svg>
                   </div>
                   <div>
-                    <span className="text-xs font-mono text-[#6D001A]/50 block mb-1">Step {step.num}</span>
+                    <span className="text-xs font-mono text-[#0149FD]/50 block mb-1">Step {step.num}</span>
                     <h3 className="text-xl font-display font-semibold text-[#0a0a0a] mb-2">{step.title}</h3>
                     <p className="text-gray-500 text-sm leading-relaxed mb-4">{step.desc}</p>
                     <div className="space-y-2">
                       {step.details.map((detail, i) => (
                         <div key={i} className="flex items-center gap-2">
-                          <svg className="w-3.5 h-3.5 text-[#6D001A]/60" fill="currentColor" viewBox="0 0 20 20">
+                          <svg className="w-3.5 h-3.5 text-[#0149FD]/60" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                           <span className="text-sm text-gray-500">{detail}</span>
@@ -134,7 +134,7 @@ export function HowItWorks() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">
+            <span className="text-[#0149FD] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">
               Risk Scoring
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0a0a0a] mb-4">
@@ -187,7 +187,7 @@ export function HowItWorks() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <span className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">
+            <span className="text-[#0149FD] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">
               Feature Extraction
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-[#0a0a0a] mb-4">
@@ -206,11 +206,11 @@ export function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="bg-white rounded-xl p-6 border border-gray-200 hover:border-[#6D001A]/20 transition-all shadow-sm"
+                className="bg-white rounded-xl p-6 border border-gray-200 hover:border-[#0149FD]/20 transition-all shadow-sm"
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-semibold text-[#0a0a0a]">{category.name}</h3>
-                  <span className="text-xs font-mono text-[#6D001A] bg-[#6D001A]/5 px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-mono text-[#0149FD] bg-[#0149FD]/5 px-2 py-0.5 rounded-full">
                     {category.count}
                   </span>
                 </div>
@@ -238,7 +238,7 @@ export function HowItWorks() {
             </p>
             <Link
               to="/scan"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#6D001A] hover:bg-[#8B0023] text-white font-semibold rounded-full transition-all duration-300 shadow-sm"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#0149FD] hover:bg-[#0033CC] text-white font-semibold rounded-full transition-all duration-300 shadow-sm"
             >
               Scan a Token
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

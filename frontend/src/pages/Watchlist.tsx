@@ -42,7 +42,7 @@ export function Watchlist() {
         actions={
           <Link
             to="/scan"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023]"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC]"
           >
             <ScanLine className="h-4 w-4" />
             New scan
@@ -68,7 +68,7 @@ export function Watchlist() {
                 }}
                 placeholder="0x…"
                 spellCheck={false}
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 font-mono text-[12px] text-[#0a0a0a] placeholder:text-gray-400 focus:border-[#6D001A]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6D001A]/10"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 font-mono text-[12px] text-[#0a0a0a] placeholder:text-gray-400 focus:border-[#0149FD]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
               />
             </div>
             <div>
@@ -79,7 +79,7 @@ export function Watchlist() {
                 value={label}
                 onChange={(event) => setLabel(event.target.value)}
                 placeholder="e.g. TREASURY-V3"
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-[12px] text-[#0a0a0a] placeholder:text-gray-400 focus:border-[#6D001A]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6D001A]/10"
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 text-[12px] text-[#0a0a0a] placeholder:text-gray-400 focus:border-[#0149FD]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
               />
             </div>
 
@@ -143,7 +143,7 @@ export function Watchlist() {
                   </span>
                   <Link
                     to={`/scan?address=${item.address}`}
-                    className="shrink-0 rounded-lg border border-gray-200 px-2.5 py-1.5 text-[11px] font-medium text-gray-600 transition-colors hover:border-[#6D001A]/30 hover:text-[#6D001A]"
+                    className="shrink-0 rounded-lg border border-gray-200 px-2.5 py-1.5 text-[11px] font-medium text-gray-600 transition-colors hover:border-[#0149FD]/30 hover:text-[#0149FD]"
                   >
                     Scan
                   </Link>

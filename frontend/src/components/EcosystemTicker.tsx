@@ -49,7 +49,7 @@ export function EcosystemTicker() {
               key={index}
               className="flex items-center gap-2.5 px-8 py-3 shrink-0"
             >
-              <span className="text-[#6D001A]/60 text-lg">{item.icon}</span>
+              <span className="text-[#0149FD]/60 text-lg">{item.icon}</span>
               <span className="text-white/30 text-sm font-medium tracking-wide hover:text-white/60 transition-colors duration-300 whitespace-nowrap">
                 {item.name}
               </span>
@@ -66,7 +66,7 @@ export function EcosystemTicker() {
               key={index}
               className="flex items-center gap-3 px-6 py-2 shrink-0"
             >
-              <span className="text-[#6D001A]/30 text-[10px]">●</span>
+              <span className="text-[#0149FD]/30 text-[10px]">●</span>
               <span className="text-white/20 text-xs font-['JetBrains_Mono'] tracking-[0.15em] uppercase whitespace-nowrap">
                 {item}
               </span>

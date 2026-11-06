@@ -10,8 +10,8 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F6F6F7]">
         <div className="flex flex-col items-center gap-3">
-          <span className="flex h-11 w-11 animate-pulse items-center justify-center rounded-xl border border-[#6D001A]/15 bg-[#6D001A]/[0.06]">
-            <svg className="h-5 w-5 text-[#6D001A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <span className="flex h-11 w-11 animate-pulse items-center justify-center rounded-xl border border-[#0149FD]/15 bg-[#0149FD]/[0.06]">
+            <svg className="h-5 w-5 text-[#0149FD]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

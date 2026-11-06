@@ -99,7 +99,7 @@ export function Dashboard() {
             </Link>
             <Link
               to="/scan"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023]"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC]"
             >
               <ScanLine className="h-4 w-4" />
               New scan
@@ -154,7 +154,7 @@ export function Dashboard() {
             description="Contracts analysed per day, last 14 days"
             action={
               <Pill>
-                <Activity className="h-3 w-3 text-[#6D001A]" />
+                <Activity className="h-3 w-3 text-[#0149FD]" />
                 {stats.last7Days} this week
               </Pill>
             }
@@ -164,8 +164,8 @@ export function Dashboard() {
               <AreaChart data={stats.trend} margin={{ top: 6, right: 6, left: -22, bottom: 0 }}>
                 <defs>
                   <linearGradient id="scanFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#6D001A" stopOpacity={0.22} />
-                    <stop offset="100%" stopColor="#6D001A" stopOpacity={0.01} />
+                    <stop offset="0%" stopColor="#0149FD" stopOpacity={0.22} />
+                    <stop offset="100%" stopColor="#0149FD" stopOpacity={0.01} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid vertical={false} stroke="#f1f1f3" />
@@ -197,7 +197,7 @@ export function Dashboard() {
                   type="monotone"
                   dataKey="scans"
                   name="Scans"
-                  stroke="#6D001A"
+                  stroke="#0149FD"
                   strokeWidth={2}
                   fill="url(#scanFill)"
                   dot={false}
@@ -217,7 +217,7 @@ export function Dashboard() {
               title="No risk data yet"
               description="Risk bands appear here once you analyse a contract."
               action={
-                <Link to="/scan" className="text-xs font-semibold text-[#6D001A] hover:underline">
+                <Link to="/scan" className="text-xs font-semibold text-[#0149FD] hover:underline">
                   Run a scan →
                 </Link>
               }
@@ -291,7 +291,7 @@ export function Dashboard() {
             </div>
             <Link
               to="/history"
-              className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-[#6D001A] hover:underline"
+              className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-[#0149FD] hover:underline"
             >
               All scans
               <ArrowRight className="h-3 w-3" />
@@ -306,7 +306,7 @@ export function Dashboard() {
               action={
                 <Link
                   to="/scan"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023]"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC]"
                 >
                   Analyze your first contract
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -389,14 +389,14 @@ export function Dashboard() {
                   to={action.to}
                   className="group flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-gray-50"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-100 text-gray-500 transition-colors group-hover:bg-[#6D001A]/[0.08] group-hover:text-[#6D001A]">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gray-100 text-gray-500 transition-colors group-hover:bg-[#0149FD]/[0.08] group-hover:text-[#0149FD]">
                     <action.icon className="h-4 w-4" />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-[13px] font-medium text-[#0a0a0a]">{action.label}</span>
                     <span className="block text-[11px] text-gray-400">{action.desc}</span>
                   </span>
-                  <ArrowRight className="h-3.5 w-3.5 text-gray-300 transition-transform group-hover:translate-x-0.5 group-hover:text-[#6D001A]" />
+                  <ArrowRight className="h-3.5 w-3.5 text-gray-300 transition-transform group-hover:translate-x-0.5 group-hover:text-[#0149FD]" />
                 </Link>
               ))}
             </div>
@@ -407,7 +407,7 @@ export function Dashboard() {
             <PanelHeader
               title="Watchlist"
               action={
-                <Link to="/watchlist" className="text-xs font-medium text-[#6D001A] hover:underline">
+                <Link to="/watchlist" className="text-xs font-medium text-[#0149FD] hover:underline">
                   Manage
                 </Link>
               }

@@ -11,8 +11,13 @@ export interface AnalyzePayload {
 
 export interface AnalyzeResponse {
   contract_address?: string;
+  token_address?: string;
   risk_score: number;
   risk_level?: string;
+  verdict_label?: string;
+  /** false when the backend scored the contract by policy instead of running the model */
+  model_used?: boolean;
+  input_type?: string;
   flags?: Array<{ name: string; severity: string; description?: string }>;
   signals?: Array<{ name: string; severity: string; description?: string }>;
   model?: string;
@@ -20,6 +25,8 @@ export interface AnalyzeResponse {
   response_time?: string;
   ai_assessment?: string;
   explanation?: string;
+  recommendation?: string;
+  analysis_time_ms?: number;
   shap_values?: Record<string, number>;
 }
 
@@ -35,7 +42,9 @@ class SentinelXApi {
 
   constructor() {
     this.baseUrl = API_URL;
-    this.timeout = 30000; // 30s timeout
+    /* The Render instance sleeps when idle and a cold start can take 40s,
+       so allow 75s before giving up. */
+    this.timeout = 75000;
   }
 
   get isConfigured(): boolean {
@@ -88,7 +97,7 @@ class SentinelXApi {
 
       if (error.name === 'AbortError') {
         throw new Error(
-          'The analysis request timed out. Please try again.'
+          'The analysis service is starting up and took too long. Wait a few seconds and try again.'
         );
       }
 

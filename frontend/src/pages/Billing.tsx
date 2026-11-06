@@ -73,7 +73,7 @@ export function Billing() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <Pill>
-                <ShieldCheck className="h-3 w-3 text-[#6D001A]" />
+                <ShieldCheck className="h-3 w-3 text-[#0149FD]" />
                 Current plan
               </Pill>
               <h2 className="mt-3 font-display text-2xl font-bold text-[#0a0a0a]">Free</h2>
@@ -83,7 +83,7 @@ export function Billing() {
             </div>
             <Link
               to="/pricing"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023]"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC]"
             >
               <Sparkles className="h-4 w-4" />
               Upgrade
@@ -103,7 +103,7 @@ export function Billing() {
             <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-100">
               <div
                 className={`h-full rounded-full transition-all duration-700 ${
-                  percentage >= 90 ? 'bg-red-500' : percentage >= 70 ? 'bg-amber-500' : 'bg-[#6D001A]'
+                  percentage >= 90 ? 'bg-red-500' : percentage >= 70 ? 'bg-amber-500' : 'bg-[#0149FD]'
                 }`}
                 style={{ width: `${Math.max(percentage, used > 0 ? 3 : 0)}%` }}
               />
@@ -147,7 +147,7 @@ export function Billing() {
             </p>
             <Link
               to="/contact"
-              className="mt-3 inline-block text-[11px] font-semibold text-[#6D001A] hover:underline"
+              className="mt-3 inline-block text-[11px] font-semibold text-[#0149FD] hover:underline"
             >
               Contact us about Pro →
             </Link>
@@ -184,12 +184,12 @@ export function Billing() {
             key={plan.name}
             className={
               plan.highlighted
-                ? 'relative border-[#6D001A]/30 ring-1 ring-[#6D001A]/10'
+                ? 'relative border-[#0149FD]/30 ring-1 ring-[#0149FD]/10'
                 : undefined
             }
           >
             {plan.highlighted && (
-              <span className="absolute -top-2.5 left-5 rounded-full bg-[#6D001A] px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-white">
+              <span className="absolute -top-2.5 left-5 rounded-full bg-[#0149FD] px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-white">
                 Recommended
               </span>
             )}
@@ -202,7 +202,7 @@ export function Billing() {
             <ul className="mt-4 space-y-2">
               {plan.features.map((feature) => (
                 <li key={feature} className="flex items-start gap-2 text-[12px] text-gray-600">
-                  <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#6D001A]" />
+                  <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0149FD]" />
                   {feature}
                 </li>
               ))}
@@ -210,7 +210,7 @@ export function Billing() {
             {plan.href ? (
               <Link
                 to={plan.href}
-                className="mt-5 block rounded-xl border border-gray-200 bg-white py-2 text-center text-[12px] font-semibold text-[#0a0a0a] transition-colors hover:border-[#6D001A]/30 hover:text-[#6D001A]"
+                className="mt-5 block rounded-xl border border-gray-200 bg-white py-2 text-center text-[12px] font-semibold text-[#0a0a0a] transition-colors hover:border-[#0149FD]/30 hover:text-[#0149FD]"
               >
                 {plan.cta}
               </Link>

@@ -65,7 +65,7 @@ export function Terms() {
             <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">5. Contact</h2>
             <p className="text-sm leading-relaxed">
               For questions about these Terms, contact us at{' '}
-              <a href="mailto:legal@sentinelx.site" className="text-[#6D001A] hover:underline">
+              <a href="mailto:legal@sentinelx.site" className="text-[#0149FD] hover:underline">
                 legal@sentinelx.site
               </a>
             </p>

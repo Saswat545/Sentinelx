@@ -1,11 +1,11 @@
 /* SentinelX theme for driver.js (tour popovers, hint beacons, checklist).
    Loaded after driver.css / hints.css / checklist.css so these win the cascade.
-   Brand system: white surfaces, 16px radii, #6D001A crimson accent,
+   Brand system: white surfaces, 16px radii, #0149FD crimson accent,
    Orbitron display / Exo 2 body / JetBrains Mono eyebrows. */
 
 :root {
   --driver-popover-font-family: 'Exo 2', ui-sans-serif, sans-serif;
-  --driver-hint-color: #6d001a;
+  --driver-hint-color: #0149FD;
   --driver-hint-size: 24px;
 }
 
@@ -90,8 +90,8 @@
 
 .driver-popover-footer-btn.sx-btn-next,
 .driver-popover-footer-btn.sx-btn-done {
-  background-color: #6d001a;
-  border-color: #6d001a;
+  background-color: #0149FD;
+  border-color: #0149FD;
   color: #ffffff;
 }
 
@@ -113,13 +113,13 @@
 
 .driver-hint-dot,
 .driver-hint-pulse {
-  background-color: var(--driver-hint-color, #6d001a);
+  background-color: var(--driver-hint-color, #0149FD);
 }
 
 /* ---------- Checklist ---------- */
 
 .driver-checklist {
-  --driver-checklist-color: #6d001a;
+  --driver-checklist-color: #0149FD;
 }
 
 .driver-checklist-launcher {
@@ -133,8 +133,8 @@
 }
 
 .driver-checklist-launcher:hover {
-  background-color: #6d001a;
-  border-color: #6d001a;
+  background-color: #0149FD;
+  border-color: #0149FD;
 }
 
 .driver-checklist-launcher-count {
@@ -153,7 +153,7 @@
 }
 
 .driver-checklist-header {
-  background-color: rgba(109, 0, 26, 0.045);
+  background-color: rgba(1, 73, 253, 0.045);
   border-bottom: 1px solid #f1f1f3;
   border-radius: 16px 16px 0 0;
   padding: 16px 16px 13px;

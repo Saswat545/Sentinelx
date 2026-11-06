@@ -82,7 +82,7 @@ export function Disclaimer() {
             <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-3">6. Contact Us</h2>
             <p className="text-sm leading-relaxed">
               If you have questions about this Disclaimer, contact us at{' '}
-              <a href="mailto:support@sentinelx.site" className="text-[#6D001A] hover:underline">
+              <a href="mailto:support@sentinelx.site" className="text-[#0149FD] hover:underline">
                 support@sentinelx.site
               </a>
             </p>

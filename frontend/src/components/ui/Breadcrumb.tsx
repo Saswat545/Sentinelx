@@ -38,7 +38,7 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
       >
         <ol className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
           <li>
-            <Link to="/" className="hover:text-[#6D001A] transition-colors">
+            <Link to="/" className="hover:text-[#0149FD] transition-colors">
               Home
             </Link>
           </li>
@@ -48,7 +48,7 @@ export function Breadcrumb({ items, className = '' }: BreadcrumbProps) {
                 /
               </span>
               {item.href ? (
-                <Link to={item.href} className="hover:text-[#6D001A] transition-colors">
+                <Link to={item.href} className="hover:text-[#0149FD] transition-colors">
                   {item.label}
                 </Link>
               ) : (

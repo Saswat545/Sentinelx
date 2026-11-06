@@ -74,7 +74,7 @@ export function Features() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <span className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">
+          <span className="text-[#0149FD] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">
             Features
           </span>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-[#0a0a0a] mb-4">
@@ -95,9 +95,9 @@ export function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-2xl p-8 border border-gray-200 hover:border-[#6D001A]/20 transition-all duration-300 group shadow-sm hover:shadow-md"
+              className="bg-white rounded-2xl p-8 border border-gray-200 hover:border-[#0149FD]/20 transition-all duration-300 group shadow-sm hover:shadow-md"
             >
-              <div className="w-14 h-14 rounded-xl bg-[#6D001A]/5 flex items-center justify-center text-[#6D001A] mb-6 group-hover:bg-[#6D001A]/10 transition-colors">
+              <div className="w-14 h-14 rounded-xl bg-[#0149FD]/5 flex items-center justify-center text-[#0149FD] mb-6 group-hover:bg-[#0149FD]/10 transition-colors">
                 <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={feature.icon} />
                 </svg>
@@ -107,7 +107,7 @@ export function Features() {
               <ul className="space-y-2">
                 {feature.details.map((detail, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-gray-500">
-                    <svg className="w-4 h-4 text-[#6D001A] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-[#0149FD] shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     {detail}
@@ -128,7 +128,7 @@ export function Features() {
           <p className="text-gray-500 mb-6">Ready to analyze a contract?</p>
           <Link
             to="/scan"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[#6D001A] hover:bg-[#8B0023] text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-[#6D001A]/20"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[#0149FD] hover:bg-[#0033CC] text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-[#0149FD]/20"
           >
             Analyze a Contract
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

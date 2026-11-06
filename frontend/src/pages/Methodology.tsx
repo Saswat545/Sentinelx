@@ -161,7 +161,7 @@ export function Methodology() {
               className="relative pl-16 sm:pl-20"
             >
               {/* Step number */}
-              <div className="absolute left-0 top-0 w-12 h-12 bg-[#6D001A] text-white rounded-xl flex items-center justify-center font-bold text-lg">
+              <div className="absolute left-0 top-0 w-12 h-12 bg-[#0149FD] text-white rounded-xl flex items-center justify-center font-bold text-lg">
                 {item.step}
               </div>
               {/* Connector line */}
@@ -175,7 +175,7 @@ export function Methodology() {
                   {item.details.map((detail, j) => (
                     <li key={j} className="flex items-start gap-2 text-sm text-gray-500">
                       <svg
-                        className="w-4 h-4 mt-0.5 text-[#6D001A] flex-shrink-0"
+                        className="w-4 h-4 mt-0.5 text-[#0149FD] flex-shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -213,7 +213,7 @@ export function Methodology() {
               transition={{ delay: i * 0.05, duration: 0.3 }}
               className="p-6 bg-gray-50 rounded-xl border border-gray-100"
             >
-              <div className="text-3xl font-bold text-[#6D001A] font-mono">{metric.value}</div>
+              <div className="text-3xl font-bold text-[#0149FD] font-mono">{metric.value}</div>
               <div className="mt-1 font-semibold text-[#0a0a0a]">{metric.label}</div>
               <div className="text-sm text-gray-500 mt-1">{metric.description}</div>
             </motion.div>
@@ -256,7 +256,7 @@ export function Methodology() {
           </p>
           <Link
             to="/scan"
-            className="inline-block bg-[#6D001A] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#5a0015] transition-colors"
+            className="inline-block bg-[#0149FD] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#5a0015] transition-colors"
           >
             Analyze a Contract
           </Link>

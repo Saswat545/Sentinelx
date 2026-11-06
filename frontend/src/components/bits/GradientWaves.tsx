@@ -61,7 +61,7 @@ const ctxMap = new WeakMap<Element, { renderer: Renderer; program: Program; mesh
 
 export default function GradientWaves({
   horizonColor = '#1a0a2e',
-  waveColor = '#6D001A',
+  waveColor = '#0149FD',
   crestColor = '#0059ff',
   speed = 0.4,
   amplitude = 2.5,

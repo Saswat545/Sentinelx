@@ -13,7 +13,7 @@ export function ComingSoon({ title = 'This Page', description }: ComingSoonProps
     <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 bg-white">
       {/* Subtle background accent */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#6D001A]/3 rounded-full blur-[120px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#0149FD]/3 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 text-center max-w-2xl mx-auto">
@@ -24,7 +24,7 @@ export function ComingSoon({ title = 'This Page', description }: ComingSoonProps
           transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-gray-50 border border-gray-200"
         >
-          <span className="w-2 h-2 bg-[#6D001A] rounded-full animate-pulse" />
+          <span className="w-2 h-2 bg-[#0149FD] rounded-full animate-pulse" />
           <span className="text-xs font-mono text-gray-500 tracking-wider uppercase">Under Construction</span>
         </motion.div>
 
@@ -39,7 +39,7 @@ export function ComingSoon({ title = 'This Page', description }: ComingSoonProps
             showCursor={true}
             cursorCharacter="|"
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-[#0a0a0a]"
-            textColors={['#0a0a0a', '#6D001A', '#0a0a0a']}
+            textColors={['#0a0a0a', '#0149FD', '#0a0a0a']}
           />
         </div>
 
@@ -65,7 +65,7 @@ export function ComingSoon({ title = 'This Page', description }: ComingSoonProps
         >
           <Link
             to="/"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[#6D001A] text-white font-semibold rounded-full transition-all duration-300 hover:bg-[#8B0023] hover:shadow-lg hover:shadow-[#6D001A]/20"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-[#0149FD] text-white font-semibold rounded-full transition-all duration-300 hover:bg-[#0033CC] hover:shadow-lg hover:shadow-[#0149FD]/20"
           >
             Back to Home
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

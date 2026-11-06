@@ -202,15 +202,15 @@ def is_eth_address(text: str) -> bool:
 def score_to_verdict(score: int) -> tuple[str, str]:
     """Return (verdict_code, verdict_label) for a given score."""
     if score >= 80:
-        return "CRITICAL", "Critical Risk — Do Not Invest"
+        return "CRITICAL", "Treat this contract as hostile."
     elif score >= 60:
-        return "HIGH",     "High Risk — Extreme Caution"
+        return "HIGH",     "Review this contract before interacting with it."
     elif score >= 40:
-        return "MEDIUM",   "Medium Risk — Verify Carefully"
+        return "MEDIUM",   "Check the flagged signals before trading."
     elif score >= 20:
-        return "LOW",      "Low Risk — Standard Precautions"
+        return "LOW",      "Standard precautions apply."
     else:
-        return "SAFE",     "Likely Safe — Still Do Your Research"
+        return "SAFE",     "No rug pull patterns matched."
 
 
 def score_to_recommendation(score: int, flags: list) -> str:
@@ -461,24 +461,22 @@ def analyze(req: AnalyzeRequest):
             return AnalyzeResponse(
                 risk_score=90,
                 verdict="CRITICAL",
-                verdict_label="Critical Risk — Unverified Contract",
+                verdict_label="Source code is not verified.",
                 rug_probability=0.90,
                 input_type=input_type,
                 flags=[FlagItem(
                     name="Unverified Source Code",
                     severity="CRITICAL",
-                    description="Contract source code is not verified on Etherscan. "
-                                "No legitimate project hides their code."
+                    description="Etherscan has no verified source code for this address, "
+                                "so the model could not run. The score is a policy "
+                                "result, not an ML prediction."
                 )],
                 shap_top_features=[],
                 recommendation=(
-                    "🚫 CRITICAL: Source code not verified on Etherscan.\n\n"
-                    "This is an automatic red flag. Every legitimate project verifies "
-                    "their source code. An unverified contract means:\n"
-                    "  • The team is hiding what the code does\n"
-                    "  • There is no way to audit it\n"
-                    "  • This is a common pattern in exit scams\n\n"
-                    "DO NOT INVEST in unverified contracts."
+                    "Source code is not verified on Etherscan, so there is nothing to "
+                    "analyse. Ask the deployer to verify the source, or read the "
+                    "bytecode yourself before trading. Treat the score as a policy "
+                    "warning rather than an ML prediction."
                 ),
                 model_used=False,
                 analysis_time_ms=int((time.time() - start_ms) * 1000),

@@ -130,7 +130,7 @@ export function History() {
             )}
             <Link
               to="/scan"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023]"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-3.5 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC]"
             >
               <ScanLine className="h-4 w-4" />
               New scan
@@ -148,7 +148,7 @@ export function History() {
               value={query}
               onChange={(event) => updateQuery(event.target.value)}
               placeholder="Search by contract address or name…"
-              className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-3 font-mono text-[12px] text-[#0a0a0a] placeholder:font-sans placeholder:text-gray-400 focus:border-[#6D001A]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6D001A]/10"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-3 font-mono text-[12px] text-[#0a0a0a] placeholder:font-sans placeholder:text-gray-400 focus:border-[#0149FD]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
             />
           </div>
 
@@ -161,7 +161,7 @@ export function History() {
                   setLevel(event.target.value);
                   setPage(0);
                 }}
-                className="appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-8 text-xs font-medium text-gray-600 focus:border-[#6D001A]/40 focus:outline-none focus:ring-2 focus:ring-[#6D001A]/10"
+                className="appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-8 pr-8 text-xs font-medium text-gray-600 focus:border-[#0149FD]/40 focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
               >
                 {['All', 'Critical', 'High', 'Medium', 'Low'].map((option) => (
                   <option key={option} value={option}>
@@ -176,7 +176,7 @@ export function History() {
               <select
                 value={sort}
                 onChange={(event) => setSort(event.target.value as SortKey)}
-                className="appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-8 text-xs font-medium text-gray-600 focus:border-[#6D001A]/40 focus:outline-none focus:ring-2 focus:ring-[#6D001A]/10"
+                className="appearance-none rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-8 text-xs font-medium text-gray-600 focus:border-[#0149FD]/40 focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
               >
                 <option value="newest">Newest first</option>
                 <option value="oldest">Oldest first</option>
@@ -201,7 +201,7 @@ export function History() {
               scans.length === 0 ? (
                 <Link
                   to="/scan"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023]"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC]"
                 >
                   Start your first scan
                   <ChevronRight className="h-3.5 w-3.5" />
@@ -213,7 +213,7 @@ export function History() {
                     updateQuery('');
                     setLevel('All');
                   }}
-                  className="text-xs font-semibold text-[#6D001A] hover:underline"
+                  className="text-xs font-semibold text-[#0149FD] hover:underline"
                 >
                   Clear filters
                 </button>
@@ -259,7 +259,7 @@ export function History() {
                             <div className="flex items-center gap-2">
                               <ChevronRight
                                 className={`h-3.5 w-3.5 shrink-0 text-gray-300 transition-transform ${
-                                  isOpen ? 'rotate-90 text-[#6D001A]' : ''
+                                  isOpen ? 'rotate-90 text-[#0149FD]' : ''
                                 }`}
                               />
                               <div className="min-w-0">

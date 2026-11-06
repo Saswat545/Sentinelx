@@ -16,7 +16,7 @@ export function PageHeader({
     <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div className="min-w-0">
         {eyebrow && (
-          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[#6D001A]">
+          <p className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[#0149FD]">
             {eyebrow}
           </p>
         )}
@@ -73,7 +73,7 @@ export function PanelHeader({
 }
 
 const STAT_TONES: Record<string, { bg: string; text: string }> = {
-  brand: { bg: 'bg-[#6D001A]/[0.07]', text: 'text-[#6D001A]' },
+  brand: { bg: 'bg-[#0149FD]/[0.07]', text: 'text-[#0149FD]' },
   red: { bg: 'bg-red-50', text: 'text-red-600' },
   amber: { bg: 'bg-amber-50', text: 'text-amber-600' },
   emerald: { bg: 'bg-emerald-50', text: 'text-emerald-600' },

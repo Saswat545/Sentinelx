@@ -14,11 +14,14 @@ export function CookieBanner() {
 
   const handleAccept = () => {
     localStorage.setItem('sentinelx_cookie_consent', 'accepted');
+    // Let Analytics know it is now allowed to load GA
+    window.dispatchEvent(new CustomEvent('sentinelx:consent', { detail: 'accepted' }));
     setIsVisible(false);
   };
 
   const handleDecline = () => {
     localStorage.setItem('sentinelx_cookie_consent', 'declined');
+    window.dispatchEvent(new CustomEvent('sentinelx:consent', { detail: 'declined' }));
     setIsVisible(false);
   };
 
@@ -35,7 +38,7 @@ export function CookieBanner() {
           <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-xl shadow-black/8">
             {/* Header */}
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-[#6D001A]/10 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-[#0149FD]/10 flex items-center justify-center">
                 <img
                   src="/brand/dark/Icon mark.png"
                   alt=""
@@ -57,7 +60,7 @@ export function CookieBanner() {
               We use cookies to enhance your experience and analyze site traffic.
               <a
                 href="/privacy"
-                className="text-[#6D001A] hover:underline ml-1 font-medium"
+                className="text-[#0149FD] hover:underline ml-1 font-medium"
               >
                 Read our Privacy Policy
               </a>
@@ -67,13 +70,13 @@ export function CookieBanner() {
             <div className="flex gap-2">
               <button
                 onClick={handleDecline}
-                className="flex-1 px-3 py-2 border border-gray-200 text-gray-500 hover:text-[#0a0a0a] hover:border-[#6D001A]/30 rounded-lg text-xs font-semibold transition-all duration-200"
+                className="flex-1 px-3 py-2 border border-gray-200 text-gray-500 hover:text-[#0a0a0a] hover:border-[#0149FD]/30 rounded-lg text-xs font-semibold transition-all duration-200"
               >
                 Decline
               </button>
               <button
                 onClick={handleAccept}
-                className="flex-1 px-3 py-2 bg-[#6D001A] hover:bg-[#8B0023] text-white rounded-lg text-xs font-semibold transition-all duration-200"
+                className="flex-1 px-3 py-2 bg-[#0149FD] hover:bg-[#0033CC] text-white rounded-lg text-xs font-semibold transition-all duration-200"
               >
                 Accept
               </button>

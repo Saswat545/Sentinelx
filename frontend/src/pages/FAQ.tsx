@@ -40,7 +40,7 @@ export function FAQ() {
     <div className="min-h-screen bg-white pt-28 pb-16 px-4">
       <div className="max-w-3xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-          <span className="text-[#6D001A] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">FAQ</span>
+          <span className="text-[#0149FD] font-mono text-xs tracking-[0.2em] uppercase mb-4 block">FAQ</span>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-[#0a0a0a] mb-4">Frequently Asked Questions</h1>
           <p className="text-gray-500">Everything you need to know about SentinelX.</p>
         </motion.div>

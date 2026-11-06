@@ -110,7 +110,7 @@ export function Settings() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex shrink-0 items-center gap-2.5 rounded-xl px-3 py-2.5 text-[13px] transition-colors ${
                 activeTab === tab.id
-                  ? 'bg-[#6D001A]/[0.06] font-semibold text-[#6D001A]'
+                  ? 'bg-[#0149FD]/[0.06] font-semibold text-[#0149FD]'
                   : 'font-medium text-gray-500 hover:bg-gray-50 hover:text-[#0a0a0a]'
               }`}
             >
@@ -145,7 +145,7 @@ export function Settings() {
                       setProfileState('idle');
                     }}
                     placeholder="Your name"
-                    className="w-full max-w-md rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm text-[#0a0a0a] placeholder:text-gray-400 focus:border-[#6D001A]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6D001A]/10"
+                    className="w-full max-w-md rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm text-[#0a0a0a] placeholder:text-gray-400 focus:border-[#0149FD]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
                   />
                 </div>
 
@@ -168,11 +168,11 @@ export function Settings() {
                     Plan
                   </label>
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#6D001A]/15 bg-[#6D001A]/[0.06] px-3 py-1 text-xs font-semibold text-[#6D001A]">
+                    <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#0149FD]/15 bg-[#0149FD]/[0.06] px-3 py-1 text-xs font-semibold text-[#0149FD]">
                       <ShieldCheck className="h-3.5 w-3.5" />
                       Free
                     </span>
-                    <Link to="/billing" className="text-xs font-medium text-[#6D001A] hover:underline">
+                    <Link to="/billing" className="text-xs font-medium text-[#0149FD] hover:underline">
                       View usage
                     </Link>
                   </div>
@@ -189,7 +189,7 @@ export function Settings() {
                     type="button"
                     onClick={saveProfile}
                     disabled={!isConfigured || profileState === 'saving' || !name.trim()}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-[#6D001A] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#8B0023] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-[#0149FD] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0033CC] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {profileState === 'saving' ? 'Saving…' : 'Save changes'}
                   </button>
@@ -290,7 +290,7 @@ export function Settings() {
                       aria-checked={prefs[item.key]}
                       onClick={() => togglePref(item.key)}
                       className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
-                        prefs[item.key] ? 'bg-[#6D001A]' : 'bg-gray-200'
+                        prefs[item.key] ? 'bg-[#0149FD]' : 'bg-gray-200'
                       }`}
                     >
                       <span

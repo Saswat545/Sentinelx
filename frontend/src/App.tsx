@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { MotionConfig } from 'framer-motion';
 import { gsap } from 'gsap';
@@ -17,6 +17,7 @@ import { CookieBanner } from './components/CookieBanner';
 import { Analytics } from './components/Analytics';
 import { RouteErrorBoundary } from './components/RouteErrorBoundary';
 import { LoadingScreen } from './components/LoadingScreen';
+import { PageTransition } from './components/motion/PageTransition';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 // Pages — Home stays eager (landing route); everything else code-splits on demand
@@ -111,7 +112,9 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white text-[#0a0a0a] flex flex-col">
       <Navigation />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <PageTransition>{children}</PageTransition>
+      </main>
       <Footer />
       <CookieBanner />
     </div>
@@ -119,11 +122,32 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 }
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
-  return <div className="min-h-screen">{children}</div>;
+  return (
+    <div className="min-h-screen">
+      <PageTransition>{children}</PageTransition>
+    </div>
+  );
 }
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  /* First visit in a session gets the full brand moment; repeat loads get a
+     short one, so the splash never becomes a toll booth. */
+  const [splashDuration] = useState(() => {
+    try {
+      return sessionStorage.getItem('sentinelx_splash_seen') ? 1200 : 2900;
+    } catch {
+      return 1200;
+    }
+  });
+  const finishSplash = useCallback(() => {
+    try {
+      sessionStorage.setItem('sentinelx_splash_seen', '1');
+    } catch {
+      /* Private mode: the splash simply replays next load. */
+    }
+    setIsLoading(false);
+  }, []);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -144,21 +168,19 @@ function App() {
     lenis?.on('scroll', ScrollTrigger.update);
     gsap.ticker.lagSmoothing(0);
 
-    // First visit in a session plays the full brand splash; later loads skip the wait
-    const seen = sessionStorage.getItem('sentinelx_splash_seen');
-    const delay = seen ? 0 : 700;
-    const timer = setTimeout(() => {
-      sessionStorage.setItem('sentinelx_splash_seen', '1');
-      setIsLoading(false);
-    }, delay);
     return () => {
       gsap.ticker.remove(tick);
       lenis?.destroy();
-      clearTimeout(timer);
     };
   }, []);
 
-  if (isLoading) return <MotionConfig reducedMotion="user"><LoadingScreen /></MotionConfig>;
+  if (isLoading) {
+    return (
+      <MotionConfig reducedMotion="user">
+        <LoadingScreen duration={splashDuration} onDone={finishSplash} />
+      </MotionConfig>
+    );
+  }
 
   return (
     <MotionConfig reducedMotion="user">

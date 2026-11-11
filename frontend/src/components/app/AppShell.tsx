@@ -18,6 +18,7 @@ import {
 import { useAuth } from '../../lib/auth';
 import { adoptGuestScans, useScans } from '../../lib/scanStore';
 import { OnboardingProvider } from '../onboarding/OnboardingProvider';
+import { SmoothInput } from '../ui/SmoothInput';
 
 const PAGE_META: Record<string, { title: string; crumb: string }> = {
   '/dashboard': { title: 'Overview', crumb: 'Overview' },
@@ -299,11 +300,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <form onSubmit={submitSearch} className="hidden md:block">
                 <div className="relative">
                   <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                  <input
+                  <SmoothInput
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder="Search contracts…"
-                    className="w-56 rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-3 text-sm text-[#0a0a0a] placeholder:text-gray-400 transition-all focus:w-72 focus:border-[#0149FD]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10"
+                    aria-label="Search scanned contracts"
+                    className="w-56 rounded-xl border border-gray-200 bg-gray-50 py-2 pl-9 pr-3 text-sm text-[#0a0a0a] transition-colors duration-200 placeholder:text-gray-400 focus:border-[#0149FD]/40 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0149FD]/10 focus:w-72"
                   />
                 </div>
               </form>
@@ -388,7 +390,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              XGBoost v2.4 · 53 feature AST
+              XGBoost · 53 features
             </span>
           </div>
         </footer>

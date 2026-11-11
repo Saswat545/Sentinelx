@@ -6,16 +6,8 @@ import { useAuth } from '../lib/auth';
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const { user, signOut, isConfigured } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -54,12 +46,8 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="fixed inset-x-0 top-0 z-50 border-b border-gray-200 bg-white/85 backdrop-blur-md">
-        <div
-          className={`mx-auto flex w-full max-w-6xl items-center justify-between px-6 transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            scrolled ? 'h-14' : 'h-16'
-          }`}
-        >
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-gray-200/70 bg-white/70 backdrop-blur-xl">
+        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0" aria-label="SentinelX Home">
             <img
@@ -84,7 +72,13 @@ export function Navigation() {
                 onMouseEnter={() => setActiveDropdown(item.label)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center gap-1 rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900">
+                <button
+                  type="button"
+                  aria-expanded={activeDropdown === item.label}
+                  onFocus={() => setActiveDropdown(item.label)}
+                  onBlur={() => setActiveDropdown(null)}
+                  className="flex items-center gap-1 rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors duration-200 hover:bg-gray-50 hover:text-gray-900"
+                >
                   {item.label}
                   <svg className={`w-3 h-3 transition-transform duration-200 ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -104,7 +98,12 @@ export function Navigation() {
                         <Link
                           key={subItem.label}
                           to={subItem.href}
-                          className="mx-1 block rounded-md px-3 py-2 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
+                          aria-current={location.pathname === subItem.href ? 'page' : undefined}
+                          className={`mx-1 block rounded-md px-3 py-2 text-sm transition-colors duration-200 hover:bg-gray-50 hover:text-gray-900 ${
+                            location.pathname === subItem.href
+                              ? 'bg-[#F5F7FA] font-medium text-gray-900'
+                              : 'text-gray-600'
+                          }`}
                         >
                           {subItem.label}
                         </Link>

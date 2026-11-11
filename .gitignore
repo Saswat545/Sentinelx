@@ -55,3 +55,7 @@ coverage/
 
 # Misc
 skills-lock.json
+
+# Bulk Etherscan evaluation cache (regenerable, ~19 MB)
+backend/scripts/cache_sources.json
+backend/scripts/*.log

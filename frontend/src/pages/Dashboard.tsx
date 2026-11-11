@@ -173,14 +173,14 @@ export function Dashboard() {
                   dataKey="label"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 10, fill: '#9ca3af', fontFamily: 'JetBrains Mono' }}
+                  tick={{ fontSize: 10, fill: '#9ca3af', fontFamily: 'Geist Mono' }}
                   interval={2}
                 />
                 <YAxis
                   allowDecimals={false}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 10, fill: '#9ca3af', fontFamily: 'JetBrains Mono' }}
+                  tick={{ fontSize: 10, fill: '#9ca3af', fontFamily: 'Geist Mono' }}
                   width={40}
                 />
                 <Tooltip

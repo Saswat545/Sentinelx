@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Dots } from '../components/ui/Dots';
 import { ScanHints } from '../components/onboarding/ScanHints';
+import { SmoothInput } from '../components/ui/SmoothInput';
 import { api } from '../lib/api';
 import { useAuth } from '../lib/auth';
 import { addScan, normalizeRiskLevel } from '../lib/scanStore';
@@ -39,15 +40,24 @@ export function Analyze() {
     // If it's a direct address (0x + 40 hex chars), return as-is
     if (/^0x[a-fA-F0-9]{40}$/.test(trimmed)) return trimmed;
     
-    // If it's a URL, try to extract a 40-char address from it
-    const urlMatch = trimmed.match(/(0x[a-fA-F0-9]{40})/);
-    if (urlMatch) return urlMatch[1];
-    
-    // If it's a URL with a 64-char hash (like DEXScreener pair hash), extract first 40 chars
-    const longHashMatch = trimmed.match(/(0x[a-fA-F0-9]{64})/);
-    if (longHashMatch) return longHashMatch[1].slice(0, 42); // Take first 42 chars (0x + 40)
-    
+    // A 40-char address inside a URL or pasted text, but never the first 40
+    // characters of a 64-char transaction or pair hash.
+    const addressMatch = trimmed.match(/(0x[a-fA-F0-9]{40})(?![a-fA-F0-9])/i);
+    if (addressMatch) return addressMatch[1];
+
     return trimmed;
+  };
+
+  /* A 64-char hex string is a transaction or pool hash, not a contract address.
+     Slicing it to 42 characters invents an address that does not exist, and the
+     result page then reports it as an unverified contract scoring 90. */
+  const isTransactionOrPairHash = (input: string): boolean => {
+    const trimmed = input.trim();
+    if (/^0x[a-fA-F0-9]{64}$/.test(trimmed)) return true;
+    return (
+      /0x[a-fA-F0-9]{64}/i.test(trimmed) &&
+      !/(0x[a-fA-F0-9]{40})(?![a-fA-F0-9])/i.test(trimmed)
+    );
   };
 
   const isDexScreenerUrl = (input: string) => /dexscreener\.com/i.test(input);
@@ -63,6 +73,14 @@ export function Analyze() {
         return;
       }
       
+      if (isTransactionOrPairHash(contractAddress)) {
+        setError(
+          'That is a 64-character transaction or pool hash, not a contract address. ' +
+          'Open the token on Dexscreener or Etherscan and copy its 42-character contract address instead (0x followed by 40 characters).'
+        );
+        return;
+      }
+
       // Special message for DEXScreener URLs with pair hashes
       if (isDexScreenerUrl(contractAddress)) {
         const hasLongHash = /0x[a-fA-F0-9]{40,}/i.test(contractAddress);
@@ -114,7 +132,7 @@ export function Analyze() {
         setAnalyzingStep(0);
         navigate('/results', {
           state: {
-            contractAddress: mode === 'address' ? contractAddress.trim() : 'Solidity Source',
+            contractAddress: mode === 'address' ? extractAddress(contractAddress) : 'Solidity Source',
             inputMode: mode,
             riskScore: null,
             riskLevel: 'Unavailable',
@@ -168,7 +186,10 @@ export function Analyze() {
 
       navigate('/results', {
         state: {
-          contractAddress: data.contract_address || contractAddress.trim(),
+          contractAddress:
+            data.contract_address ||
+            data.token_address ||
+            (mode === 'address' ? extractAddress(contractAddress) : 'Solidity Source'),
           inputMode: mode,
           riskScore: data.risk_score,
           riskLevel: data.risk_level || (data.risk_score <= 30 ? 'Low' : data.risk_score <= 60 ? 'Medium' : data.risk_score <= 80 ? 'High' : 'Critical'),
@@ -310,13 +331,14 @@ export function Analyze() {
                 {mode === 'address' ? (
                   <div>
                     <label className="block text-sm font-medium text-gray-600 mb-2">Contract Address</label>
-                    <input
+                    <SmoothInput
                       id="scan-input"
                       type="text"
                       value={contractAddress}
                       onChange={(e) => { setContractAddress(e.target.value); setError(''); }}
                       placeholder="0x742d35Cc6634C0532925a3b844Bc9e7595f..."
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-mono text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#0149FD] focus:outline-none focus:ring-4 focus:ring-[#0149FD]/10"
+                      aria-label="Ethereum contract address"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-mono text-sm text-gray-900 placeholder:text-gray-400 transition-colors duration-200 focus:border-[#0149FD] focus:ring-4 focus:ring-[#0149FD]/10 focus:outline-none"
                       onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
                     />
                     <p className="mt-2 text-xs text-gray-400">Enter any Ethereum mainnet contract address</p>
@@ -340,6 +362,7 @@ export function Analyze() {
 
                 {error && (
                   <motion.p
+                    role="alert"
                     initial={{ opacity: 0, y: -5, x: 0 }}
                     animate={{ opacity: 1, y: 0, x: [0, -5, 4, -2, 0] }}
                     transition={{ x: { duration: 0.35, ease: 'easeInOut' }, opacity: { duration: 0.2 } }}

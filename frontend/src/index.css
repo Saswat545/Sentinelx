@@ -32,10 +32,42 @@ body {
   font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
   background: #ffffff;
   color: #111827;
+  line-height: 1.6;
   font-feature-settings: 'cv11', 'ss01';
   font-variant-ligatures: contextual;
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* One easing and one duration palette for the whole interface, so unrelated
+   components do not each invent their own motion feel. */
+:root {
+  --sx-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --sx-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --sx-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --sx-dur-quick: 160ms;
+  --sx-dur-base: 280ms;
+  --sx-dur-slow: 480ms;
+  --sx-hairline: #e5e7eb;
+  --sx-surface: #f7f8fa;
+  --sx-text-muted: #6b7280;
+}
+
+/* Tracking is size-specific: display sizes tighten, body stays near zero. */
+h4,
+h5,
+h6 {
+  letter-spacing: -0.01em;
+}
+
+/* Apple-style material fallback: when the OS asks for less transparency,
+   floating chrome becomes solid instead of staying translucent. */
+@media (prefers-reduced-transparency: reduce) {
+  nav {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+  }
 }
 
 /* Headings carry the hierarchy, so tighten the tracking instead of
@@ -99,4 +131,10 @@ button {
 
 .font-mono {
   font-family: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Tabular figures for scores and counters, so numbers do not shift width while
+   they animate. */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }

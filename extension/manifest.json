@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "SentinelX Contract Check",
+  "version": "1.0.0",
+  "description": "Find an Ethereum contract address or Solidity source on the page and score it for rug-pull risk without leaving the tab.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Check this contract with SentinelX"
+  },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://sentinelx-iz11.onrender.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "icons/icon128.png"
+  }
+}

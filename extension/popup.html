@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>SentinelX</title>
+  </head>
+  <body>
+    <header class="hd">
+      <span class="mark">SX</span>
+      <div class="hd-text">
+        <p class="name">SentinelX</p>
+        <p class="tag">Contract risk check</p>
+      </div>
+      <span id="dot" class="dot" data-state="idle" title="Idle"></span>
+    </header>
+
+    <main>
+      <p id="status" class="status">Reading this page…</p>
+
+      <section id="detected" class="block" hidden>
+        <p class="label">Found on this page</p>
+        <div id="list" class="list"></div>
+      </section>
+
+      <section id="source" class="block" hidden>
+        <button id="scanSource" class="ghost" type="button">Scan the Solidity on this page</button>
+      </section>
+
+      <form id="manual" class="block">
+        <label class="label" for="input">Or paste a contract address</label>
+        <div class="row">
+          <input id="input" autocomplete="off" spellcheck="false" placeholder="0x…" />
+          <button class="primary" type="submit">Scan</button>
+        </div>
+      </form>
+
+      <section id="result" class="result" hidden></section>
+    </main>
+
+    <footer class="ft">
+      <a id="open" href="https://www.sentinelx.site/scan" target="_blank" rel="noreferrer">
+        Open full scanner
+      </a>
+      <span class="note">Research only, not advice</span>
+    </footer>
+
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>

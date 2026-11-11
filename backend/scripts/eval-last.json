@@ -1,0 +1,100 @@
+[
+  {
+    "label": "USDC",
+    "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "contract": "FiatTokenProxy",
+    "status": "scored",
+    "sourceChars": 11012,
+    "score": 2,
+    "verdict": "SAFE",
+    "modelUsed": true,
+    "flags": [
+      "Proxy Without Timelock",
+      "Assembly Caller",
+      "Old Solidity Version"
+    ],
+    "topFeature": "has_proxy",
+    "topImpact": 1.869
+  },
+  {
+    "label": "WETH",
+    "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "contract": "WETH9",
+    "status": "scored",
+    "sourceChars": 38401,
+    "score": 5,
+    "verdict": "SAFE",
+    "modelUsed": true,
+    "flags": [
+      "Proxy Without Timelock",
+      "Old Solidity Version"
+    ],
+    "topFeature": "has_proxy",
+    "topImpact": 1.5698
+  },
+  {
+    "label": "DAI",
+    "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    "contract": "Dai",
+    "status": "scored",
+    "sourceChars": 7965,
+    "score": 5,
+    "verdict": "SAFE",
+    "modelUsed": true,
+    "flags": [
+      "Assembly Caller",
+      "Old Solidity Version"
+    ],
+    "topFeature": "payable_count",
+    "topImpact": 1.3925
+  },
+  {
+    "label": "UNI",
+    "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+    "contract": "Uni",
+    "status": "scored",
+    "sourceChars": 23858,
+    "score": 75,
+    "verdict": "HIGH",
+    "modelUsed": true,
+    "flags": [
+      "Hidden Owner",
+      "Mint + No Cap",
+      "Old Solidity Version"
+    ],
+    "topFeature": "payable_count",
+    "topImpact": 1.4212
+  },
+  {
+    "label": "LINK",
+    "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+    "contract": "LinkToken",
+    "status": "scored",
+    "sourceChars": 9102,
+    "score": 12,
+    "verdict": "SAFE",
+    "modelUsed": true,
+    "flags": [
+      "Old Solidity Version"
+    ],
+    "topFeature": "payable_count",
+    "topImpact": 1.4131
+  },
+  {
+    "label": "SHIB",
+    "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+    "contract": "TokenMintERC20Token",
+    "status": "scored",
+    "sourceChars": 16783,
+    "score": 35,
+    "verdict": "LOW",
+    "modelUsed": true,
+    "flags": [
+      "Unlimited Mint",
+      "Mint + No Cap",
+      "Old Solidity Version"
+    ],
+    "topFeature": "private_count",
+    "topImpact": 0.9494
+  }
+]

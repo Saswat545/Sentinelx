@@ -160,6 +160,47 @@ main {
   white-space: nowrap;
 }
 
+.chain-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.chain-head .label {
+  margin: 0;
+}
+
+.chains {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.chains button {
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font: 500 10px/1.6 inherit;
+  cursor: pointer;
+}
+
+.chains button:hover {
+  color: var(--ink);
+}
+
+.chains button[aria-pressed='true'] {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgb(17 24 39 / 8%);
+}
+
 .row {
   display: flex;
   gap: 6px;
@@ -223,6 +264,26 @@ input:focus {
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);
+}
+
+.result[data-tone='critical'] {
+  border-left: 3px solid #b42318;
+}
+
+.result[data-tone='high'] {
+  border-left: 3px solid #b45309;
+}
+
+.result[data-tone='medium'] {
+  border-left: 3px solid #956400;
+}
+
+.result[data-tone='low'] {
+  border-left: 3px solid #346538;
+}
+
+.result[data-tone='safe'] {
+  border-left: 3px solid var(--brand);
 }
 
 .score-row {

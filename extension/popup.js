@@ -16,6 +16,33 @@ const short = (value) => (value.length > 20 ? `${value.slice(0, 8)}…${value.sl
 const isAddress = (value) => /^0x[a-fA-F0-9]{40}$/.test(value.trim());
 const isHash = (value) => /^0x[a-fA-F0-9]{64}$/.test(value.trim());
 
+const CHAIN_NAMES = { ETH: 'Ethereum', BSC: 'BNB Chain', POLYGON: 'Polygon' };
+
+/** The API takes the chain as a field, so read it off the explorer's host. */
+function chainFor(url) {
+  let host = '';
+  try {
+    host = new URL(url).hostname;
+  } catch (error) {
+    return 'ETH';
+  }
+  if (/(^|\.)bscscan\.com$/i.test(host)) return 'BSC';
+  if (/(^|\.)polygonscan\.com$/i.test(host)) return 'POLYGON';
+  return 'ETH';
+}
+
+let currentChain = 'ETH';
+let scanToken = 0;
+
+const chainButtons = Array.from(document.querySelectorAll('.chains button'));
+
+function setChain(chain) {
+  currentChain = CHAIN_NAMES[chain] ? chain : 'ETH';
+  chainButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.chain === currentChain));
+  });
+}
+
 function status(text, state = 'idle') {
   els.status.textContent = text;
   els.dot.dataset.state = state;
@@ -81,6 +108,7 @@ function renderResult(data, address) {
 
   els.result.replaceChildren();
   els.result.hidden = false;
+  els.result.dataset.tone = tone;
 
   const row = document.createElement('div');
   row.className = 'score-row';
@@ -132,7 +160,7 @@ function renderResult(data, address) {
   if (address) {
     const line = document.createElement('p');
     line.className = 'addr-line';
-    line.textContent = address;
+    line.textContent = `${address} · ${CHAIN_NAMES[currentChain] || currentChain}`;
     els.result.append(line);
   }
 
@@ -156,19 +184,37 @@ async function scan(input) {
     return;
   }
 
+  const token = ++scanToken;
   status('Scanning…', 'busy');
   els.result.hidden = true;
 
+  // The free server sleeps between visits, so the first check can queue behind
+  // a cold start. Say that instead of leaving the popup looking frozen.
+  const slow = setTimeout(() => {
+    if (token === scanToken) {
+      status('Waking the scanner. The free server sleeps between visits, so a first check can take a minute.', 'busy');
+    }
+  }, 4000);
+
   let response;
   try {
-    response = await chrome.runtime.sendMessage({ type: 'sx:analyze', input: value });
+    response = await chrome.runtime.sendMessage({ type: 'sx:analyze', input: value, chain: currentChain });
   } catch (error) {
+    clearTimeout(slow);
     status('Could not reach the background worker. Reopen the popup.', 'warn');
     return;
   }
 
+  clearTimeout(slow);
+  if (token !== scanToken) return;
+
   if (!response) {
     status('No response from the background worker. Reopen the popup.', 'warn');
+    return;
+  }
+
+  if (response.status === 0) {
+    status(response.body?.error || 'Could not reach the scanner. Try again in a moment.', 'warn');
     return;
   }
 
@@ -196,6 +242,10 @@ async function init() {
     void scan(els.input.value);
   });
 
+  chainButtons.forEach((button) => {
+    button.addEventListener('click', () => setChain(button.dataset.chain));
+  });
+
   let tab;
   try {
     [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -208,6 +258,8 @@ async function init() {
     status('Open a regular web page, then click the icon again.', 'warn');
     return;
   }
+
+  setChain(chainFor(tab.url));
 
   let page;
   try {
@@ -240,7 +292,7 @@ async function init() {
     page.addresses.forEach((item) => addItem(item.address, item.context));
     if (!isAddress(selection)) {
       status(
-        `${page.addresses.length} address${page.addresses.length === 1 ? '' : 'es'} found. Pick one, or paste below.`,
+        `${page.addresses.length} address${page.addresses.length === 1 ? '' : 'es'} found on ${CHAIN_NAMES[currentChain]}. Pick one, or paste below.`,
       );
     }
   } else if (!isAddress(selection)) {

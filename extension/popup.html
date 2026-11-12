@@ -29,7 +29,14 @@
       </section>
 
       <form id="manual" class="block">
-        <label class="label" for="input">Or paste a contract address</label>
+        <div class="chain-head">
+          <label class="label" for="input">Or paste a contract address</label>
+          <div class="chains" role="group" aria-label="Chain">
+            <button type="button" data-chain="ETH" aria-pressed="true">Ethereum</button>
+            <button type="button" data-chain="BSC" aria-pressed="false">BNB</button>
+            <button type="button" data-chain="POLYGON" aria-pressed="false">Polygon</button>
+          </div>
+        </div>
         <div class="row">
           <input id="input" autocomplete="off" spellcheck="false" placeholder="0x…" />
           <button class="primary" type="submit">Scan</button>

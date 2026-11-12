@@ -39,9 +39,10 @@ export function About() {
             <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-4">What We Do</h2>
             <div className="space-y-4 text-gray-600 text-sm leading-relaxed">
               <p>
-                SentinelX analyzes Ethereum smart contracts and wallet addresses using an XGBoost
-                machine learning model trained on thousands of labeled contracts. Our system extracts
-                53+ security features and provides SHAP-based explainability for every risk score.
+                SentinelX analyzes smart contracts with two engines. Deterministic rules check what
+                the code can actually do: mint, pause, blacklist, upgrade, drain. An XGBoost model
+                trained on thousands of labelled contracts then contributes its own read, and the two
+                are fused so the score is mostly evidence with the model as one input.
               </p>
               <p>
                 We detect rug-pull indicators, honeypot patterns, privilege escalation risks,
@@ -54,8 +55,9 @@ export function About() {
             <h2 className="text-xl font-display font-semibold text-[#0a0a0a] mb-4">Technology</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
+                { title: 'Rule Engine', desc: 'Deterministic checks with named evidence behind every finding' },
                 { title: 'XGBoost ML', desc: 'Gradient-boosted tree classification trained on 2,400+ contracts' },
-                { title: '53+ Features', desc: 'Comprehensive smart contract feature extraction' },
+                { title: '54 Features', desc: 'Comprehensive smart contract feature extraction' },
                 { title: 'SHAP Explainability', desc: 'Transparent, interpretable risk explanations' },
                 { title: 'Static Analysis', desc: 'Solidity bytecode and source code pattern detection' },
               ].map((item, i) => (

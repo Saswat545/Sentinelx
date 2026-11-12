@@ -15,8 +15,8 @@ const sections = [
     title: 'Scanner',
     items: [
       { title: 'Supported Chains', desc: 'Ethereum mainnet and planned EVM chain support.' },
-      { title: 'Risk Score Methodology', desc: 'How the XGBoost model classifies contract risk.' },
-      { title: 'Security Signals', desc: 'The 53+ features extracted during analysis.' },
+      { title: 'Risk Score Methodology', desc: 'How rules at 70% and XGBoost at 30% are fused into one score.' },
+      { title: 'Security Signals', desc: 'The 54 features extracted during analysis.' },
       { title: 'SHAP Explanations', desc: 'Understanding explainable AI feature attribution.' },
     ],
   },

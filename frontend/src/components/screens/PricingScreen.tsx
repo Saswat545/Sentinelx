@@ -88,7 +88,7 @@ export const PricingScreen: React.FC<PricingScreenProps> = ({ onNavigate }) => {
               </li>
               <li className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>53 Feature XGBoost Classifier</span>
+                <span>54-feature hybrid engine (rules + XGBoost)</span>
               </li>
               <li className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0" />

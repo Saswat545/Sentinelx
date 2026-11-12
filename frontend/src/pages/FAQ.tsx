@@ -28,12 +28,12 @@ export function FAQ() {
 
   const faqs = [
     { question: 'What is SentinelX?', answer: 'SentinelX is an AI-powered blockchain security platform that analyzes Ethereum smart contracts and token addresses to identify potential rug-pull indicators, dangerous contract behaviors, privilege risks, and other security signals.' },
-    { question: 'How does SentinelX calculate risk scores?', answer: 'SentinelX uses an XGBoost machine learning model trained on 2,400+ labeled contracts, combined with rule-based security analysis of 53+ smart contract features. The model achieves 96.15% accuracy on our evaluation dataset.' },
+    { question: 'How does SentinelX calculate risk scores?', answer: 'Two engines are fused. Deterministic rules that name what the contract can do carry 70% of the score, and an XGBoost model trained on 2,400+ labeled contracts contributes the other 30%. A confirmed critical finding, such as a honeypot, overrides the fused number. When the evidence is too thin, the result is UNKNOWN rather than a guess.' },
     { question: 'Can SentinelX analyze any Ethereum contract?', answer: 'Yes, SentinelX can analyze any publicly deployed Ethereum smart contract. Simply enter the contract address or paste the Solidity source code for analysis.' },
     { question: 'Does a low score guarantee that a contract is safe?', answer: 'No. SentinelX identifies potential security risks. It does not guarantee the safety or profitability of any asset. A low risk score means fewer concerning patterns were detected, but it is not a guarantee of safety.' },
     { question: 'Is SentinelX financial advice?', answer: 'No. SentinelX is a security analysis tool for informational and research purposes only. It is not financial advice, and you should always conduct your own research before making any financial decisions.' },
     { question: 'Which chains are supported?', answer: 'SentinelX currently supports Ethereum mainnet analysis. We plan to expand to additional EVM-compatible chains in the future.' },
-    { question: 'How accurate is the model?', answer: 'Our XGBoost model achieves 96.15% accuracy on our labeled test dataset of 2,400+ contracts. However, real-world performance may vary, and the model should be used as one of many tools in your security assessment.' },
+    { question: 'How accurate is the model?', answer: 'The XGBoost component achieves 96.15% accuracy on our labeled test dataset of 2,400+ contracts. It is deliberately only 30% of the score, because a model cannot explain a honeypot the way a rule can. Real-world performance varies, and any result belongs inside your own research.' },
   ];
 
   return (

@@ -390,7 +390,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              XGBoost · 53 features
+              Rules + XGBoost · 54 features
             </span>
           </div>
         </footer>

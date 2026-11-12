@@ -34,7 +34,7 @@ const pipeline = [
     step: '03',
     title: 'Rule-Based Detection',
     description:
-      'Apply deterministic security rules to flag known dangerous patterns regardless of ML model output.',
+      'Run deterministic checks that name what the contract can do, regardless of what the model thinks. These rules carry 70% of the fused score.',
     details: [
       'Honeypot detection (blocked sell functions)',
       'Hidden mint function identification',
@@ -45,9 +45,9 @@ const pipeline = [
   },
   {
     step: '04',
-    title: 'ML Classification',
+    title: 'Model Contribution',
     description:
-      'XGBoost gradient-boosted decision tree classifier evaluates the 53 features against patterns learned from 2,400+ labeled contracts.',
+      'An XGBoost gradient-boosted classifier evaluates the 54 features against patterns learned from 2,400+ labeled contracts and contributes the remaining 30% of the score.',
     details: [
       'XGBoost gradient-boosted ensemble',
       'Trained on 2,391 rug pulls + 83 legitimate contracts',
@@ -83,7 +83,7 @@ const pipeline = [
 ];
 
 const metrics = [
-  { label: 'Model Accuracy', value: '96.15%', description: 'XGBoost Classifier' },
+  { label: 'Model Accuracy', value: '96.15%', description: 'XGBoost classifier, 30% of score' },
   { label: 'Precision', value: '99.57%', description: 'Low false positive rate' },
   { label: 'Recall', value: '96.44%', description: 'Catches most rug pulls' },
   { label: 'F1 Score', value: '97.98%', description: 'Balanced performance' },

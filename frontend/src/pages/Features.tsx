@@ -7,14 +7,14 @@ const features = [
   {
     icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
     title: 'Static Code Analysis',
-    description: 'Deep inspection of Solidity bytecode for dangerous patterns, backdoors, and known vulnerability signatures. Analyzes contract source code for 53+ security-relevant features.',
+    description: 'Deep inspection of Solidity bytecode for dangerous patterns, backdoors, and known vulnerability signatures. Analyzes contract source code for 54 security-relevant features.',
     details: ['Bytecode disassembly and pattern matching', 'Known vulnerability signature detection', 'Function permission analysis', 'State variable access control review'],
   },
   {
     icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
     title: 'Machine Learning',
-    description: 'XGBoost classifier trained on a labeled dataset of smart contracts, achieving 96.15% accuracy for rug-pull classification with 53 feature extraction signals.',
-    details: ['XGBoost gradient boosting classifier', '53 smart-contract feature extraction', 'Trained on ~2,474 labeled contracts', 'Cross-validated at 97.16% accuracy'],
+    description: 'An XGBoost classifier trained on a labeled dataset of smart contracts contributes 30% of the fused score, so pattern recognition informs the verdict without deciding it alone.',
+    details: ['XGBoost gradient boosting classifier', '54 smart-contract feature extraction', 'Trained on ~2,474 labeled contracts', 'Cross-validated at 97.16% accuracy'],
   },
   {
     icon: 'M13 10V3L4 14h7v7l9-11h-7z',
@@ -37,8 +37,14 @@ const features = [
   {
     icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
     title: 'Risk Scoring',
-    description: 'Composite risk score from 0-100 based on ML classification and rule-based analysis. Lower scores indicate fewer detected risk signals.',
-    details: ['0-100 risk scale', 'Multi-factor weighted scoring', 'Severity classification (Low/Medium/High/Critical)', 'Continuous model improvement'],
+    description: 'Composite score from 0-100: deterministic rules carry 70% and the model 30%, with a confirmed critical finding able to override both. Lower scores mean fewer signals were found.',
+    details: ['0-100 risk scale', '70% rules, 30% model', 'Severity classification (Low/Medium/High/Critical)', 'UNKNOWN when evidence is insufficient'],
+  },
+  {
+    icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+    title: 'Browser Extension',
+    description: 'A Chrome extension reads the page you are already on, finds token addresses or Solidity in it, and shows the same rule and model split in a popup without leaving the tab.',
+    details: ['Detects addresses on the current page', 'Scores from the service worker, no CORS friction', 'Chain detected from the explorer host', 'Developer preview: loads unpacked, store listing pending'],
   },
 ];
 
@@ -46,14 +52,14 @@ export function Features() {
   useEffect(() => {
     setPageSEO({
       title: 'Features | SentinelX: AI Security Platform Capabilities',
-      description: 'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
+      description: 'Explore SentinelX features: hybrid rule and XGBoost risk scoring, SHAP explainability, 54 security signals, honeypot detection, and the browser extension.',
       keywords: ['smart contract features', 'ML security analysis', 'SHAP explainability', 'honeypot detection', 'security signals'],
       type: 'article',
       publishedTime: '2026-08-27',
     }, '/features');
     const schema = generateArticleSchema({
       title: 'Features | SentinelX: AI Security Platform Capabilities',
-      description: 'Explore SentinelX features: XGBoost ML risk scoring, SHAP explainability, 53+ security signals, honeypot detection, access control analysis, and real-time monitoring.',
+      description: 'Explore SentinelX features: hybrid rule and XGBoost risk scoring, SHAP explainability, 54 security signals, honeypot detection, and the browser extension.',
       url: 'https://www.sentinelx.site/features',
       publishedTime: '2026-08-27',
     });

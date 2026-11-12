@@ -49,8 +49,8 @@ export function Analyze() {
   };
 
   /* A 64-char hex string is a transaction or pool hash, not a contract address.
-     Slicing it to 42 characters invents an address that does not exist, and the
-     result page then reports it as an unverified contract scoring 90. */
+     Slicing it to 42 characters invents an address that was never deployed, and
+     the result page then reports on a contract that does not exist. */
   const isTransactionOrPairHash = (input: string): boolean => {
     const trimmed = input.trim();
     if (/^0x[a-fA-F0-9]{64}$/.test(trimmed)) return true;
@@ -211,8 +211,8 @@ export function Analyze() {
 
   const analyzingLabels = [
     mode === 'address' ? 'Fetching contract source code...' : 'Parsing Solidity source code...',
-    'Extracting 53+ security features...',
-    'Running XGBoost risk classification...',
+    'Extracting 54 security features...',
+    'Running rules and XGBoost scoring...',
     'Generating explainable assessment...',
   ];
 
@@ -232,8 +232,9 @@ export function Analyze() {
             Scan a contract
           </h1>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-600">
-            Paste an Ethereum contract address or Solidity source. Verified contracts are scored
-            by the model; unverified ones get a policy score and the result says so.
+            Paste an Ethereum contract address or Solidity source. Verified contracts are scored by
+            the rule engine and the model together; unverified ones are scored from bytecode, or
+            return UNKNOWN when neither can be read.
           </p>
           <p className="mt-2 font-mono text-xs text-gray-400">
             No account required
@@ -471,7 +472,7 @@ export function Analyze() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { step: '01', title: 'Input', desc: 'Paste a contract address or Solidity source code' },
-                { step: '02', title: 'Analysis', desc: 'XGBoost model extracts 53+ features in real-time' },
+                { step: '02', title: 'Analysis', desc: 'Rules and model score 54 extracted features' },
                 { step: '03', title: 'Result', desc: 'Get a risk score with explainable AI reasoning' },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">

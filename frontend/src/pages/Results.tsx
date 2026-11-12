@@ -110,7 +110,7 @@ export function Results() {
   const summary = result.aiAssessment
     ? result.aiAssessment
     : policyScore
-      ? 'The model did not run on this address. The score below is set by the unverified-source rule.'
+      ? 'No source is available for this address, so the score comes from bytecode checks, or is UNKNOWN when those cannot run.'
       : `The model scored ${score} of 100 from ${result.modelInfo.features} extracted signals.`;
 
   return (
@@ -203,12 +203,12 @@ export function Results() {
           <div className="mt-4 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-5">
             <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" />
             <div>
-              <h2 className="text-sm font-semibold text-amber-900">No model analysis ran</h2>
+              <h2 className="text-sm font-semibold text-amber-900">No verified source</h2>
               <p className="mt-1 text-sm leading-relaxed text-amber-800">
-                Etherscan has no verified source code for this address, so there were no features to
-                extract. SentinelX gives every unverified contract a fixed score of 90 instead of a
-                model result. Ask the deployer to verify the source on Etherscan, or read the
-                bytecode before you trade.
+                Etherscan has no verified source code for this address, so the rule engine and model
+                could not read it. SentinelX scores the bytecode where it can, and returns UNKNOWN
+                when even that is unavailable. Ask the deployer to verify the source, and treat an
+                unknown result as unverified rather than safe.
               </p>
             </div>
           </div>

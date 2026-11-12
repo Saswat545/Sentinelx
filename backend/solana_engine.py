@@ -29,6 +29,8 @@ except ImportError:
     from .risk_engine import Finding, fuse, recommendation_for, rule_score, verdict_for
 
 SOL_RPC = os.getenv("SOLANA_RPC_URL", "https://api.mainnet-beta.solana.com")
+# The public endpoint rate-limits bursts; one fallback keeps a scan alive.
+FALLBACK_RPC = os.getenv("SOLANA_RPC_FALLBACK", "https://solana-rpc.publicnode.com")
 DEXSCREENER = "https://api.dexscreener.com/latest/dex/tokens"
 
 TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
@@ -38,22 +40,47 @@ import re
 
 BASE58_RE = re.compile(r"^[1-9A-HJ-NP-Za-km-z]{32,44}$")
 
+SYSTEM_PROGRAM = "11111111111111111111111111111111"
+
+# Authorities that hold tokens for a market, not for a seller. The owner-program
+# check below catches these generically; the explicit entry covers the largest
+# AMM so the intent is readable.
+KNOWN_POOL_AUTHORITIES = {
+    "5Q544fKrFoe6tsEbD7S8EmxGTJYAKtTVhAW5Q5pge4j1",  # Raydium AMM v4 authority
+}
+
 
 def is_solana_address(text: str) -> bool:
     return bool(BASE58_RE.match((text or "").strip()))
 
 
 def _rpc(method: str, params: list) -> dict:
-    response = requests.post(
-        SOL_RPC,
-        json={"jsonrpc": "2.0", "id": 1, "method": method, "params": params},
-        timeout=20,
-    )
-    response.raise_for_status()
-    body = response.json()
-    if body.get("error"):
-        raise RuntimeError(body["error"].get("message", "RPC error"))
-    return body.get("result") or {}
+    """Call the RPC, retrying once on 429 and falling back to a second endpoint."""
+    payload = {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}
+    problems: list[str] = []
+
+    for url in dict.fromkeys([SOL_RPC, FALLBACK_RPC]):
+        for attempt in (1, 2, 3):
+            try:
+                response = requests.post(url, json=payload, timeout=20)
+                if response.status_code == 429:
+                    problems.append(f"{url}: rate limited")
+                    # Public endpoints throttle bursts; back off before retrying.
+                    time.sleep(1.2 * attempt)
+                    continue
+                response.raise_for_status()
+                body = response.json()
+                if body.get("error"):
+                    # A malformed request fails the same way everywhere.
+                    raise RuntimeError(body["error"].get("message", "RPC error"))
+                return body.get("result") or {}
+            except RuntimeError:
+                raise
+            except Exception as exc:
+                problems.append(f"{url}: {exc}")
+                break
+
+    raise RuntimeError("Solana RPC unavailable (" + "; ".join(problems[-2:]) + ")")
 
 
 def fetch_mint(mint: str) -> Optional[dict]:
@@ -91,6 +118,56 @@ def market(mint: str) -> Optional[dict]:
 
 def _share(amount: int, supply: int) -> float:
     return 0.0 if supply <= 0 else amount / supply
+
+
+def exclude_pool_accounts(holders: list[dict]) -> tuple[list[dict], int]:
+    """Drop token accounts held by a program (pool vault, escrow, lock) instead
+    of a wallet.
+
+    A user wallet is an account owned by the System Program. AMM vaults and
+    escrow PDAs are owned by the DEX program, so the owner of the authority
+    tells us which is which without hardcoding every pool address. Returns the
+    remaining holders and how many were dropped.
+    """
+    if not holders:
+        return holders, 0
+
+    addresses = [h.get("address") for h in holders]
+    if not all(addresses):
+        return holders, 0
+
+    infos = _rpc("getMultipleAccounts", [addresses, {"encoding": "jsonParsed"}]).get("value") or []
+
+    # Index, never zip: a short response must leave the trailing holders
+    # unclassified (and therefore counted), not silently remove them.
+    authorities: list[Optional[str]] = []
+    for index in range(len(addresses)):
+        info = infos[index] if index < len(infos) else None
+        parsed = ((info or {}).get("data") or {}).get("parsed") or {}
+        authorities.append((parsed.get("info") or {}).get("owner"))
+
+    unique = [a for a in dict.fromkeys(authorities) if a]
+    owner_program: dict[str, Optional[str]] = {}
+    if unique:
+        programs = _rpc("getMultipleAccounts", [unique, {"encoding": "jsonParsed"}]).get("value") or []
+        if len(programs) == len(unique):
+            for address, value in zip(unique, programs):
+                owner_program[address] = (value or {}).get("owner")
+
+    kept: list[dict] = []
+    dropped = 0
+    for index, holder in enumerate(holders):
+        authority = authorities[index] if index < len(authorities) else None
+        program = owner_program.get(authority) if authority else None
+        is_program_held = authority in KNOWN_POOL_AUTHORITIES or (
+            program is not None and program != SYSTEM_PROGRAM
+        )
+        if is_program_held:
+            dropped += 1
+            continue
+        kept.append(holder)
+
+    return kept, dropped
 
 
 def evaluate_state(mint: str) -> list[Finding] | None:
@@ -171,6 +248,16 @@ def evaluate_state(mint: str) -> list[Finding] | None:
     except Exception:
         holders = []
 
+    # Pool and vault accounts hold most of a healthy token's supply; counting
+    # them as whales flagged legitimate tokens. Drop them before measuring.
+    dropped = 0
+    try:
+        holders, dropped = exclude_pool_accounts(holders)
+    except Exception:
+        # If ownership cannot be read, measure the raw list rather than claim
+        # an exclusion that did not happen.
+        dropped = 0
+
     if holders and supply > 0:
         top = [int(h.get("amount") or 0) for h in holders]
         top1 = _share(top[0], supply) if top else 0.0
@@ -184,7 +271,8 @@ def evaluate_state(mint: str) -> list[Finding] | None:
                     "HIGH",
                     25,
                     f"{holders[0].get('address')} holds {top1:.1%} of supply; that wallet can "
-                    "sell into any liquidity in one transaction.",
+                    f"sell into any liquidity in one transaction."
+                    + (f" {dropped} pool/vault accounts were excluded." if dropped else ""),
                     False,
                 )
             )
@@ -195,7 +283,8 @@ def evaluate_state(mint: str) -> list[Finding] | None:
                     "Large single holder",
                     "MEDIUM",
                     12,
-                    f"{holders[0].get('address')} holds {top1:.1%} of supply.",
+                    f"{holders[0].get('address')} holds {top1:.1%} of supply."
+                    + (f" {dropped} pool/vault accounts were excluded." if dropped else ""),
                     False,
                 )
             )
@@ -207,7 +296,8 @@ def evaluate_state(mint: str) -> list[Finding] | None:
                     "Ten accounts hold nearly all supply",
                     "MEDIUM",
                     12,
-                    f"The ten largest token accounts hold {top10:.1%} of supply.",
+                    f"The ten largest token accounts hold {top10:.1%} of supply."
+                    + (f" {dropped} pool/vault accounts were excluded." if dropped else ""),
                     False,
                 )
             )

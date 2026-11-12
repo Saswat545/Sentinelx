@@ -7,7 +7,7 @@ const features = [
   {
     icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
     title: 'Static Code Analysis',
-    description: 'Deep inspection of Solidity bytecode for dangerous patterns, backdoors, and known vulnerability signatures. Analyzes contract source code for 54 security-relevant features.',
+    description: 'Deep inspection of EVM Solidity source and bytecode for dangerous patterns, backdoors, and known vulnerability signatures. Extracts 54 security-relevant features from every contract.',
     details: ['Bytecode disassembly and pattern matching', 'Known vulnerability signature detection', 'Function permission analysis', 'State variable access control review'],
   },
   {
@@ -39,6 +39,17 @@ const features = [
     title: 'Risk Scoring',
     description: 'Composite score from 0-100: deterministic rules carry 70% and the model 30%, with a confirmed critical finding able to override both. Lower scores mean fewer signals were found.',
     details: ['0-100 risk scale', '70% rules, 30% model', 'Severity classification (Low/Medium/High/Critical)', 'UNKNOWN when evidence is insufficient'],
+  },
+  {
+    icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+    title: 'Solana On-Chain Scoring',
+    description: 'Solana mints are scored from live chain state, not source code: who can still mint or freeze, where the supply actually sits, and whether a market exists to sell into.',
+    details: [
+      'Mint and freeze authority checks',
+      'Holder concentration with pool and vault accounts excluded',
+      'DEX liquidity depth and pool age',
+      'Rules-only, reported as on-chain state',
+    ],
   },
   {
     icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',

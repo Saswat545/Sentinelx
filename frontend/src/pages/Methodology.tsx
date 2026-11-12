@@ -9,19 +9,20 @@ const pipeline = [
     step: '01',
     title: 'Input Processing',
     description:
-      'Accept Ethereum contract addresses or raw Solidity source code. For addresses, SentinelX fetches verified source code from Etherscan.',
+      'Accept an EVM contract address, raw Solidity source, or a Solana mint. For EVM addresses, SentinelX fetches verified source code from Etherscan. Solana has no verified-source registry, so a mint is read directly from chain state instead.',
     details: [
-      'Supports Ethereum mainnet contract addresses',
+      'EVM contract addresses across 49 chains',
+      'Solana mint addresses (base58)',
       'Direct Solidity source code input',
-      'Automatic source code verification',
-      'Etherscan API integration for source retrieval',
+      'Etherscan V2 for source retrieval',
+      'Solana RPC for mint, holder and market state',
     ],
   },
   {
     step: '02',
     title: 'Feature Extraction',
     description:
-      'Extract 53 engineered features from the smart contract covering bytecode patterns, token economics, access control, and code complexity.',
+      'Extract 54 engineered features from EVM source and bytecode covering bytecode patterns, token economics, access control, and code complexity. On Solana, the input is chain state rather than source, so this step reads the mint, its holders and its market instead.',
     details: [
       'Bytecode-level pattern analysis',
       'Token supply and distribution metrics',
@@ -41,13 +42,15 @@ const pipeline = [
       'Blacklist and whitelist abuse detection',
       'Fee manipulation pattern recognition',
       'Owner privilege escalation flags',
+      'Solana: live mint and freeze authority',
+      'Solana: holder concentration, excluding pool and vault accounts',
     ],
   },
   {
     step: '04',
     title: 'Model Contribution',
     description:
-      'An XGBoost gradient-boosted classifier evaluates the 54 features against patterns learned from 2,400+ labeled contracts and contributes the remaining 30% of the score.',
+      'An XGBoost gradient-boosted classifier evaluates the 54 features against patterns learned from 2,400+ labeled contracts and contributes the remaining 30% of the score. This model covers EVM contracts; Solana results are rules-only and are labelled that way.',
     details: [
       'XGBoost gradient-boosted ensemble',
       'Trained on 2,391 rug pulls + 83 legitimate contracts',
@@ -80,6 +83,18 @@ const pipeline = [
       'Security recommendation',
     ],
   },
+  {
+    step: '07',
+    title: 'Solana Path',
+    description:
+      'A Solana mint branches off at step 01. With no verified source to read, the pipeline skips feature extraction, the model and SHAP, and reads the mint account, holder spread and DEX market instead. The result is rules-only and is labelled as on-chain state.',
+    details: [
+      'Mint and freeze authority read from the mint account',
+      'Holder concentration measured after excluding pool and vault accounts',
+      'Liquidity depth and pool age from DEX market data',
+      'UNKNOWN when the address is not a readable SPL mint',
+    ],
+  },
 ];
 
 const metrics = [
@@ -102,7 +117,7 @@ export function Methodology() {
       {
         title: 'How SentinelX Works | Security Methodology & ML Pipeline',
         description:
-          'Learn how SentinelX uses XGBoost ML, rule-based detection, SHAP explainability, and 53 smart-contract features to identify rug-pull risk indicators. Full methodology breakdown.',
+          'Learn how SentinelX scores EVM contracts with 70% rules and 30% XGBoost, and Solana mints from live on-chain state: mint and freeze authority, holder concentration and DEX liquidity.',
         keywords: [
           'security methodology',
           'how SentinelX works',
@@ -241,7 +256,7 @@ export function Methodology() {
             <div className="text-gray-600 mt-1">Source codes successfully retrieved</div>
           </div>
           <div className="p-6 bg-gray-50 rounded-xl border border-gray-100">
-            <div className="text-4xl font-bold text-[#0a0a0a]">53</div>
+            <div className="text-4xl font-bold text-[#0a0a0a]">54</div>
             <div className="text-gray-600 mt-1">Engineered security features</div>
           </div>
         </div>
@@ -271,7 +286,7 @@ export function Methodology() {
             generateArticleSchema({
               title: 'How SentinelX Works | Security Methodology & ML Pipeline',
               description:
-                'Learn how SentinelX uses XGBoost ML, rule-based detection, SHAP explainability, and 53 smart-contract features to identify rug-pull risk indicators.',
+                'Learn how SentinelX scores EVM contracts with 70% rules and 30% XGBoost, and Solana mints from live on-chain state: mint and freeze authority, holder concentration and DEX liquidity.',
               url: 'https://www.sentinelx.site/methodology',
               publishedTime: '2026-07-15',
               modifiedTime: '2026-08-27',

@@ -226,6 +226,7 @@ class AnalyzeResponse(BaseModel):
     confidence: float = 0.0           # how much evidence supports the verdict
     status: str = "VERIFIED"          # VERIFIED / PROXY_RESOLVED / BYTECODE_ONLY / ONCHAIN_STATE / INSUFFICIENT_DATA
     findings: list[dict] = []         # per-rule evidence for the explanation panel
+    holder_stats: Optional[dict] = None  # Solana: what holder data was actually read
 
 
 # ── Utility functions ─────────────────────────────────────────────────────────

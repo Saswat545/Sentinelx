@@ -16,7 +16,9 @@ not exist or cannot be read, the result is INSUFFICIENT_DATA, never a guess.
 
 from __future__ import annotations
 
+import json
 import os
+import threading
 import time
 from typing import Optional
 
@@ -54,8 +56,49 @@ def is_solana_address(text: str) -> bool:
     return bool(BASE58_RE.match((text or "").strip()))
 
 
+# Public RPCs throttle bursts. A scan makes three to five reads, and people
+# rescan the same mint, so identical reads inside a short window are reused.
+CACHE_TTL = float(os.getenv("SOLANA_CACHE_TTL", "60"))
+CACHE_MAX = 512
+_cache: dict[str, tuple[float, dict]] = {}
+_cache_lock = threading.Lock()
+
+
+def _cache_get(key: str) -> Optional[dict]:
+    with _cache_lock:
+        entry = _cache.get(key)
+        if entry is None:
+            return None
+        stored_at, value = entry
+        if time.time() - stored_at > CACHE_TTL:
+            _cache.pop(key, None)
+            return None
+        return value
+
+
+def _cache_put(key: str, value: dict) -> None:
+    with _cache_lock:
+        if len(_cache) >= CACHE_MAX:
+            now = time.time()
+            for stale in [k for k, (at, _) in _cache.items() if now - at > CACHE_TTL]:
+                _cache.pop(stale, None)
+            if len(_cache) >= CACHE_MAX:
+                _cache.clear()
+        _cache[key] = (time.time(), value)
+
+
+def clear_cache() -> None:
+    with _cache_lock:
+        _cache.clear()
+
+
 def _rpc(method: str, params: list) -> dict:
-    """Call the RPC, retrying once on 429 and falling back to a second endpoint."""
+    """Call the RPC, caching reads and retrying on 429 with a fallback endpoint."""
+    key = json.dumps([method, params], sort_keys=True, default=str)
+    cached = _cache_get(key)
+    if cached is not None:
+        return cached
+
     payload = {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}
     problems: list[str] = []
 
@@ -73,7 +116,9 @@ def _rpc(method: str, params: list) -> dict:
                 if body.get("error"):
                     # A malformed request fails the same way everywhere.
                     raise RuntimeError(body["error"].get("message", "RPC error"))
-                return body.get("result") or {}
+                result = body.get("result") or {}
+                _cache_put(key, result)
+                return result
             except RuntimeError:
                 raise
             except Exception as exc:
@@ -170,11 +215,25 @@ def exclude_pool_accounts(holders: list[dict]) -> tuple[list[dict], int]:
     return kept, dropped
 
 
-def evaluate_state(mint: str) -> list[Finding] | None:
-    """Build findings from chain state. None means the mint could not be read."""
+def evaluate_state(mint: str) -> tuple[list[Finding] | None, dict]:
+    """Build findings from chain state.
+
+    Returns the findings and what was actually read. A None finding list means
+    the mint itself could not be read. The stats exist so a caller can tell
+    "no concentration found" apart from "holder data was unavailable": public
+    RPCs throttle getTokenLargestAccounts, and silence must not look safe.
+    """
+    stats: dict = {
+        "holder_data": "unavailable",
+        "accounts": 0,
+        "excluded_pool_accounts": 0,
+        "top1_share": None,
+        "top10_share": None,
+    }
+
     info = fetch_mint(mint)
     if info is None:
-        return None
+        return None, stats
 
     findings: list[Finding] = []
     supply = int(info.get("supply") or 0)
@@ -251,17 +310,24 @@ def evaluate_state(mint: str) -> list[Finding] | None:
     # Pool and vault accounts hold most of a healthy token's supply; counting
     # them as whales flagged legitimate tokens. Drop them before measuring.
     dropped = 0
-    try:
-        holders, dropped = exclude_pool_accounts(holders)
-    except Exception:
-        # If ownership cannot be read, measure the raw list rather than claim
-        # an exclusion that did not happen.
-        dropped = 0
+    if holders:
+        stats["holder_data"] = "raw"
+        try:
+            holders, dropped = exclude_pool_accounts(holders)
+            stats["holder_data"] = "classified"
+        except Exception:
+            # If ownership cannot be read, measure the raw list rather than claim
+            # an exclusion that did not happen.
+            dropped = 0
+    stats["accounts"] = len(holders)
+    stats["excluded_pool_accounts"] = dropped
 
     if holders and supply > 0:
         top = [int(h.get("amount") or 0) for h in holders]
         top1 = _share(top[0], supply) if top else 0.0
         top10 = _share(sum(top[:10]), supply)
+        stats["top1_share"] = round(top1, 4)
+        stats["top10_share"] = round(top10, 4)
 
         if top1 >= 0.50:
             findings.append(
@@ -348,13 +414,13 @@ def evaluate_state(mint: str) -> list[Finding] | None:
                         )
                     )
 
-    return findings
+    return findings, stats
 
 
 def analyze_solana(mint: str) -> dict:
     """Return a response shaped like main.AnalyzeResponse."""
     start_ms = time.time()
-    findings = evaluate_state(mint)
+    findings, holder_stats = evaluate_state(mint)
 
     if findings is None:
         return {
@@ -379,6 +445,7 @@ def analyze_solana(mint: str) -> dict:
             "confidence": 0.15,
             "status": "INSUFFICIENT_DATA",
             "findings": [],
+            "holder_stats": holder_stats,
         }
 
     rules = rule_score(findings)
@@ -387,6 +454,11 @@ def analyze_solana(mint: str) -> dict:
     # A market hours old has no trading history; it must not read as SAFE.
     if any(item.rule == "new_pool" for item in findings):
         score = max(score, 20)
+
+    # Holder distribution is evidence; if it could not be read, say so through a
+    # lower confidence instead of letting silence read as a clean result.
+    if holder_stats.get("holder_data") == "unavailable":
+        confidence = round(confidence * 0.7, 2)
 
     verdict, band_label = verdict_for(score)
 
@@ -420,4 +492,5 @@ def analyze_solana(mint: str) -> dict:
         "confidence": confidence,
         "status": "ONCHAIN_STATE",
         "findings": [item.as_dict() for item in findings],
+        "holder_stats": holder_stats,
     }

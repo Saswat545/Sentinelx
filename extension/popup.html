@@ -30,12 +30,16 @@
 
       <form id="manual" class="block">
         <div class="chain-head">
-          <label class="label" for="input">Or paste a contract address</label>
-          <div class="chains" role="group" aria-label="Chain">
-            <button type="button" data-chain="ETH" aria-pressed="true">Ethereum</button>
-            <button type="button" data-chain="BSC" aria-pressed="false">BNB</button>
-            <button type="button" data-chain="POLYGON" aria-pressed="false">Polygon</button>
-          </div>
+          <label class="label" for="input">Or paste an address</label>
+          <select id="chain" class="chain-select" aria-label="Chain">
+            <option value="ETH">Ethereum</option>
+            <option value="BSC">BNB Chain</option>
+            <option value="POLYGON">Polygon</option>
+            <option value="ARB">Arbitrum</option>
+            <option value="BASE">Base</option>
+            <option value="OP">Optimism</option>
+            <option value="AVAX">Avalanche</option>
+          </select>
         </div>
         <div class="row">
           <input id="input" autocomplete="off" spellcheck="false" placeholder="0x…" />

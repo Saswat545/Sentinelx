@@ -172,33 +172,20 @@ main {
   margin: 0;
 }
 
-.chains {
-  display: flex;
-  gap: 2px;
-  padding: 2px;
+.chain-select {
+  max-width: 118px;
+  padding: 3px 4px;
+  border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--surface);
-  border: 1px solid var(--line);
-}
-
-.chains button {
-  padding: 2px 6px;
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--muted);
-  font: 500 10px/1.6 inherit;
+  color: var(--ink);
+  font: 500 10px/1.5 inherit;
   cursor: pointer;
 }
 
-.chains button:hover {
-  color: var(--ink);
-}
-
-.chains button[aria-pressed='true'] {
-  background: #fff;
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgb(17 24 39 / 8%);
+.chain-select:focus-visible {
+  border-color: var(--brand);
+  outline: 2px solid rgba(1, 73, 253, 0.12);
 }
 
 .row {

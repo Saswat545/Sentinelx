@@ -16,7 +16,15 @@ const short = (value) => (value.length > 20 ? `${value.slice(0, 8)}…${value.sl
 const isAddress = (value) => /^0x[a-fA-F0-9]{40}$/.test(value.trim());
 const isHash = (value) => /^0x[a-fA-F0-9]{64}$/.test(value.trim());
 
-const CHAIN_NAMES = { ETH: 'Ethereum', BSC: 'BNB Chain', POLYGON: 'Polygon' };
+const CHAIN_NAMES = {
+  ETH: 'Ethereum',
+  BSC: 'BNB Chain',
+  POLYGON: 'Polygon',
+  ARB: 'Arbitrum',
+  BASE: 'Base',
+  OP: 'Optimism',
+  AVAX: 'Avalanche',
+};
 
 /** The API takes the chain as a field, so read it off the explorer's host. */
 function chainFor(url) {
@@ -28,19 +36,21 @@ function chainFor(url) {
   }
   if (/(^|\.)bscscan\.com$/i.test(host)) return 'BSC';
   if (/(^|\.)polygonscan\.com$/i.test(host)) return 'POLYGON';
+  if (/(^|\.)arbiscan\.io$/i.test(host)) return 'ARB';
+  if (/(^|\.)basescan\.org$/i.test(host)) return 'BASE';
+  if (/(^|\.)optimistic\.etherscan\.io$/i.test(host)) return 'OP';
+  if (/(^|\.)snowtrace\.io$/i.test(host) || /(^|\.)snowscan\.xyz$/i.test(host)) return 'AVAX';
   return 'ETH';
 }
 
 let currentChain = 'ETH';
 let scanToken = 0;
 
-const chainButtons = Array.from(document.querySelectorAll('.chains button'));
+const chainSelect = $('chain');
 
 function setChain(chain) {
   currentChain = CHAIN_NAMES[chain] ? chain : 'ETH';
-  chainButtons.forEach((button) => {
-    button.setAttribute('aria-pressed', String(button.dataset.chain === currentChain));
-  });
+  if (chainSelect.value !== currentChain) chainSelect.value = currentChain;
 }
 
 function status(text, state = 'idle') {
@@ -242,9 +252,7 @@ async function init() {
     void scan(els.input.value);
   });
 
-  chainButtons.forEach((button) => {
-    button.addEventListener('click', () => setChain(button.dataset.chain));
-  });
+  chainSelect.addEventListener('change', () => setChain(chainSelect.value));
 
   let tab;
   try {

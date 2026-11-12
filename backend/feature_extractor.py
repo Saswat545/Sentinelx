@@ -17,7 +17,30 @@ from typing import Optional
 
 # ── Etherscan V2 (single endpoint, chain via chainid param) ──
 ETHERSCAN_V2_URL = "https://api.etherscan.io/v2/api"
-CHAIN_IDS = {"ETH": 1, "BSC": 56, "POLYGON": 137}
+CHAIN_IDS = {
+    "ETH": 1,        # Ethereum
+    "BSC": 56,       # BNB Chain
+    "POLYGON": 137,  # Polygon PoS
+    "ARB": 42161,    # Arbitrum One
+    "BASE": 8453,    # Base
+    "OP": 10,        # OP Mainnet
+    "AVAX": 43114,   # Avalanche C-Chain
+}
+
+
+def chain_id_for(chain: str) -> int:
+    """
+    Resolve a chain code to its Etherscan chain id.
+
+    Unknown codes used to fall back to Ethereum, which silently answered about
+    the wrong chain's source code. Fail loudly instead.
+    """
+    key = (chain or "ETH").upper()
+    if key not in CHAIN_IDS:
+        raise ValueError(
+            f"Unsupported chain '{chain}'. Supported: {', '.join(sorted(CHAIN_IDS))}"
+        )
+    return CHAIN_IDS[key]
 
 
 def fetch_source_code(address: str, api_key: str, chain: str = "ETH") -> Optional[str]:
@@ -26,7 +49,7 @@ def fetch_source_code(address: str, api_key: str, chain: str = "ETH") -> Optiona
     Returns source string or None if unverified.
     Raises RuntimeError on hard API failures.
     """
-    chain_id = CHAIN_IDS.get(chain.upper(), 1)
+    chain_id = chain_id_for(chain)
 
     params = {
         "chainid": chain_id,

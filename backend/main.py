@@ -43,10 +43,20 @@ if hasattr(sys.stdout, 'reconfigure'):
 # In production this file sits next to main.py
 try:
     # Works when Render starts ``uvicorn main:app`` from backend/.
-    from feature_extractor import extract_features, extract_features_from_address, fetch_source_code
+    from feature_extractor import (
+        CHAIN_IDS,
+        extract_features,
+        extract_features_from_address,
+        fetch_source_code,
+    )
 except ImportError:
     # Works when the project is started from its repository root.
-    from .feature_extractor import extract_features, extract_features_from_address, fetch_source_code
+    from .feature_extractor import (
+        CHAIN_IDS,
+        extract_features,
+        extract_features_from_address,
+        fetch_source_code,
+    )
 
 load_dotenv()
 
@@ -167,7 +177,7 @@ load_models()
 
 class AnalyzeRequest(BaseModel):
     input: str                        # token address OR raw Solidity code
-    chain: Optional[str] = "ETH"     # ETH, BSC, POLYGON
+    chain: Optional[str] = "ETH"     # ETH, BSC, POLYGON, ARB, BASE, OP, AVAX
 
 
 class FlagItem(BaseModel):
@@ -437,6 +447,15 @@ def analyze(req: AnalyzeRequest):
     if len(raw_input) > 500_000:
         raise HTTPException(413, "Input too large — maximum 500,000 characters")
 
+    # An unknown chain must not fall back to Ethereum: that returns a confident
+    # score about a different chain's contract.
+    chain = (req.chain or "ETH").upper()
+    if chain not in CHAIN_IDS:
+        raise HTTPException(
+            400,
+            f"Unsupported chain '{req.chain}'. Supported: {', '.join(sorted(CHAIN_IDS))}",
+        )
+
     input_type    = "unknown"
     token_address = None
     contract_name = None
@@ -454,7 +473,7 @@ def analyze(req: AnalyzeRequest):
             )
 
         # Fetch source from Etherscan V2
-        source_code = fetch_source_code(raw_input, ETHERSCAN_API_KEY, req.chain)
+        source_code = fetch_source_code(raw_input, ETHERSCAN_API_KEY, chain)
 
         if not source_code:
             # Unverified contract — automatic high risk

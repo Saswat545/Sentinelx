@@ -5,7 +5,7 @@ const CACHE_TTL = 10 * 60 * 1000;
 // a minute. Give the request room to outlast that instead of failing early.
 const REQUEST_TIMEOUT = 90 * 1000;
 
-const CHAINS = new Set(['ETH', 'BSC', 'POLYGON']);
+const CHAINS = new Set(['ETH', 'BSC', 'POLYGON', 'ARB', 'BASE', 'OP', 'AVAX']);
 
 /**
  * The API only allows browser origins on its CORS list, and a chrome-extension

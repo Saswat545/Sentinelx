@@ -1,0 +1,1972 @@
+[
+ {
+  "chain": "ARB",
+  "control": {
+   "n": 6,
+   "median": 75,
+   "mean": 38.5,
+   "min": 2,
+   "max": 75,
+   "pct_60_plus": 50.0,
+   "pct_75_exact": 50.0,
+   "pct_90_plus": 0.0,
+   "pct_20_below": 50.0
+  },
+  "sample": {
+   "n": 23,
+   "median": 3,
+   "mean": 28.7,
+   "min": 3,
+   "max": 90,
+   "pct_60_plus": 34.8,
+   "pct_75_exact": 30.4,
+   "pct_90_plus": 4.3,
+   "pct_20_below": 65.2
+  },
+  "results": [
+   {
+    "chain": "ARB",
+    "address": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "label": "USDC.e",
+    "name": "TransparentUpgradeableProxy",
+    "chars": 19720,
+    "score": 2,
+    "probability": 0.016,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    "label": "WETH",
+    "name": "TransparentUpgradeableProxy",
+    "chars": 19720,
+    "score": 2,
+    "probability": 0.016,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    "label": "USDT",
+    "name": "TransparentUpgradeableProxy",
+    "chars": 27121,
+    "score": 2,
+    "probability": 0.0185,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "label": "DAI",
+    "name": "Dai",
+    "chars": 7676,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    "label": "LINK",
+    "name": "ClonableBeaconProxy",
+    "chars": 25963,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    "label": "WBTC",
+    "name": "ClonableBeaconProxy",
+    "chars": 25963,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x94a984253ecd65c1fabd35dba3cc6bcbc86b8795",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127776,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xa0412ce46fe877b7f174b82acd95e70063bbaf2a",
+    "label": null,
+    "name": "WrappedBackedTokenProxy",
+    "chars": 173554,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Hidden Owner + Drain",
+     "Selfdestruct",
+     "Owner + Selfdestruct",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x6e401189c8a68d05562c9bab7f674f910821eacf",
+    "label": null,
+    "name": "KERNEL_OFT",
+    "chars": 134837,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Assembly Caller",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x5f7671980a85c558a504efe57ccdf2d25fc9b215",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xcf1f5be54cfcf61a79a427c92835ac043266decd",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127776,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x63665934a6571079657baba7f4752a476c231527",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xfcbd9b46e71b627798b5d175047f0c46d30006cf",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127776,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x3e4ffeb394b371aaaa0998488046ca19d870d9ba",
+    "label": null,
+    "name": "ERC1967Proxy",
+    "chars": 22573,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x00000000ea00f3f4000e7ed5ed91965b19f1009b",
+    "label": null,
+    "name": "Maia",
+    "chars": 23804,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x83e09ad4b53fe6b63fc90e439cc7778f18065869",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x6b6009c545eba19df681549109c82eb1916f09a9",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x63b0507283b2a58ce149396afefc92fa38ea587c",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127776,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x3fde83d2d577f21f1c0f61c7a53f4f578f8d800f",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x2706b9e4fd01262a806a0eb2ffe5799edabc3887",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x1ea627476e38277e15d2c477d4dfd11eae56d124",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x5a69331980825aae1fc1f5f5a78e72760498a3f3",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x6b25e9cdec221c9a3a555af25fae68d5f15aa109",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x63c58b5b62b75091368b797316e5a755402a5f36",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xbadad4333818381d81db1aeb72e6f587bce3eab2",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xac0d661f0ce741a7eb42648a6ef990ee36f38f5d",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x796e8db2de4a98bd570946b7061c20567ac64991",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0xbcea9294781b49fec82bd4bd5dcc8a8acc7dffc0",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 33121,
+    "score": 3,
+    "probability": 0.0281,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "ARB",
+    "address": "0x6598634b4319841c72ac6ed9f868ed99ccf24fd9",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127776,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   }
+  ]
+ },
+ {
+  "chain": "BASE",
+  "control": {
+   "n": 7,
+   "median": 75,
+   "mean": 48.7,
+   "min": 2,
+   "max": 90,
+   "pct_60_plus": 57.1,
+   "pct_75_exact": 28.6,
+   "pct_90_plus": 28.6,
+   "pct_20_below": 42.9
+  },
+  "sample": {
+   "n": 24,
+   "median": 75,
+   "mean": 59.2,
+   "min": 2,
+   "max": 99,
+   "pct_60_plus": 66.7,
+   "pct_75_exact": 20.8,
+   "pct_90_plus": 45.8,
+   "pct_20_below": 33.3
+  },
+  "results": [
+   {
+    "chain": "BASE",
+    "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "label": "USDC",
+    "name": "FiatTokenProxy",
+    "chars": 22778,
+    "score": 2,
+    "probability": 0.023,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x4200000000000000000000000000000000000006",
+    "label": "WETH",
+    "name": "WETH9",
+    "chars": 38516,
+    "score": 5,
+    "probability": 0.0464,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+    "label": "DAI",
+    "name": "OptimismMintableERC20",
+    "chars": 30252,
+    "score": 4,
+    "probability": 0.0424,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+    "label": "USDbC",
+    "name": "Proxy",
+    "chars": 7045,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Fallback Trap",
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22",
+    "label": "cbETH",
+    "name": "Proxy",
+    "chars": 7045,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Fallback Trap",
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+    "label": "AERO",
+    "name": "Aero",
+    "chars": 64716,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x88fb150bdc53a65fe94dea0c9ba0a6daf8c6e196",
+    "label": "LINK",
+    "name": "LinkToken",
+    "chars": 57761,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xb8d59c7b33054beda610b2b2d38ea38694cdfabd",
+    "label": null,
+    "name": "ERC20Templete",
+    "chars": 5407,
+    "score": 97,
+    "probability": 0.9732,
+    "verdict": "CRITICAL",
+    "overridden": false,
+    "flags": [
+     "Hidden Owner"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x00e57ec29ef2ba7df07ad10573011647b2366f6d",
+    "label": null,
+    "name": "Toshe",
+    "chars": 14944,
+    "score": 99,
+    "probability": 0.9922,
+    "verdict": "CRITICAL",
+    "overridden": false,
+    "flags": [
+     "Hidden Owner",
+     "Uncapped Tax",
+     "Dynamic Tax"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x0e83a7ae823a04787e175fb77fb2f77a56896a69",
+    "label": null,
+    "name": "ClankerToken",
+    "chars": 201199,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x1a4f71b0ff3c22540887bcf83b50054a213c673d",
+    "label": null,
+    "name": "WrappedBackedTokenProxy",
+    "chars": 173554,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Hidden Owner + Drain",
+     "Selfdestruct",
+     "Owner + Selfdestruct",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x7ecae30ed8ee4f72653ada7b0941bde7a0a8ee8d",
+    "label": null,
+    "name": "BeaconProxy",
+    "chars": 37555,
+    "score": 3,
+    "probability": 0.0263,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x2974dc646e375e83bd1c0342625b49f288987fa4",
+    "label": null,
+    "name": "OptimismMintableERC20",
+    "chars": 30252,
+    "score": 4,
+    "probability": 0.0424,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x6a54aa801607a09f11be4f83fcc324696163bb07",
+    "label": null,
+    "name": "ClankerToken",
+    "chars": 226300,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x120edc8e391ba4c94cb98bb65d8856ae6ec1525f",
+    "label": null,
+    "name": "Louder",
+    "chars": 236577,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Hidden Owner + Drain",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xf34e0cff046e154cafcae502c7541b9e5fd8c249",
+    "label": null,
+    "name": "OptimismMintableERC20",
+    "chars": 30252,
+    "score": 4,
+    "probability": 0.0424,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x3fda9cc61b1fef8b2ffd715f0a9eef7182e48f37",
+    "label": null,
+    "name": "ERC1967Proxy",
+    "chars": 32287,
+    "score": 2,
+    "probability": 0.0213,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x91f9cc2649ac70a071602cade9b0c1a5868af51d",
+    "label": null,
+    "name": "WXTZ",
+    "chars": 195252,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Hidden Owner + Drain",
+     "Assembly Caller",
+     "Hash-based Access",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x8a45376fd791c29b9c5a49bc01c2f5d865a98b07",
+    "label": null,
+    "name": "ClankerToken",
+    "chars": 226300,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xcb111e6a2a3bde90856d299d61341ac302167d23",
+    "label": null,
+    "name": "FiatTokenProxy",
+    "chars": 21225,
+    "score": 2,
+    "probability": 0.023,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x9c5c365e764829876243d0b289733b9d2b729685",
+    "label": null,
+    "name": "ShareToken",
+    "chars": 59212,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x0028e1e60167b48a938b785aa5292917e7eaca8b",
+    "label": null,
+    "name": "CoinyeWest",
+    "chars": 22920,
+    "score": 7,
+    "probability": 0.0745,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x10ac13e54218470eed360d13a38c2bbafacb6167",
+    "label": null,
+    "name": "AgentToken",
+    "chars": 145055,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Uncapped Tax",
+     "Sell Restriction",
+     "Dynamic Tax",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x797f214a2cd64a4963a91fa21c8c55ec3eba4714",
+    "label": null,
+    "name": "AgentToken",
+    "chars": 148050,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Uncapped Tax",
+     "Sell Restriction",
+     "Dynamic Tax",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xc5b3789cdf0610ef653c871a18643d792446c30c",
+    "label": null,
+    "name": "PENELOPE",
+    "chars": 20864,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x03f64375f98aaafb617d18ca1e4a9a85a5c74476",
+    "label": null,
+    "name": "RocketFunToken",
+    "chars": 31345,
+    "score": 97,
+    "probability": 0.9706,
+    "verdict": "CRITICAL",
+    "overridden": false,
+    "flags": [
+     "Hidden Owner",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xfd4330b0312fdeec6d4225075b82e00493ff2e3f",
+    "label": null,
+    "name": "BridgeToken",
+    "chars": 24666,
+    "score": 2,
+    "probability": 0.0214,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xc8e51fefd7d595c217c7ab641513faa4ad522b26",
+    "label": null,
+    "name": "CrappyBird",
+    "chars": 30380,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xf48bc234855ab08ab2ec0cfaaeb2a80d065a3b07",
+    "label": null,
+    "name": "ClankerToken",
+    "chars": 226300,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0x04d5ddf5f3a8939889f11e97f8c4bb48317f1938",
+    "label": null,
+    "name": "ChildUSDz",
+    "chars": 195919,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Drain Function",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "BASE",
+    "address": "0xf25620f89d0e23a8ba7b11ab3235b66268794196",
+    "label": null,
+    "name": "TransparentUpgradeableProxy",
+    "chars": 35181,
+    "score": 10,
+    "probability": 0.0966,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Selfdestruct",
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   }
+  ]
+ },
+ {
+  "chain": "OP",
+  "control": {
+   "n": 7,
+   "median": 18,
+   "mean": 36.3,
+   "min": 2,
+   "max": 75,
+   "pct_60_plus": 42.9,
+   "pct_75_exact": 42.9,
+   "pct_90_plus": 0.0,
+   "pct_20_below": 57.1
+  },
+  "sample": {
+   "n": 25,
+   "median": 75,
+   "mean": 57.8,
+   "min": 2,
+   "max": 75,
+   "pct_60_plus": 76.0,
+   "pct_75_exact": 76.0,
+   "pct_90_plus": 0.0,
+   "pct_20_below": 24.0
+  },
+  "results": [
+   {
+    "chain": "OP",
+    "address": "0x4200000000000000000000000000000000000042",
+    "label": "OP",
+    "name": "GovernanceToken",
+    "chars": 66484,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x0b2c639c533813f4aa9d7837caf62653d097ff85",
+    "label": "USDC",
+    "name": "FiatTokenProxy",
+    "chars": 22802,
+    "score": 2,
+    "probability": 0.023,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    "label": "USDC.e",
+    "name": "OVMFiatToken",
+    "chars": 35693,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x4200000000000000000000000000000000000006",
+    "label": "WETH",
+    "name": "WETH9",
+    "chars": 38516,
+    "score": 5,
+    "probability": 0.0464,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    "label": "DAI",
+    "name": "Dai",
+    "chars": 7247,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6",
+    "label": "LINK",
+    "name": "LinkTokenOptimism",
+    "chars": 33203,
+    "score": 18,
+    "probability": 0.1777,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    "label": "USDT",
+    "name": "USDT",
+    "chars": 26705,
+    "score": 4,
+    "probability": 0.0399,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Unlimited Mint",
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x41778f4f36b2dd8fd27c55043154ba7a3df18d83",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+    "label": null,
+    "name": "CrossChainCanonicalFRAX",
+    "chars": 67864,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xd3a40e90234f9389a772868d3421ea4a26a048ea",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xadad6f009a825c62fca74a643addae151506593f",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xb5b2dc7fd34c249f4be7fb1fcea07950784229e0",
+    "label": null,
+    "name": "ERC1967Proxy",
+    "chars": 24137,
+    "score": 3,
+    "probability": 0.0326,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x3e29d3a9316dab217754d13b28646b76607c5f04",
+    "label": null,
+    "name": "TransparentUpgradeableProxy",
+    "chars": 27121,
+    "score": 2,
+    "probability": 0.0185,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xc0c2150cf0870e2d7abc7cde17c20a542fafbb9b",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xb7e2e3ef9f5c6b72a162ffc76382e4477a44d913",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xe231db5f348d709239ef1741ea30961b3b635a61",
+    "label": null,
+    "name": "TransparentUpgradeableProxy",
+    "chars": 38837,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x671b6083bf2f77844dd61f4376a4fe900270c5e4",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xf78e8b9441fbbfb674d35101df0658d88b3bb33f",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xb73ee5488647a6302ebf5fee8af3152f6960ae4c",
+    "label": null,
+    "name": "OptimizedTransparentUpgradeableProxy",
+    "chars": 54866,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x16c283ac8f4789fb3d707308e69fd96ade45837a",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xe0124233d9e93e85a687b6849711cf063cce7e65",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+    "label": null,
+    "name": "USDeOFT",
+    "chars": 142761,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Uncapped Tax",
+     "Dynamic Tax",
+     "Assembly Caller",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x6d80113e533a2c0fe82eabd35f1875dcea89ea97",
+    "label": null,
+    "name": "InitializableImmutableAdminUpgradeabilityProxy",
+    "chars": 13427,
+    "score": 4,
+    "probability": 0.0407,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x6985884c4392d348587b19cb9eaaf157f13271cd",
+    "label": null,
+    "name": "LayerZeroToken",
+    "chars": 137000,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Assembly Caller",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xad0772bf1f744e58bd2d65c5aa5e9681b924d052",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x28a3983afd8110a0e8143ef1f8a9ec23f4215edd",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x191c10aa4af7c30e871e70c95db0e4eb77237530",
+    "label": null,
+    "name": "InitializableImmutableAdminUpgradeabilityProxy",
+    "chars": 13427,
+    "score": 4,
+    "probability": 0.0407,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xe6d9b0127a5f742bc79af0b327d25624a9150c06",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x7fb688ccf682d58f86d7e38e03f9d22e7705448b",
+    "label": null,
+    "name": "L2StandardERC20",
+    "chars": 26459,
+    "score": 5,
+    "probability": 0.0528,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Unlimited Mint",
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xbf3735196a77b62d0d9a52e2d3a70f667f76315a",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0xebb35d5b5bf82203812e3c02797ef0cbdbb81146",
+    "label": null,
+    "name": "BackedTokenProxy",
+    "chars": 127863,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Proxy Without Timelock",
+     "Mint + No Cap",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "OP",
+    "address": "0x38761749330c23d681d136e8ea3fc47d4bb93db3",
+    "label": null,
+    "name": "BridgeToken",
+    "chars": 23598,
+    "score": 2,
+    "probability": 0.0181,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   }
+  ]
+ },
+ {
+  "chain": "AVAX",
+  "control": {
+   "n": 7,
+   "median": 75,
+   "mean": 50.6,
+   "min": 2,
+   "max": 90,
+   "pct_60_plus": 57.1,
+   "pct_75_exact": 14.3,
+   "pct_90_plus": 42.9,
+   "pct_20_below": 42.9
+  },
+  "sample": {
+   "n": 14,
+   "median": 75,
+   "mean": 53.0,
+   "min": 2,
+   "max": 90,
+   "pct_60_plus": 64.3,
+   "pct_75_exact": 42.9,
+   "pct_90_plus": 21.4,
+   "pct_20_below": 35.7
+  },
+  "results": [
+   {
+    "chain": "AVAX",
+    "address": "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    "label": "WAVAX",
+    "name": "WAVAX",
+    "chars": 38514,
+    "score": 5,
+    "probability": 0.0464,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
+    "label": "USDC",
+    "name": "FiatTokenProxy",
+    "chars": 13293,
+    "score": 2,
+    "probability": 0.0214,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7",
+    "label": "USDT",
+    "name": "TransparentUpgradeableProxy",
+    "chars": 27159,
+    "score": 2,
+    "probability": 0.0185,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
+    "label": "DAI.e",
+    "name": "BridgeToken",
+    "chars": 25488,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x5947bb275c521040051d82396192181b413227a3",
+    "label": "LINK.e",
+    "name": "BridgeToken",
+    "chars": 26996,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x50b7545627a5162f82a992c33b87adc75187b218",
+    "label": "WBTC.e",
+    "name": "BridgeToken",
+    "chars": 25485,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd",
+    "label": "JOE",
+    "name": "JoeToken",
+    "chars": 34193,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0xf44ff799ea2bbfec96f9a50498209aac3c2b3b8b",
+    "label": null,
+    "name": "TransparentUpgradeableProxy",
+    "chars": 27159,
+    "score": 2,
+    "probability": 0.0185,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x451532f1c9eb7e4dc2d493db52b682c0acf6f5ef",
+    "label": null,
+    "name": "SuzakuToken",
+    "chars": 24054,
+    "score": 11,
+    "probability": 0.1088,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x94025780a1ab58868d9b2dbbb775f44b32e8e6e5",
+    "label": null,
+    "name": "BETS",
+    "chars": 85236,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Hash-based Access"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x7cc9c624efa62c2decf0a2a028f7885ecea95a17",
+    "label": null,
+    "name": "SPACEMWORLD",
+    "chars": 153671,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Assembly Caller",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x97cf07b5401b76d69bf48a4f6fdf63684e0748e0",
+    "label": null,
+    "name": "StableCoin",
+    "chars": 60431,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x82fe038ea4b50f9c957da326c412ebd73462077c",
+    "label": null,
+    "name": "JoeHatToken",
+    "chars": 23971,
+    "score": 3,
+    "probability": 0.0331,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Unlimited Mint",
+     "Mint + No Cap"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x83a283641c6b4df383bcddf807193284c84c5342",
+    "label": null,
+    "name": "VaporNodes",
+    "chars": 69992,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Hidden Owner + Drain",
+     "Unlimited Mint",
+     "Uncapped Tax",
+     "Mint + No Cap",
+     "Dynamic Tax",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x5954ff4099ac47c4d6d098a9216f3278bb8c9506",
+    "label": null,
+    "name": "ERC1967Proxy",
+    "chars": 42757,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0xc7b5d72c836e718cda8888eaf03707faef675079",
+    "label": null,
+    "name": "BridgeToken",
+    "chars": 25491,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "tx.origin Usage",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0xc45a479877e1e9dfe9fcd4056c699575a1045daa",
+    "label": null,
+    "name": "InitializableImmutableAdminUpgradeabilityProxy",
+    "chars": 13427,
+    "score": 4,
+    "probability": 0.0407,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0xccf580e697b8bba73748ba881c1872dd4fb01cda",
+    "label": null,
+    "name": "GenesisToken",
+    "chars": 205351,
+    "score": 90,
+    "probability": 0.9,
+    "verdict": "CRITICAL",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Hidden Owner + Drain",
+     "Assembly Caller",
+     "Blacklist Mechanism"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x3709e8615e02c15b096f8a9b460ccb8ca8194e86",
+    "label": null,
+    "name": "Vee",
+    "chars": 8715,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0xa25eaf2906fa1a3a13edac9b9657108af7b703e3",
+    "label": null,
+    "name": "TransparentUpgradeableProxy",
+    "chars": 31933,
+    "score": 2,
+    "probability": 0.0183,
+    "verdict": "SAFE",
+    "overridden": false,
+    "flags": [
+     "Proxy Without Timelock",
+     "Assembly Caller"
+    ]
+   },
+   {
+    "chain": "AVAX",
+    "address": "0x5ddc8d968a94cf95cfeb7379f8372d858b9c797d",
+    "label": null,
+    "name": "TokenTemplate",
+    "chars": 29373,
+    "score": 75,
+    "probability": 0.75,
+    "verdict": "HIGH",
+    "overridden": true,
+    "flags": [
+     "Hidden Owner",
+     "Unlimited Mint",
+     "Mint + No Cap",
+     "Blacklist Mechanism"
+    ]
+   }
+  ]
+ }
+]

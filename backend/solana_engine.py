@@ -16,8 +16,10 @@ not exist or cannot be read, the result is INSUFFICIENT_DATA, never a guess.
 
 from __future__ import annotations
 
+import base64
 import json
 import os
+import struct
 import threading
 import time
 from typing import Optional
@@ -30,10 +32,17 @@ except ImportError:
     # Render imports this as backend.solana_engine, not a top-level module.
     from .risk_engine import Finding, fuse, recommendation_for, rule_score, verdict_for
 
-SOL_RPC = os.getenv("SOLANA_RPC_URL", "https://api.mainnet-beta.solana.com")
-# The public endpoint rate-limits bursts; one fallback keeps a scan alive.
-FALLBACK_RPC = os.getenv("SOLANA_RPC_FALLBACK", "https://solana-rpc.publicnode.com")
+# The official endpoint answers getAccountInfo but throttles
+# getTokenLargestAccounts (HTTP 429 by method) and publicnode blocks it outright,
+# which left holder concentration permanently unmeasured in production. These
+# are tried in order; the first one that answers wins, and each read is cached.
+SOL_RPC = os.getenv("SOLANA_RPC_URL", "https://solana-mainnet.g.alchemy.com/v2/demo")
+FALLBACK_RPC = os.getenv("SOLANA_RPC_FALLBACK", "https://api.mainnet-beta.solana.com")
+EXTRA_RPC = os.getenv("SOLANA_RPC_EXTRA", "https://solana-rpc.publicnode.com")
 DEXSCREENER = "https://api.dexscreener.com/latest/dex/tokens"
+
+# Errors that mean "this endpoint will not serve this method", not "bad request".
+ENDPOINT_ERROR_CODES = {401, 403, 410, 429, -32029}
 
 TOKEN_PROGRAM = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
 TOKEN_2022 = "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
@@ -92,6 +101,17 @@ def clear_cache() -> None:
         _cache.clear()
 
 
+# A method an endpoint refuses stays refused for a while; retrying it on every
+# scan cost tens of seconds. Ten minutes, then we try again.
+_method_blocked: dict[str, float] = {}
+METHOD_BLOCK_TTL = 600
+
+
+def _method_allowed(method: str) -> bool:
+    until = _method_blocked.get(method)
+    return until is None or time.time() > until
+
+
 def _rpc(method: str, params: list) -> dict:
     """Call the RPC, caching reads and retrying on 429 with a fallback endpoint."""
     key = json.dumps([method, params], sort_keys=True, default=str)
@@ -102,8 +122,8 @@ def _rpc(method: str, params: list) -> dict:
     payload = {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}
     problems: list[str] = []
 
-    for url in dict.fromkeys([SOL_RPC, FALLBACK_RPC]):
-        for attempt in (1, 2, 3):
+    for url in dict.fromkeys([SOL_RPC, FALLBACK_RPC, EXTRA_RPC]):
+        for attempt in (1, 2):
             try:
                 response = requests.post(url, json=payload, timeout=20)
                 if response.status_code == 429:
@@ -114,8 +134,17 @@ def _rpc(method: str, params: list) -> dict:
                 response.raise_for_status()
                 body = response.json()
                 if body.get("error"):
-                    # A malformed request fails the same way everywhere.
-                    raise RuntimeError(body["error"].get("message", "RPC error"))
+                    error = body["error"]
+                    message = str(error.get("message", "RPC error"))
+                    blocked = error.get("code") in ENDPOINT_ERROR_CODES or any(
+                        word in message.lower()
+                        for word in ("blocked", "disabled", "too many", "rate limit")
+                    )
+                    if blocked:
+                        # Not our request's fault: try the next endpoint.
+                        problems.append(f"{url}: {message}")
+                        break
+                    raise RuntimeError(message)
                 result = body.get("result") or {}
                 _cache_put(key, result)
                 return result
@@ -125,6 +154,7 @@ def _rpc(method: str, params: list) -> dict:
                 problems.append(f"{url}: {exc}")
                 break
 
+    _method_blocked[method] = time.time() + METHOD_BLOCK_TTL
     raise RuntimeError("Solana RPC unavailable (" + "; ".join(problems[-2:]) + ")")
 
 
@@ -145,9 +175,98 @@ def fetch_mint(mint: str) -> Optional[dict]:
     return info
 
 
-def largest_holders(mint: str) -> list[dict]:
-    result = _rpc("getTokenLargestAccounts", [mint])
-    return result.get("value") or []
+GPA_MAX_BYTES = 8 * 1024 * 1024
+_B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+
+
+def _b58encode(raw: bytes) -> str:
+    number = int.from_bytes(raw, "big")
+    out = ""
+    while number:
+        number, remainder = divmod(number, 58)
+        out = _B58[remainder] + out
+    for byte in raw:
+        if byte != 0:
+            break
+        out = _B58[0] + out
+    return out or "_"
+
+
+def _holders_from_program_accounts(mint: str, program: Optional[str] = None) -> list[dict]:
+    """Read every token account for the mint straight from the token program.
+
+    getTokenLargestAccounts is an "indexed" method that public RPCs throttle or
+    refuse without a key. getProgramAccounts is served, but returns every holder,
+    so the response is streamed and abandoned past a size cap: a mint with
+    millions of accounts stays unmeasured instead of exhausting memory.
+    """
+    accounts: list[dict] = []
+    # The mint tells us which token program holds its accounts, so only that one
+    # needs querying.
+    programs = (TOKEN_2022,) if program == "token-2022" else (TOKEN_PROGRAM,)
+    for token_program in programs:
+        payload = {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "getProgramAccounts",
+            "params": [
+                token_program,
+                {
+                    "encoding": "base64",
+                    "filters": [{"memcmp": {"offset": 0, "bytes": mint}}],
+                    "dataSlice": {"offset": 0, "length": 72},
+                },
+            ],
+        }
+        for url in dict.fromkeys([FALLBACK_RPC, SOL_RPC]):
+            try:
+                with requests.post(url, json=payload, timeout=30, stream=True) as response:
+                    if response.status_code != 200:
+                        continue
+                    total = 0
+                    chunks: list[bytes] = []
+                    for chunk in response.iter_content(65536):
+                        total += len(chunk)
+                        if total > GPA_MAX_BYTES:
+                            chunks = []
+                            break
+                        chunks.append(chunk)
+                    if not chunks:
+                        continue
+                    body = json.loads(b"".join(chunks))
+            except Exception:
+                continue
+
+            if body.get("error"):
+                continue
+            for item in body.get("result") or []:
+                raw = base64.b64decode((item.get("account", {}).get("data") or [""])[0] or "")
+                if len(raw) < 72:
+                    continue
+                accounts.append(
+                    {
+                        "address": item.get("pubkey"),
+                        "owner": _b58encode(raw[32:64]),
+                        "amount": str(struct.unpack("<Q", raw[64:72])[0]),
+                    }
+                )
+            break
+
+    accounts.sort(key=lambda h: -int(h["amount"]))
+    return accounts[:20]
+
+
+def largest_holders(mint: str, program: Optional[str] = None) -> list[dict]:
+    """Top holders by balance, with a program-account fallback when the indexed
+    endpoint refuses the request. Returns [] when neither path could read them."""
+    if _method_allowed("getTokenLargestAccounts"):
+        try:
+            values = _rpc("getTokenLargestAccounts", [mint]).get("value") or []
+            if values:
+                return values
+        except Exception:
+            pass
+    return _holders_from_program_accounts(mint, program)
 
 
 def market(mint: str) -> Optional[dict]:
@@ -303,7 +422,7 @@ def evaluate_state(mint: str) -> tuple[list[Finding] | None, dict]:
         )
 
     try:
-        holders = largest_holders(mint)
+        holders = largest_holders(mint, info.get("_program"))
     except Exception:
         holders = []
 

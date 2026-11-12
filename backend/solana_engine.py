@@ -22,7 +22,11 @@ from typing import Optional
 
 import requests
 
-from risk_engine import Finding, fuse, recommendation_for, rule_score, verdict_for
+try:
+    from risk_engine import Finding, fuse, recommendation_for, rule_score, verdict_for
+except ImportError:
+    # Render imports this as backend.solana_engine, not a top-level module.
+    from .risk_engine import Finding, fuse, recommendation_for, rule_score, verdict_for
 
 SOL_RPC = os.getenv("SOLANA_RPC_URL", "https://api.mainnet-beta.solana.com")
 DEXSCREENER = "https://api.dexscreener.com/latest/dex/tokens"

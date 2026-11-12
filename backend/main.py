@@ -28,7 +28,6 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from solana_engine import analyze_solana, is_solana_address
 
 if hasattr(sys.stdout, 'reconfigure'):
     try:
@@ -60,6 +59,7 @@ try:
         rule_score,
         verdict_for,
     )
+    from solana_engine import analyze_solana, is_solana_address
 except ImportError:
     # Works when the project is started from its repository root.
     from .feature_extractor import (
@@ -78,6 +78,7 @@ except ImportError:
         rule_score,
         verdict_for,
     )
+    from .solana_engine import analyze_solana, is_solana_address
 
 load_dotenv()
 

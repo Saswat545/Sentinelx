@@ -18,13 +18,58 @@ from typing import Optional
 # ── Etherscan V2 (single endpoint, chain via chainid param) ──
 ETHERSCAN_V2_URL = "https://api.etherscan.io/v2/api"
 CHAIN_IDS = {
-    "ETH": 1,        # Ethereum
-    "BSC": 56,       # BNB Chain
-    "POLYGON": 137,  # Polygon PoS
-    "ARB": 42161,    # Arbitrum One
-    "BASE": 8453,    # Base
-    "OP": 10,        # OP Mainnet
-    "AVAX": 43114,   # Avalanche C-Chain
+    # Every chain below is an Etherscan V2 chain id that answered
+    # contract/getsourcecode on a free key. Chains whose source module is not
+    # served return UNKNOWN rather than a wrong score.
+    "ETH": 1,              # Ethereum
+    "BSC": 56,             # BNB Smart Chain
+    "POLYGON": 137,        # Polygon PoS
+    "ARB": 42161,          # Arbitrum One
+    "BASE": 8453,          # Base
+    "OP": 10,              # OP Mainnet
+    "AVAX": 43114,         # Avalanche C-Chain
+    "LINEA": 59144,        # Linea
+    "SCROLL": 534352,      # Scroll
+    "MANTLE": 5000,        # Mantle
+    "BLAST": 81457,        # Blast
+    "ZKSYNC": 324,         # zkSync Era
+    "CELO": 42220,         # Celo
+    "GNOSIS": 100,         # Gnosis
+    "SONIC": 146,          # Sonic
+    "WORLD": 480,          # World Chain
+    "UNICHAIN": 130,       # Unichain
+    "BERACHAIN": 80094,    # Berachain
+    "SEI": 1329,           # Sei
+    "MONAD": 143,          # Monad
+    "HYPEREVM": 999,       # HyperEVM
+    "INK": 57073,          # Ink
+    "SONEIUM": 1868,       # Soneium
+    "ABSTRACT": 2741,      # Abstract
+    "KATANA": 747474,      # Katana
+    "PLASMA": 9745,        # Plasma
+    "MEGAETH": 4326,       # MegaETH
+    "STABLE": 988,         # Stable
+    "ROBINHOOD": 4663,     # Robinhood Chain
+    "ARC": 5042,           # Arc
+    "FRAXTAL": 252,        # Fraxtal
+    "TAIKO": 167000,       # Taiko
+    "XDC": 50,             # XDC Network
+    "BTT": 199,            # BitTorrent Chain
+    "MEMECORE": 4352,      # Memecore
+    "FANTOM": 250,         # Fantom
+    "CRONOS": 25,          # Cronos
+    "KAVA": 2222,          # Kava
+    "METIS": 1088,         # Metis
+    "MANTA": 169,          # Manta Pacific
+    "FUSE": 122,           # Fuse
+    "TELOS": 40,           # Telos
+    "MERLIN": 4200,        # Merlin Chain
+    "ELYSIUM": 1339,       # Elysium
+    "APECHAIN": 33139,     # ApeChain
+    "FLOW": 747,           # Flow EVM
+    "INJECTIVE": 1776,     # Injective EVM
+    "HEDERA": 295,         # Hedera
+    "PULSECHAIN": 369,     # PulseChain
 }
 
 

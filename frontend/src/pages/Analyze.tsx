@@ -7,6 +7,7 @@ import { SmoothInput } from '../components/ui/SmoothInput';
 import { api } from '../lib/api';
 import { useAuth } from '../lib/auth';
 import { addScan, normalizeRiskLevel } from '../lib/scanStore';
+import { CHAINS } from '../lib/chains';
 
 type InputMode = 'address' | 'solidity';
 
@@ -25,6 +26,7 @@ export function Analyze() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState('');
   const [analyzingStep, setAnalyzingStep] = useState(0);
+  const [chain, setChain] = useState('ETH');
   const navigate = useNavigate();
 
   /* The backend sleeps when idle. Ping it on mount so the cold start overlaps
@@ -149,7 +151,7 @@ export function Analyze() {
 
     try {
       const input = mode === 'address' ? extractAddress(contractAddress) : solidityCode.trim();
-      const data = await api.analyze({ input });
+      const data = await api.analyze({ input, chain });
 
       clearInterval(stepTimer);
       setIsAnalyzing(false);
@@ -164,7 +166,7 @@ export function Analyze() {
       const modelUsed = data.model_used !== false;
       const modelInfo = {
         model: data.model || (modelUsed ? 'XGBoost' : 'Not run'),
-        features: data.features_used ?? (modelUsed ? 53 : 0),
+        features: data.features_used ?? (modelUsed ? 54 : 0),
         responseTime:
           data.response_time ||
           (data.analysis_time_ms ? `${data.analysis_time_ms} ms` : 'n/a'),
@@ -200,6 +202,27 @@ export function Analyze() {
           verdictLabel: data.verdict_label || null,
           aiAssessment: data.ai_assessment || data.explanation || '',
           shapValues: data.shap_values || null,
+          /* The fused number is not the whole result: carry both subtotals so
+             Results can show the 70/30 split the copy promises. */
+          engine:
+            data.rule_score !== undefined
+              ? {
+                  ruleScore: data.rule_score ?? null,
+                  aiScore: data.ai_score ?? null,
+                  /* The API sends confidence as a 0-1 fraction and status in caps. */
+                  confidence:
+                    data.confidence == null
+                      ? null
+                      : Math.round(data.confidence <= 1 ? data.confidence * 100 : data.confidence),
+                  status: data.status ? data.status.toLowerCase() : null,
+                  findings: (data.findings || []).map((f) => ({
+                    title: f.title || f.rule,
+                    severity: f.severity || 'informational',
+                    evidence: f.evidence || '',
+                    confirmed: Boolean(f.confirmed),
+                  })),
+                }
+              : null,
         },
       });
     } catch (err: any) {
@@ -327,6 +350,26 @@ export function Analyze() {
                 </button>
               </div>
 
+              {/* Chain selector: the backend routes to an Etherscan V2 chain id */}
+              <div className="mb-4 flex flex-wrap items-center gap-2">
+                <label htmlFor="scan-chain" className="text-sm font-medium text-gray-600">
+                  Chain
+                </label>
+                <select
+                  id="scan-chain"
+                  value={chain}
+                  onChange={(e) => setChain(e.target.value)}
+                  className="h-9 rounded-lg border border-gray-300 bg-white px-3 text-sm text-gray-900 focus:border-[#0149FD] focus:outline-none focus:ring-4 focus:ring-[#0149FD]/10"
+                >
+                  {CHAINS.map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+                <span className="text-xs text-gray-400">Unverified source returns UNKNOWN.</span>
+              </div>
+
               {/* Input Area */}
               <div className="mb-6">
                 {mode === 'address' ? (
@@ -338,11 +381,11 @@ export function Analyze() {
                       value={contractAddress}
                       onChange={(e) => { setContractAddress(e.target.value); setError(''); }}
                       placeholder="0x742d35Cc6634C0532925a3b844Bc9e7595f..."
-                      aria-label="Ethereum contract address"
+                      aria-label="Contract address on the selected chain"
                       className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-mono text-sm text-gray-900 placeholder:text-gray-400 transition-colors duration-200 focus:border-[#0149FD] focus:ring-4 focus:ring-[#0149FD]/10 focus:outline-none"
                       onKeyDown={(e) => e.key === 'Enter' && handleAnalyze()}
                     />
-                    <p className="mt-2 text-xs text-gray-400">Enter any Ethereum mainnet contract address</p>
+                    <p className="mt-2 text-xs text-gray-400">Enter a contract address on the selected chain</p>
                   </div>
                 ) : (
                   <div>
@@ -395,13 +438,13 @@ export function Analyze() {
                   <svg className="w-3.5 h-3.5 text-[#0149FD]/50" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  53+ Security Signals
+                  54 Security Signals
                 </span>
                 <span className="flex items-center gap-2">
                   <svg className="w-3.5 h-3.5 text-[#0149FD]/50" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  AI + Static Analysis
+                  Rules + XGBoost
                 </span>
                 <span className="flex items-center gap-2">
                   <svg className="w-3.5 h-3.5 text-[#0149FD]/50" fill="currentColor" viewBox="0 0 20 20">

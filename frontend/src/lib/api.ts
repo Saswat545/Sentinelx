@@ -28,6 +28,21 @@ export interface AnalyzeResponse {
   recommendation?: string;
   analysis_time_ms?: number;
   shap_values?: Record<string, number>;
+  /** deterministic rule subtotal, 0-100 (70% of the fused score) */
+  rule_score?: number;
+  /** gradient-boosted model subtotal, 0-100 (30% of the fused score) */
+  ai_score?: number | null;
+  /** how much of the evidence was readable; drives the UNKNOWN verdict */
+  confidence?: number;
+  status?: string;
+  findings?: Array<{
+    rule: string;
+    title: string;
+    severity: string;
+    weight: number;
+    evidence?: string;
+    confirmed?: boolean;
+  }>;
 }
 
 export interface HealthResponse {

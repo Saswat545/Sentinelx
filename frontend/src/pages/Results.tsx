@@ -18,6 +18,13 @@ interface AnalysisResult {
   shapValues?: any;
   saved?: boolean;
   error?: string;
+  engine?: {
+    ruleScore: number | null;
+    aiScore: number | null;
+    confidence: number | null;
+    status: string | null;
+    findings: { title: string; severity: string; evidence: string; confirmed: boolean }[];
+  } | null;
 }
 
 const severityStyles: Record<string, { chip: string; dot: string }> = {
@@ -43,6 +50,7 @@ export function Results() {
   const result = location.state as AnalysisResult | null;
   const { user, isConfigured } = useAuth();
   const reduceMotion = useReducedMotion();
+  const engine = result?.engine ?? null;
 
   if (!result) {
     return (
@@ -182,7 +190,11 @@ export function Results() {
               <p className="mt-4 text-xs text-gray-500">
                 Score basis:{' '}
                 <span className="font-medium text-gray-700">
-                  {policyScore ? 'policy rule (source not verified)' : `model (${result.modelInfo.model})`}
+                  {engine && engine.ruleScore !== null
+                    ? `rules ${engine.ruleScore} × 0.7 + model ${engine.aiScore ?? 'n/a'} × 0.3`
+                    : policyScore
+                      ? 'policy rule (source not verified)'
+                      : `model (${result.modelInfo.model})`}
                 </span>
               </p>
             </div>
@@ -198,6 +210,103 @@ export function Results() {
             </Link>
           </div>
         </section>
+
+        {/* Engine split: the backend fuses rules (70%) and model (30%) */}
+        {engine && (
+          <section className="mt-6 rounded-xl border border-gray-200">
+            <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-100 px-6 py-4">
+              <h2 className="text-sm font-semibold text-gray-900">How this score was built</h2>
+              <span className="font-mono text-xs text-gray-400">
+                {engine.status === 'insufficient_data' ? 'not scored' : 'rules 70% · model 30%'}
+              </span>
+            </div>
+
+            {engine.status !== 'insufficient_data' && (
+              <div className="grid gap-6 px-6 py-5 sm:grid-cols-2">
+              <div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-sm text-gray-700">Rule engine</span>
+                  <span className="font-mono text-sm tabular-nums text-gray-900">
+                    {engine.ruleScore}
+                  </span>
+                </div>
+                <div className="mt-2 h-1.5 rounded-full bg-gray-100" aria-hidden="true">
+                  <div
+                    className="h-1.5 rounded-full bg-[#0149FD]"
+                    style={{ width: `${Math.min(Math.max(engine.ruleScore ?? 0, 0), 100)}%` }}
+                  />
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                  Deterministic checks. Each one names the code pattern it matched.
+                </p>
+              </div>
+
+              <div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-sm text-gray-700">XGBoost model</span>
+                  <span className="font-mono text-sm tabular-nums text-gray-900">
+                    {engine.aiScore ?? 'not run'}
+                  </span>
+                </div>
+                <div className="mt-2 h-1.5 rounded-full bg-gray-100" aria-hidden="true">
+                  <div
+                    className="h-1.5 rounded-full bg-[#0149FD]/40"
+                    style={{ width: `${Math.min(Math.max(engine.aiScore ?? 0, 0), 100)}%` }}
+                  />
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-gray-500">
+                  {engine.aiScore === null
+                    ? 'Not run for this input, so the rules carried the score.'
+                    : '54 extracted features, scored by the trained booster.'}
+                </p>
+              </div>
+              </div>
+            )}
+
+            {engine.findings.length > 0 && engine.status !== 'insufficient_data' && (
+              <ul className="divide-y divide-gray-100 border-t border-gray-100">
+                {engine.findings.slice(0, 8).map((finding, index) => {
+                  const style =
+                    severityStyles[finding.severity?.toUpperCase()] ?? severityStyles.INFORMATIONAL;
+                  return (
+                    <li key={index} className="flex flex-wrap items-start justify-between gap-3 px-6 py-3">
+                      <div className="min-w-0">
+                        <p className="text-sm text-gray-800">
+                          {finding.title}
+                          {finding.confirmed && (
+                            <span className="ml-2 font-mono text-[10px] uppercase tracking-wide text-red-600">
+                              confirmed
+                            </span>
+                          )}
+                        </p>
+                        {finding.evidence && (
+                          <p className="mt-0.5 break-all font-mono text-[11px] text-gray-500">
+                            {finding.evidence}
+                          </p>
+                        )}
+                      </div>
+                      <span
+                        className={`shrink-0 rounded-md border px-2 py-0.5 font-mono text-[11px] uppercase tracking-wide ${style.chip}`}
+                      >
+                        {finding.severity}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
+            <div className="border-t border-gray-100 px-6 py-3">
+              <p className="text-xs text-gray-500">
+                {engine.status === 'insufficient_data'
+                  ? 'There was not enough readable evidence to score this contract. UNKNOWN, not safe.'
+                  : engine.status === 'bytecode_only'
+                    ? `Source is unverified, so the model did not run. This score comes from bytecode evidence alone (${engine.confidence ?? '--'}% of it readable).`
+                    : `Confidence ${engine.confidence ?? '--'}%, based on how much of the source could be read.`}
+              </p>
+            </div>
+          </section>
+        )}
 
         {policyScore && (
           <div className="mt-4 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-5">
@@ -277,7 +386,15 @@ export function Results() {
               { label: 'Model', value: result.modelInfo.model },
               { label: 'Features', value: result.modelInfo.features || '0' },
               { label: 'Time', value: result.modelInfo.responseTime },
-              { label: 'Basis', value: policyScore ? 'Policy rule' : 'Model' },
+              {
+                label: 'Basis',
+                value:
+                  engine && engine.ruleScore !== null
+                    ? 'Rules 70% + model 30%'
+                    : policyScore
+                      ? 'Policy rule'
+                      : 'Model',
+              },
             ].map((item) => (
               <div key={item.label} className="border-b border-gray-100 px-6 py-4 last:border-b-0 sm:border-b-0">
                 <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-400">

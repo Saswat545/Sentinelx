@@ -1,0 +1,60 @@
+// Chains wired end to end: the backend resolves each code to an Etherscan V2
+// chain id, and the scanner sends it with the address. Keep this list in sync
+// with CHAIN_IDS in backend/feature_extractor.py.
+
+export interface ChainOption {
+  code: string;
+  name: string;
+}
+
+export const CHAINS: ChainOption[] = [
+  { code: 'ETH', name: 'Ethereum' },
+  { code: 'BSC', name: 'BNB Smart Chain' },
+  { code: 'POLYGON', name: 'Polygon' },
+  { code: 'ARB', name: 'Arbitrum One' },
+  { code: 'BASE', name: 'Base' },
+  { code: 'OP', name: 'OP Mainnet' },
+  { code: 'AVAX', name: 'Avalanche C-Chain' },
+  { code: 'LINEA', name: 'Linea' },
+  { code: 'SCROLL', name: 'Scroll' },
+  { code: 'MANTLE', name: 'Mantle' },
+  { code: 'BLAST', name: 'Blast' },
+  { code: 'ZKSYNC', name: 'zkSync Era' },
+  { code: 'CELO', name: 'Celo' },
+  { code: 'GNOSIS', name: 'Gnosis' },
+  { code: 'SONIC', name: 'Sonic' },
+  { code: 'WORLD', name: 'World Chain' },
+  { code: 'UNICHAIN', name: 'Unichain' },
+  { code: 'BERACHAIN', name: 'Berachain' },
+  { code: 'SEI', name: 'Sei' },
+  { code: 'MONAD', name: 'Monad' },
+  { code: 'HYPEREVM', name: 'HyperEVM' },
+  { code: 'INK', name: 'Ink' },
+  { code: 'SONEIUM', name: 'Soneium' },
+  { code: 'ABSTRACT', name: 'Abstract' },
+  { code: 'KATANA', name: 'Katana' },
+  { code: 'PLASMA', name: 'Plasma' },
+  { code: 'MEGAETH', name: 'MegaETH' },
+  { code: 'STABLE', name: 'Stable' },
+  { code: 'ROBINHOOD', name: 'Robinhood Chain' },
+  { code: 'ARC', name: 'Arc' },
+  { code: 'FRAXTAL', name: 'Fraxtal' },
+  { code: 'TAIKO', name: 'Taiko' },
+  { code: 'XDC', name: 'XDC Network' },
+  { code: 'BTT', name: 'BitTorrent Chain' },
+  { code: 'MEMECORE', name: 'Memecore' },
+  { code: 'FANTOM', name: 'Fantom' },
+  { code: 'CRONOS', name: 'Cronos' },
+  { code: 'KAVA', name: 'Kava' },
+  { code: 'METIS', name: 'Metis' },
+  { code: 'MANTA', name: 'Manta Pacific' },
+  { code: 'FUSE', name: 'Fuse' },
+  { code: 'TELOS', name: 'Telos' },
+  { code: 'MERLIN', name: 'Merlin Chain' },
+  { code: 'ELYSIUM', name: 'Elysium' },
+  { code: 'APECHAIN', name: 'ApeChain' },
+  { code: 'FLOW', name: 'Flow EVM' },
+  { code: 'INJECTIVE', name: 'Injective EVM' },
+  { code: 'HEDERA', name: 'Hedera' },
+  { code: 'PULSECHAIN', name: 'PulseChain' },
+];

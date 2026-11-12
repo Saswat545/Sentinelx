@@ -48,6 +48,60 @@ let scanToken = 0;
 
 const chainSelect = $('chain');
 
+/* Every chain the backend routes (mirrors backend/feature_extractor.py).
+   Auto-detection only covers the big explorers, so the dropdown is the
+   reliable way to pick a newer chain. */
+Object.assign(CHAIN_NAMES, {
+  LINEA: 'Linea',
+  SCROLL: 'Scroll',
+  MANTLE: 'Mantle',
+  BLAST: 'Blast',
+  ZKSYNC: 'zkSync Era',
+  CELO: 'Celo',
+  GNOSIS: 'Gnosis',
+  SONIC: 'Sonic',
+  WORLD: 'World Chain',
+  UNICHAIN: 'Unichain',
+  BERACHAIN: 'Berachain',
+  SEI: 'Sei',
+  MONAD: 'Monad',
+  HYPEREVM: 'HyperEVM',
+  INK: 'Ink',
+  SONEIUM: 'Soneium',
+  ABSTRACT: 'Abstract',
+  KATANA: 'Katana',
+  PLASMA: 'Plasma',
+  MEGAETH: 'MegaETH',
+  STABLE: 'Stable',
+  ROBINHOOD: 'Robinhood Chain',
+  ARC: 'Arc',
+  FRAXTAL: 'Fraxtal',
+  TAIKO: 'Taiko',
+  XDC: 'XDC Network',
+  BTT: 'BitTorrent Chain',
+  MEMECORE: 'Memecore',
+  FANTOM: 'Fantom',
+  CRONOS: 'Cronos',
+  KAVA: 'Kava',
+  METIS: 'Metis',
+  MANTA: 'Manta Pacific',
+  FUSE: 'Fuse',
+  TELOS: 'Telos',
+  MERLIN: 'Merlin Chain',
+  ELYSIUM: 'Elysium',
+  APECHAIN: 'ApeChain',
+  FLOW: 'Flow EVM',
+  INJECTIVE: 'Injective EVM',
+  HEDERA: 'Hedera',
+  PULSECHAIN: 'PulseChain',
+});
+
+if (chainSelect) {
+  chainSelect.innerHTML = Object.entries(CHAIN_NAMES)
+    .map(([code, name]) => `<option value="${code}">${name}</option>`)
+    .join('');
+}
+
 function setChain(chain) {
   currentChain = CHAIN_NAMES[chain] ? chain : 'ETH';
   if (chainSelect.value !== currentChain) chainSelect.value = currentChain;

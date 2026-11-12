@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { useAuth } from '../lib/auth';
 
 export function Navigation() {
@@ -77,7 +78,7 @@ export function Navigation() {
                   aria-expanded={activeDropdown === item.label}
                   onFocus={() => setActiveDropdown(item.label)}
                   onBlur={() => setActiveDropdown(null)}
-                  className="flex items-center gap-1 rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors duration-200 hover:bg-gray-50 hover:text-gray-900"
+                  className="flex items-center gap-1 rounded-md px-3 py-2 text-[14px] font-medium text-gray-600 transition-colors duration-200 hover:bg-gray-50 hover:text-gray-900"
                 >
                   {item.label}
                   <svg className={`w-3 h-3 transition-transform duration-200 ${activeDropdown === item.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,23 +120,27 @@ export function Navigation() {
           <div className="flex items-center gap-2">
             {user && isConfigured ? (
               <>
-                <Link to="/dashboard" className="hidden rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 sm:block">
+                <Link to="/dashboard" className="hidden rounded-md px-3 py-2 text-[14px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 sm:block">
                   Dashboard
                 </Link>
-                <button onClick={() => signOut()} className="rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900">
+                <button onClick={() => signOut()} className="rounded-md px-3 py-2 text-[14px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900">
                   Sign out
                 </button>
               </>
             ) : (
-              <Link to="/login" className="hidden rounded-md px-3 py-2 text-[13px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 sm:block">
+              <Link to="/login" className="hidden rounded-md px-3 py-2 text-[14px] font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 sm:block">
                 Log in
               </Link>
             )}
             <Link
               to="/scan"
-              className="inline-flex h-9 items-center rounded-lg bg-[#0149FD] px-4 text-[13px] font-semibold text-white hover:bg-[#0033CC]"
+              className="group inline-flex h-9 items-center gap-1.5 rounded-lg bg-[#0149FD] px-4 text-[14px] font-semibold text-white hover:bg-[#0033CC]"
             >
               Scan a contract
+              <ArrowRight
+                className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+                aria-hidden="true"
+              />
             </Link>
 
             {/* Mobile hamburger */}

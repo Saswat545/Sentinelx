@@ -75,13 +75,13 @@ const pipeline = [
   },
   {
     label: 'Extraction',
-    title: '53 signals come out of the contract',
+    title: '54 signals come out of the contract',
     body: 'Ownership, mint rights, fee switches, blacklist hooks, proxy patterns and assembly calls are read from the source and turned into features.',
   },
   {
     label: 'Scoring',
-    title: 'The model returns 0 to 100',
-    body: 'An XGBoost classifier trained on 2,400 labelled contracts estimates how closely this code resembles known rug pull patterns.',
+    title: 'Rules and model are fused into 0 to 100',
+    body: 'Deterministic checks carry most of the score and the XGBoost model the rest, so a honeypot is caught by evidence rather than resemblance alone.',
   },
   {
     label: 'Explanation',
@@ -92,12 +92,12 @@ const pipeline = [
 
 const faqs = [
   {
-    q: 'Why does an unverified contract always score 90?',
-    a: 'Without verified source code there are no features to extract, so the model cannot run. Every unverified address gets a fixed score of 90 from a policy rule and the result page says so. That is a warning about missing evidence, not a model prediction.',
+    q: 'What happens when the source is unverified?',
+    a: 'SentinelX reads the deployed bytecode instead: proxies, mint entry points and ownership selectors are detectable without source. If the bytecode cannot be read either, the result is UNKNOWN rather than a made-up score.',
   },
   {
     q: 'What does the risk score measure?',
-    a: 'The score estimates how closely a contract resembles known rug pull patterns. The model uses an XGBoost classifier trained on 2,400 labelled contracts, and each result lists the signals that drove the number.',
+    a: 'It combines two engines: deterministic checks that name what the contract can do, and an XGBoost model trained on 2,400 labelled contracts. Each result lists the rules and the model contributions behind the number.',
   },
   {
     q: 'Can SentinelX analyse any Ethereum contract?',
@@ -115,7 +115,7 @@ const faqs = [
 
 const metrics = [
   { value: 96.15, decimals: 2, suffix: '%', label: 'Model accuracy' },
-  { value: 53, decimals: 0, suffix: '', label: 'Signals per contract' },
+  { value: 54, decimals: 0, suffix: '', label: 'Features per contract' },
   { value: 2400, decimals: 0, suffix: '', label: 'Labelled contracts' },
   { value: 3, decimals: 0, suffix: 's', label: 'Typical response' },
 ];
@@ -153,7 +153,7 @@ export function Home() {
             <motion.div variants={container} initial="hidden" animate="show">
               <motion.p
                 variants={item}
-                className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#0149FD]"
+                className="font-mono text-[12px] uppercase tracking-[0.18em] text-[#0149FD]"
               >
                 Smart contract security
               </motion.p>
@@ -165,7 +165,7 @@ export function Home() {
               </motion.h1>
               <motion.p
                 variants={item}
-                className="mt-6 max-w-xl text-[16px] leading-[1.65] text-gray-600 sm:text-[17px]"
+                className="mt-6 max-w-xl text-[16px] leading-[1.65] text-gray-600"
               >
                 SentinelX scores Ethereum contracts for rug pull risk and lists the signals behind
                 each score: honeypot logic, hidden mint rights, mutable fees, proxy upgrades, and
@@ -191,7 +191,7 @@ export function Home() {
                   See how scoring works
                 </Link>
               </motion.div>
-              <motion.p variants={item} className="mt-9 font-mono text-[11px] text-gray-400">
+              <motion.p variants={item} className="mt-9 font-mono text-[12px] text-gray-500">
                 Ethereum mainnet · Read only, no wallet connection · Source via Etherscan
               </motion.p>
             </motion.div>
@@ -216,10 +216,10 @@ export function Home() {
           <dl className="grid grid-cols-2 gap-y-9 sm:grid-cols-4 sm:divide-x sm:divide-gray-200">
             {metrics.map((metric) => (
               <div key={metric.label} className="sm:px-6 sm:first:pl-0 sm:last:pr-0">
-                <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-400">
+                <dt className="font-mono text-[12px] uppercase tracking-[0.12em] text-gray-500">
                   {metric.label}
                 </dt>
-                <dd className="mt-1.5 text-[26px] font-semibold tabular-nums tracking-[-0.02em] text-gray-900">
+                <dd className="mt-1.5 text-[24px] font-semibold tabular-nums tracking-[-0.02em] text-gray-900">
                   <CountUp to={metric.value} decimals={metric.decimals} />
                   {metric.suffix}
                 </dd>
@@ -233,7 +233,7 @@ export function Home() {
       <section className="border-b border-gray-200">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
           <Reveal>
-            <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <div className="flex flex-col items-start gap-3">
               <ScrollFloat
                 containerClassName="my-0"
                 textClassName="!text-left !text-[28px] sm:!text-[34px] !font-semibold !leading-[1.2] !tracking-[-0.03em] text-gray-900"
@@ -245,29 +245,26 @@ export function Home() {
               >
                 What the scanner checks
               </ScrollFloat>
-              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-400">
-                Six of the 53 signals
-              </p>
+              <p className="order-first font-mono text-[12px] text-gray-500">Six of the 54 signals</p>
             </div>
           </Reveal>
 
-          <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid auto-rows-fr gap-px overflow-hidden rounded-xl border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-3">
             {checks.map((check, index) => (
-              <Reveal key={check.name} delay={index * 0.05} className="bg-white">
-                <div className="group h-full p-7 transition-colors duration-300 hover:bg-[#FAFAFB]">
+              <Reveal key={check.name} delay={index * 0.05} className="h-full bg-white">
+                <div className="group flex h-full flex-col p-7 transition-colors duration-300 hover:bg-[#FAFAFB]">
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-[15px] font-semibold tracking-[-0.01em] text-gray-900">
+                    <h3 className="text-[16px] font-semibold tracking-[-0.01em] text-gray-900">
                       {check.name}
                     </h3>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <button
                           type="button"
-                          className={`inline-flex shrink-0 items-center gap-1 rounded-md border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide transition-colors duration-200 ${check.tone}`}
-                          aria-label={`What ${check.severity.toLowerCase()} severity means`}
+                          className={`inline-flex w-[94px] shrink-0 items-center justify-center gap-1 rounded-md border px-2 py-0.5 font-mono text-[12px] uppercase tracking-wide transition-colors duration-200 ${check.tone}`}
                         >
                           {check.severity}
-                          <Info className="h-2.5 w-2.5 opacity-60" aria-hidden="true" />
+                          <Info className="h-3 w-3 opacity-60" aria-hidden="true" />
                         </button>
                       </TooltipTrigger>
                       <TooltipContent>{check.hint}</TooltipContent>
@@ -285,7 +282,7 @@ export function Home() {
       <section className="border-b border-gray-200 bg-[#F7F8FA]">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
           <Reveal>
-            <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <div className="flex flex-col items-start gap-3">
               <ScrollFloat
                 containerClassName="my-0"
                 textClassName="!text-left !text-[28px] sm:!text-[34px] !font-semibold !leading-[1.2] !tracking-[-0.03em] text-gray-900"
@@ -297,9 +294,7 @@ export function Home() {
               >
                 Incidents the signals were built from
               </ScrollFloat>
-              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-400">
-                Public record
-              </p>
+              <p className="order-first font-mono text-[12px] text-gray-500">Public record</p>
             </div>
           </Reveal>
 
@@ -311,7 +306,7 @@ export function Home() {
                     <th
                       key={heading}
                       scope="col"
-                      className="px-5 py-3 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-gray-400"
+                      className="px-5 py-3 font-mono text-[12px] font-medium uppercase tracking-[0.12em] text-gray-500"
                     >
                       {heading}
                     </th>
@@ -353,15 +348,15 @@ export function Home() {
             <h2 className="max-w-2xl text-balance text-[28px] font-semibold leading-[1.15] tracking-[-0.03em] sm:text-[34px]">
               What the score cannot tell you
             </h2>
-            <p className="mt-4 max-w-xl text-[15px] leading-[1.65] text-gray-600">
+            <p className="mt-4 max-w-xl text-[16px] leading-[1.65] text-gray-600">
               A model that hides its limits is a liability. These are the three that matter most.
             </p>
           </Reveal>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {[
               {
-                title: 'It needs verified source',
-                body: 'Unverified contracts cannot be analysed, so they get a fixed policy score of 90 and the result says so.',
+                title: 'Unverified code limits it',
+                body: 'Without source, only bytecode checks run. When neither the source nor the bytecode can be read, the result is UNKNOWN, not a low score.',
               },
               {
                 title: 'It has not seen your trade',
@@ -374,7 +369,7 @@ export function Home() {
             ].map((limit, index) => (
               <Reveal key={limit.title} delay={index * 0.07}>
                 <div className="h-full rounded-xl border border-gray-200 bg-white p-7 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-gray-300 hover:shadow-[0_2px_10px_rgba(15,18,22,0.04)]">
-                  <h3 className="text-[15px] font-semibold tracking-[-0.01em] text-gray-900">
+                  <h3 className="text-[16px] font-semibold tracking-[-0.01em] text-gray-900">
                     {limit.title}
                   </h3>
                   <p className="mt-2.5 text-[14px] leading-[1.65] text-gray-600">{limit.body}</p>
@@ -388,16 +383,16 @@ export function Home() {
       {/* FAQ */}
       <section className="border-b border-gray-200">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.6fr)]">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.8fr)]">
             <Reveal>
               <h2 className="text-[28px] font-semibold leading-[1.15] tracking-[-0.03em] sm:text-[34px]">
                 Questions we get
               </h2>
-              <p className="mt-4 max-w-xs text-[14px] leading-relaxed text-gray-600">
+              <p className="mt-4 text-[14px] leading-relaxed text-gray-600">
                 Answered the same way we would answer them in person.
               </p>
             </Reveal>
-            <div className="border-t border-gray-200">
+            <div className="border-t border-gray-200 lg:mt-2">
               {faqs.map((faq, index) => {
                 const open = openFaq === index;
                 return (
@@ -408,7 +403,7 @@ export function Home() {
                       aria-expanded={open}
                       className="flex w-full items-start justify-between gap-6 py-5 text-left transition-colors duration-200 hover:text-[#0149FD]"
                     >
-                      <span className="text-[15px] font-medium tracking-[-0.01em] text-gray-900">
+                      <span className="text-[16px] font-medium tracking-[-0.01em] text-gray-900">
                         {faq.q}
                       </span>
                       {open ? (
@@ -426,7 +421,7 @@ export function Home() {
                           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                           className="overflow-hidden"
                         >
-                          <p className="max-w-2xl pb-6 pr-10 text-[14px] leading-[1.7] text-gray-600">
+                          <p className="max-w-2xl pb-5 pr-10 text-[14px] leading-[1.7] text-gray-600">
                             {faq.a}
                           </p>
                         </motion.div>

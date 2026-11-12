@@ -10,7 +10,7 @@ const signals = [
   { label: 'No timelock on proxy', severity: 'Medium', tone: 'bg-amber-500', value: 'upgradeTo()' },
 ];
 
-const STEPS = ['Reading verified source', 'Extracting 53 signals', 'Scoring with XGBoost'];
+const STEPS = ['Reading verified source', 'Extracting 54 signals', 'Fusing rules and model'];
 
 /**
  * A looping scan panel used as the hero visual. It walks the same three stages
@@ -51,27 +51,30 @@ export function ScanDemo() {
   }, [reduceMotion]);
 
   const visibleSignals = step >= 3 ? 4 : step >= 2 ? 2 : 0;
+  // At step 3 the scan is finished, so the status and the final step must agree
+  // with the score and findings already on screen.
+  const complete = step >= 3;
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white">
       <div className="flex items-center justify-between border-b border-gray-200 px-5 py-3">
-        <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-gray-400">
-          Live scan
+        <span className="font-mono text-[12px] uppercase tracking-[0.14em] text-gray-500">
+          {complete ? 'Scan complete' : 'Live scan'}
         </span>
-        <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-gray-500">
+        <span className="inline-flex items-center gap-1.5 font-mono text-[12px] text-gray-500">
           <span className={`h-1.5 w-1.5 rounded-full ${step > 0 ? 'bg-emerald-500' : 'bg-gray-300'}`} />
-          {step > 0 ? 'running' : 'idle'}
+          {complete ? 'complete' : step > 0 ? 'running' : 'idle'}
         </span>
       </div>
 
       <div className="px-5 py-4">
-        <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-400">Contract</p>
+        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-gray-500">Contract</p>
         <p className="mt-1 break-all font-mono text-xs text-gray-700">{ADDRESS}</p>
 
         <div className="mt-4 space-y-2">
           {STEPS.map((label, index) => {
-            const done = step > index + 1;
-            const active = step === index + 1;
+            const done = complete || step > index + 1;
+            const active = !complete && step === index + 1;
             return (
               <div key={label} className="flex items-center gap-2.5">
                 <span
@@ -86,7 +89,7 @@ export function ScanDemo() {
                 >
                   {label}
                 </span>
-                {done && <span className="font-mono text-[10px] text-gray-400">done</span>}
+                {done && <span className="font-mono text-[12px] text-gray-500">done</span>}
               </div>
             );
           })}
@@ -95,7 +98,7 @@ export function ScanDemo() {
 
       <div className="border-t border-gray-200 px-5 py-3">
         <div className="flex items-baseline justify-between">
-          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-gray-400">
+          <span className="font-mono text-[12px] uppercase tracking-[0.12em] text-gray-500">
             Risk score
           </span>
           <span className="font-mono text-sm tabular-nums text-gray-900">
@@ -128,7 +131,7 @@ export function ScanDemo() {
                   <span className={`h-1.5 w-1.5 rounded-full ${signal.tone}`} />
                   {signal.label}
                 </span>
-                <span className="font-mono text-[10px] text-gray-400">{signal.value}</span>
+                <span className="font-mono text-[12px] text-gray-600">{signal.value}</span>
               </li>
             ))}
           </motion.ul>

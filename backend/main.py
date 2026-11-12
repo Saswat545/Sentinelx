@@ -28,6 +28,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+from solana_engine import analyze_solana, is_solana_address
 
 if hasattr(sys.stdout, 'reconfigure'):
     try:
@@ -222,7 +223,7 @@ class AnalyzeResponse(BaseModel):
     rule_score: int = 0               # deterministic rules alone, 0-100
     ai_score: Optional[int] = None    # model alone, 0-100 (None when it could not run)
     confidence: float = 0.0           # how much evidence supports the verdict
-    status: str = "VERIFIED"          # VERIFIED / PROXY_RESOLVED / BYTECODE_ONLY / INSUFFICIENT_DATA
+    status: str = "VERIFIED"          # VERIFIED / PROXY_RESOLVED / BYTECODE_ONLY / ONCHAIN_STATE / INSUFFICIENT_DATA
     findings: list[dict] = []         # per-rule evidence for the explanation panel
 
 
@@ -549,9 +550,18 @@ def analyze(req: AnalyzeRequest):
     if len(raw_input) > 500_000:
         raise HTTPException(413, "Input too large — maximum 500,000 characters")
 
+    chain = (req.chain or "ETH").upper()
+
+    # Solana is not an EVM chain: its tokens have no verified source and no
+    # Etherscan entry, so this path reads chain state instead.
+    if chain == "SOL" or (is_solana_address(raw_input) and not is_eth_address(raw_input)):
+        try:
+            return AnalyzeResponse(**analyze_solana(raw_input.strip()))
+        except Exception as exc:
+            raise HTTPException(502, f"Solana RPC unavailable: {exc}")
+
     # An unknown chain must not fall back to Ethereum: that returns a confident
     # score about a different chain's contract.
-    chain = (req.chain or "ETH").upper()
     if chain not in CHAIN_IDS:
         raise HTTPException(
             400,

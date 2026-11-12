@@ -8,6 +8,7 @@ export interface ChainOption {
 }
 
 export const CHAINS: ChainOption[] = [
+  { code: 'SOL', name: 'Solana' },
   { code: 'ETH', name: 'Ethereum' },
   { code: 'BSC', name: 'BNB Smart Chain' },
   { code: 'POLYGON', name: 'Polygon' },

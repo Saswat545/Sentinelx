@@ -11,7 +11,7 @@ interface AnalysisResult {
   riskScore: number | null;
   riskLevel: string;
   verdictLabel?: string | null;
-  scoreSource?: 'model' | 'policy';
+  scoreSource?: 'model' | 'policy' | 'onchain';
   flags: { name: string; severity: string }[];
   modelInfo: { model: string; features: number; responseTime: string };
   aiAssessment: string;
@@ -191,7 +191,9 @@ export function Results() {
                 Score basis:{' '}
                 <span className="font-medium text-gray-700">
                   {engine && engine.ruleScore !== null
-                    ? `rules ${engine.ruleScore} × 0.7 + model ${engine.aiScore ?? 'n/a'} × 0.3`
+                    ? engine.aiScore !== null
+                      ? `rules ${engine.ruleScore} × 0.7 + model ${engine.aiScore} × 0.3`
+                      : `rules only (${engine.ruleScore}); no model score for this input`
                     : policyScore
                       ? 'policy rule (source not verified)'
                       : `model (${result.modelInfo.model})`}
@@ -217,7 +219,11 @@ export function Results() {
             <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-100 px-6 py-4">
               <h2 className="text-sm font-semibold text-gray-900">How this score was built</h2>
               <span className="font-mono text-xs text-gray-400">
-                {engine.status === 'insufficient_data' ? 'not scored' : 'rules 70% · model 30%'}
+                {engine.status === 'insufficient_data'
+                  ? 'not scored'
+                  : engine.aiScore !== null
+                    ? 'rules 70% · model 30%'
+                    : 'rules only'}
               </span>
             </div>
 
@@ -300,7 +306,9 @@ export function Results() {
               <p className="text-xs text-gray-500">
                 {engine.status === 'insufficient_data'
                   ? 'There was not enough readable evidence to score this contract. UNKNOWN, not safe.'
-                  : engine.status === 'bytecode_only'
+                  : engine.status === 'onchain_state'
+                    ? 'Scored from live Solana chain state: mint and freeze authority, holder concentration and DEX liquidity. No source code is read on Solana.'
+                    : engine.status === 'bytecode_only'
                     ? `Source is unverified, so the model did not run. This score comes from bytecode evidence alone (${engine.confidence ?? '--'}% of it readable).`
                     : `Confidence ${engine.confidence ?? '--'}%, based on how much of the source could be read.`}
               </p>
@@ -390,7 +398,9 @@ export function Results() {
                 label: 'Basis',
                 value:
                   engine && engine.ruleScore !== null
-                    ? 'Rules 70% + model 30%'
+                    ? engine.aiScore !== null
+                      ? 'Rules 70% + model 30%'
+                      : 'Rules only (on-chain state)'
                     : policyScore
                       ? 'Policy rule'
                       : 'Model',

@@ -422,7 +422,11 @@ def fuse(
 
     if ai is None:
         combined = rules
-        confidence = 0.45 if status == "BYTECODE_ONLY" else 0.3
+        # Chain state (Solana) is directly observed, so it beats inferred bytecode.
+        if status == "ONCHAIN_STATE":
+            confidence = 0.55
+        else:
+            confidence = 0.45 if status == "BYTECODE_ONLY" else 0.3
     else:
         combined = round(rules * rule_weight + ai * (1 - rule_weight))
         confidence = 0.9 if status == "PROXY_RESOLVED" else 0.8

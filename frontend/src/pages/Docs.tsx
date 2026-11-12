@@ -14,7 +14,7 @@ const sections = [
   {
     title: 'Scanner',
     items: [
-      { title: 'Supported Chains', desc: 'Ethereum mainnet and planned EVM chain support.' },
+      { title: 'Supported Chains', desc: '49 EVM chains read verified source through Etherscan V2, plus Solana mints, which are scored from on-chain state.' },
       { title: 'Risk Score Methodology', desc: 'How rules at 70% and XGBoost at 30% are fused into one score.' },
       { title: 'Security Signals', desc: 'The 54 features extracted during analysis.' },
       { title: 'SHAP Explanations', desc: 'Understanding explainable AI feature attribution.' },

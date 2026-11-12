@@ -40,6 +40,18 @@ function chainFor(url) {
   if (/(^|\.)basescan\.org$/i.test(host)) return 'BASE';
   if (/(^|\.)optimistic\.etherscan\.io$/i.test(host)) return 'OP';
   if (/(^|\.)snowtrace\.io$/i.test(host) || /(^|\.)snowscan\.xyz$/i.test(host)) return 'AVAX';
+  if (/(^|\.)solscan\.io$/i.test(host) || /(^|\.)solana\.fm$/i.test(host)) return 'SOL';
+  if (/(^|\.)lineascan\.build$/i.test(host)) return 'LINEA';
+  if (/(^|\.)scrollscan\.com$/i.test(host)) return 'SCROLL';
+  if (/(^|\.)mantlescan\.xyz$/i.test(host)) return 'MANTLE';
+  if (/(^|\.)blastscan\.io$/i.test(host)) return 'BLAST';
+  if (/(^|\.)celoscan\.io$/i.test(host)) return 'CELO';
+  if (/(^|\.)gnosisscan\.io$/i.test(host)) return 'GNOSIS';
+  if (/(^|\.)ftmscan\.com$/i.test(host)) return 'FANTOM';
+  if (/(^|\.)cronoscan\.com$/i.test(host)) return 'CRONOS';
+  if (/(^|\.)berascan\.com$/i.test(host)) return 'BERACHAIN';
+  if (/(^|\.)sonicscan\.org$/i.test(host)) return 'SONIC';
+  if (/(^|\.)worldscan\.org$/i.test(host)) return 'WORLD';
   return 'ETH';
 }
 
@@ -52,6 +64,7 @@ const chainSelect = $('chain');
    Auto-detection only covers the big explorers, so the dropdown is the
    reliable way to pick a newer chain. */
 Object.assign(CHAIN_NAMES, {
+  SOL: 'Solana',
   LINEA: 'Linea',
   SCROLL: 'Scroll',
   MANTLE: 'Mantle',

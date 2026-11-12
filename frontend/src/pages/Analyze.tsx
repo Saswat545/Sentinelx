@@ -64,7 +64,12 @@ export function Analyze() {
 
   const isDexScreenerUrl = (input: string) => /dexscreener\.com/i.test(input);
 
-  const validateAddress = (addr: string) => /^0x[a-fA-F0-9]{40}$/.test(extractAddress(addr));
+  /* Solana mints are base58, EVM addresses are 0x-hex; the chain decides which
+     one the field expects. */
+  const validateAddress = (addr: string) =>
+    chain === 'SOL'
+      ? /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(addr.trim())
+      : /^0x[a-fA-F0-9]{40}$/.test(extractAddress(addr));
 
   const handleAnalyze = async () => {
     setError('');
@@ -97,7 +102,11 @@ export function Analyze() {
       
       const extracted = extractAddress(contractAddress);
       if (!validateAddress(extracted)) {
-        setError('Enter a valid Ethereum address (0x followed by 40 hex characters), or paste a URL containing a contract address');
+                  setError(
+            chain === 'SOL'
+              ? 'Enter a valid Solana token mint (base58, 32-44 characters).'
+              : 'Enter a valid Ethereum address (0x followed by 40 hex characters), or paste a URL containing a contract address'
+          );
         return;
       }
       // Auto-extract address from URL if needed
@@ -198,7 +207,11 @@ export function Analyze() {
           flags,
           saved: true,
           modelInfo,
-          scoreSource: modelUsed ? 'model' : 'policy',
+          scoreSource: modelUsed
+            ? 'model'
+            : data.status === 'ONCHAIN_STATE'
+              ? 'onchain'
+              : 'policy',
           verdictLabel: data.verdict_label || null,
           aiAssessment: data.ai_assessment || data.explanation || '',
           shapValues: data.shap_values || null,

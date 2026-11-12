@@ -45,17 +45,37 @@ try:
     # Works when Render starts ``uvicorn main:app`` from backend/.
     from feature_extractor import (
         CHAIN_IDS,
+        bytecode_facts,
         extract_features,
         extract_features_from_address,
+        fetch_contract_meta,
         fetch_source_code,
+    )
+    from risk_engine import (
+        evaluate_bytecode,
+        evaluate_rules,
+        fuse,
+        recommendation_for,
+        rule_score,
+        verdict_for,
     )
 except ImportError:
     # Works when the project is started from its repository root.
     from .feature_extractor import (
         CHAIN_IDS,
+        bytecode_facts,
         extract_features,
         extract_features_from_address,
+        fetch_contract_meta,
         fetch_source_code,
+    )
+    from .risk_engine import (
+        evaluate_bytecode,
+        evaluate_rules,
+        fuse,
+        recommendation_for,
+        rule_score,
+        verdict_for,
     )
 
 load_dotenv()
@@ -199,6 +219,11 @@ class AnalyzeResponse(BaseModel):
     analysis_time_ms: int
     token_address: Optional[str] = None
     contract_name: Optional[str] = None
+    rule_score: int = 0               # deterministic rules alone, 0-100
+    ai_score: Optional[int] = None    # model alone, 0-100 (None when it could not run)
+    confidence: float = 0.0           # how much evidence supports the verdict
+    status: str = "VERIFIED"          # VERIFIED / PROXY_RESOLVED / BYTECODE_ONLY / INSUFFICIENT_DATA
+    findings: list[dict] = []         # per-rule evidence for the explanation panel
 
 
 # ── Utility functions ─────────────────────────────────────────────────────────
@@ -429,6 +454,83 @@ def get_metrics():
     return metrics
 
 
+def analyze_unverified(meta: dict, token_address: Optional[str], start_ms: float) -> AnalyzeResponse:
+    """
+    Unverified contract: score what the bytecode does instead of a flat 90.
+
+    A missing source is an absence of evidence, not evidence of fraud. When the
+    bytecode cannot be read either, the honest answer is UNKNOWN.
+    """
+    facts = bytecode_facts(meta.get("bytecode") or "")
+    findings = evaluate_bytecode(facts)
+    elapsed = int((time.time() - start_ms) * 1000)
+
+    if not facts:
+        return AnalyzeResponse(
+            risk_score=0,
+            verdict="UNKNOWN",
+            verdict_label="Not enough evidence to judge this contract.",
+            rug_probability=0.0,
+            input_type="token_address",
+            flags=[FlagItem(
+                name="No source and no bytecode",
+                severity="MEDIUM",
+                description="Etherscan has no verified source for this address and the "
+                            "bytecode could not be read, so neither engine could run. "
+                            "This is not a clean result.",
+            )],
+            shap_top_features=[],
+            recommendation=(
+                "There is not enough evidence to score this contract. Treat unknown as "
+                "unverified: read the bytecode yourself or ask the deployer to verify "
+                "the source before trading."
+            ),
+            model_used=False,
+            analysis_time_ms=elapsed,
+            token_address=token_address,
+            contract_name=meta.get("name"),
+            rule_score=0,
+            ai_score=None,
+            confidence=0.15,
+            status="INSUFFICIENT_DATA",
+            findings=[],
+        )
+
+    rules = rule_score(findings)
+    score, confidence = fuse(rules, None, findings, "BYTECODE_ONLY")
+    verdict, band_label = verdict_for(score)
+
+    flags = [
+        FlagItem(name=item.title, severity=item.severity, description=item.evidence)
+        for item in findings
+    ] or [FlagItem(
+        name="Unverified source",
+        severity="LOW",
+        description="No source on Etherscan, but the bytecode shows no mint, owner or "
+                    "proxy entry points that this engine checks for.",
+    )]
+
+    return AnalyzeResponse(
+        risk_score=score,
+        verdict=verdict,
+        verdict_label=f"{band_label} Scored from bytecode; the source is unverified.",
+        rug_probability=round(score / 100, 4),
+        input_type="token_address",
+        flags=flags,
+        shap_top_features=[],
+        recommendation=recommendation_for(score, findings),
+        model_used=False,
+        analysis_time_ms=elapsed,
+        token_address=token_address,
+        contract_name=meta.get("name"),
+        rule_score=rules,
+        ai_score=None,
+        confidence=confidence,
+        status="BYTECODE_ONLY",
+        findings=[item.as_dict() for item in findings],
+    )
+
+
 @app.post("/analyze", response_model=AnalyzeResponse)
 def analyze(req: AnalyzeRequest):
     """
@@ -460,6 +562,8 @@ def analyze(req: AnalyzeRequest):
     token_address = None
     contract_name = None
     source_code   = None
+    meta          = {}
+    status        = "VERIFIED"
 
     # ── Case 1: Token address ─────────────────────────────────
     if is_eth_address(raw_input):
@@ -472,35 +576,21 @@ def analyze(req: AnalyzeRequest):
                 "Set it in .env or Render environment variables."
             )
 
-        # Fetch source from Etherscan V2
-        source_code = fetch_source_code(raw_input, ETHERSCAN_API_KEY, chain)
+        # ── Normalisation: resolve a proxy to the logic it actually runs ──
+        meta = fetch_contract_meta(raw_input, ETHERSCAN_API_KEY, chain)
+        source_code = meta["source"]
+        contract_name = meta["name"]
+
+        if meta["is_proxy"] and meta["implementation"]:
+            implementation = fetch_contract_meta(meta["implementation"], ETHERSCAN_API_KEY, chain)
+            if implementation["source"]:
+                source_code = implementation["source"]
+                contract_name = f"{meta['name'] or 'Proxy'} implementation"
+                status = "PROXY_RESOLVED"
 
         if not source_code:
-            # Unverified contract — automatic high risk
-            return AnalyzeResponse(
-                risk_score=90,
-                verdict="CRITICAL",
-                verdict_label="Source code is not verified.",
-                rug_probability=0.90,
-                input_type=input_type,
-                flags=[FlagItem(
-                    name="Unverified Source Code",
-                    severity="CRITICAL",
-                    description="Etherscan has no verified source code for this address, "
-                                "so the model could not run. The score is a policy "
-                                "result, not an ML prediction."
-                )],
-                shap_top_features=[],
-                recommendation=(
-                    "Source code is not verified on Etherscan, so there is nothing to "
-                    "analyse. Ask the deployer to verify the source, or read the "
-                    "bytecode yourself before trading. Treat the score as a policy "
-                    "warning rather than an ML prediction."
-                ),
-                model_used=False,
-                analysis_time_ms=int((time.time() - start_ms) * 1000),
-                token_address=token_address,
-            )
+            # No source: score the bytecode rather than returning a flat 90.
+            return analyze_unverified(meta, token_address, start_ms)
 
     # ── Case 2: Raw Solidity code ─────────────────────────────
     else:
@@ -520,39 +610,35 @@ def analyze(req: AnalyzeRequest):
     # ── Feature extraction ────────────────────────────────────
     features = extract_features(source_code)
 
-    # ── ML scoring ────────────────────────────────────────────
-    risk_score, rug_prob = run_model(features)
+    # ── ML engine (30% of the fused score) ────────────────────
+    ai_raw, _model_probability = run_model(features)
+    ai_score = int(ai_raw) if model is not None else None
     model_used = model is not None
 
-    # ── Critical override ─────────────────────────────────────
-    # If 2+ critical flags → minimum 90 score
-    # If 1 critical flag  → minimum 75 score
-    raw_flags    = features_to_flags(features)
-    critical_cnt = sum(1 for f in raw_flags if f["severity"] == "CRITICAL")
-    if critical_cnt >= 2 and risk_score < 90:
-        risk_score = 90
-        rug_prob   = 0.90
-    elif critical_cnt == 1 and risk_score < 75:
-        risk_score = 75
-        rug_prob   = 0.75
+    # ── Rule engine (70% of the fused score) ──────────────────
+    findings = evaluate_rules(features, source_code or "", contract_name or "")
+    rules = rule_score(findings)
+
+    # ── Fusion: weights, confidence, confirmed-critical override ──
+    risk_score, confidence = fuse(rules, ai_score, findings, status)
 
     # ── SHAP explanation ──────────────────────────────────────
     shap_features = get_shap_explanation(features)
 
     # ── Build response ────────────────────────────────────────
-    verdict, verdict_label = score_to_verdict(risk_score)
-    recommendation = score_to_recommendation(risk_score, raw_flags)
+    verdict, verdict_label = verdict_for(risk_score)
+    recommendation = recommendation_for(risk_score, findings)
 
     flag_items = [
-        FlagItem(name=f["name"], severity=f["severity"], description=f["description"])
-        for f in raw_flags
+        FlagItem(name=item.title, severity=item.severity, description=item.evidence)
+        for item in findings
     ]
 
     return AnalyzeResponse(
         risk_score=risk_score,
         verdict=verdict,
         verdict_label=verdict_label,
-        rug_probability=round(rug_prob, 4),
+        rug_probability=round(risk_score / 100, 4),
         input_type=input_type,
         flags=flag_items,
         shap_top_features=shap_features,
@@ -561,4 +647,9 @@ def analyze(req: AnalyzeRequest):
         analysis_time_ms=int((time.time() - start_ms) * 1000),
         token_address=token_address,
         contract_name=contract_name,
+        rule_score=rules,
+        ai_score=ai_score,
+        confidence=confidence,
+        status=status,
+        findings=[item.as_dict() for item in findings],
     )

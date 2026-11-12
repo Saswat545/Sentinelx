@@ -146,10 +146,29 @@ function renderResult(data, address) {
 
   const basis = document.createElement('p');
   basis.className = 'basis';
-  basis.textContent = data.model_used
-    ? 'Basis: model score with SHAP attribution'
-    : 'Basis: policy rule, the model did not run';
+  const parts = [];
+  if (typeof data.rule_score === 'number') parts.push(`rules ${data.rule_score}`);
+  if (typeof data.ai_score === 'number') parts.push(`model ${data.ai_score}`);
+  if (typeof data.confidence === 'number') parts.push(`${Math.round(data.confidence * 100)}% confidence`);
+
+  basis.textContent = parts.length
+    ? parts.join(' · ')
+    : data.model_used
+      ? 'Basis: model score with SHAP attribution'
+      : 'Basis: policy rule, the model did not run';
   els.result.append(basis);
+
+  if (data.status && data.status !== 'VERIFIED') {
+    const note = document.createElement('p');
+    note.className = 'basis';
+    note.textContent =
+      data.status === 'PROXY_RESOLVED'
+        ? 'Scored on the implementation behind the proxy.'
+        : data.status === 'BYTECODE_ONLY'
+          ? 'Source is unverified; scored from bytecode alone.'
+          : 'Not enough evidence for a confident verdict.';
+    els.result.append(note);
+  }
 
   if (Array.isArray(data.flags) && data.flags.length > 0) {
     const list = document.createElement('ul');

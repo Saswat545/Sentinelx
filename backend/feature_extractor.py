@@ -106,6 +106,125 @@ def fetch_source_code(address: str, api_key: str, chain: str = "ETH") -> Optiona
         return None  # Network hiccup — caller will retry
 
 
+# ── Contract metadata: proxy resolution and bytecode ────────────────────────
+
+# EIP-1967 implementation slot and the EIP-1167 clone prefix are fixed constants,
+# so a proxy can be recognised without reading its ABI.
+ERC1967_SLOT = "360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+MINIMAL_PROXY_PREFIX = "363d3d373d3d3d363d73"
+
+# 4-byte selectors. Unlike keywords, these cannot appear by accident in a
+# dispatch table, which makes them usable on unverified bytecode.
+SELECTORS = {
+    "mint_address_uint": "40c10f19",
+    "mint_uint": "a0712d68",
+    "owner": "8da5cb5b",
+    "renounce_ownership": "715018a6",
+    "transfer_ownership": "f2fde38b",
+    "pause": "8456cb59",
+}
+
+
+def fetch_contract_meta(address: str, api_key: str, chain: str = "ETH") -> dict:
+    """
+    One call for everything /analyze needs about an address.
+
+    Returns the verified source, the contract name, whether Etherscan marks it as
+    a proxy and which implementation it points at, plus the deployed bytecode when
+    the plan allows reading it.
+    """
+    meta = {
+        "source": None,
+        "name": None,
+        "is_proxy": False,
+        "implementation": None,
+        "bytecode": None,
+        "verified": False,
+    }
+
+    params = {
+        "chainid": chain_id_for(chain),
+        "module": "contract",
+        "action": "getsourcecode",
+        "address": address,
+        "apikey": api_key,
+    }
+
+    try:
+        r = requests.get(ETHERSCAN_V2_URL, params=params, timeout=20)
+        if r.status_code == 200:
+            data = r.json()
+            rows = data.get("result") if isinstance(data.get("result"), list) else []
+            entry = rows[0] if rows else {}
+            source = (entry.get("SourceCode") or "").strip()
+            meta["name"] = entry.get("ContractName") or None
+            meta["is_proxy"] = str(entry.get("Proxy") or "0") == "1"
+            implementation = (entry.get("Implementation") or "").strip()
+            meta["implementation"] = implementation or None
+
+            if source and len(source) >= 100:
+                cleaned = source
+                if cleaned.startswith("{{") and cleaned.endswith("}}"):
+                    cleaned = cleaned[1:-1]
+                if cleaned.startswith('{'):
+                    try:
+                        parsed = json.loads(cleaned)
+                        if "sources" in parsed:
+                            cleaned = "\n".join(
+                                v.get("content", "") for v in parsed["sources"].values()
+                            )
+                    except Exception:
+                        pass
+                meta["source"] = cleaned
+                meta["verified"] = True
+    except Exception:
+        pass
+
+    # eth_getCode is not on the free plan for every chain, so treat it as optional.
+    try:
+        r = requests.get(
+            ETHERSCAN_V2_URL,
+            params={
+                "chainid": chain_id_for(chain),
+                "module": "proxy",
+                "action": "eth_getCode",
+                "address": address,
+                "tag": "latest",
+                "apikey": api_key,
+            },
+            timeout=20,
+        )
+        if r.status_code == 200:
+            body = r.json()
+            code = body.get("result")
+            if isinstance(code, str) and code.startswith("0x") and len(code) > 10:
+                meta["bytecode"] = code
+    except Exception:
+        pass
+
+    return meta
+
+
+def bytecode_facts(code: str) -> dict:
+    """Selector and proxy facts from deployed bytecode, for unverified contracts."""
+    if not code or len(code) < 10:
+        return {}
+
+    body = code.lower()[2:] if code.lower().startswith("0x") else code.lower()
+    facts = {
+        "size": len(body) // 2,
+        "is_minimal_proxy": body.startswith(MINIMAL_PROXY_PREFIX)
+        or ("363d3d373d3d3d363d73" in body[:80]),
+        "is_erc1967_proxy": ERC1967_SLOT in body,
+        "has_delegatecall": "f4" in body,
+    }
+
+    for name, selector in SELECTORS.items():
+        facts[f"has_{name}_selector"] = f"63{selector}" in body
+
+    return facts
+
+
 # ── Feature Extraction — 53 features ─────────────────────────────────────────
 
 def extract_features(source_code: str) -> dict:
